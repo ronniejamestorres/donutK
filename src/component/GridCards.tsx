@@ -50,30 +50,102 @@ function GridCards() {
           </ButtonGroup>
         </CardFooter>
       </Card>
-      <Box
+      <Card
+        maxW="sm"
         bg="#E6E6E6"
-        height="400px"
+        height="fit"
         borderRadius="50px 50px 50px 50px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         transition="transform 0.2s ease-out"
         _hover={{ transform: "scale(1.1)" }}
-      />
-      <Box
+      >
+        <CardBody margin={"4"}>
+          <Image
+            src="https://d2zv6vzmaqao5e.cloudfront.net/foodticket/images/6468/_cms1667989623_cinnamon-swirl.png"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+          <Stack mt="2" spacing="3">
+            <Heading size="md">Hot Donut</Heading>
+            <Text>Eat this Eat that</Text>
+            <Text color="blue.600" fontSize="2xl">
+              $450
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="orange">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
+      <Card
+        maxW="sm"
         bg="#E6E6E6"
-        height="400px"
+        height="fit"
         borderRadius="50px 50px 50px 50px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         transition="transform 0.2s ease-out"
         _hover={{ transform: "scale(1.1)" }}
-      />
-      <Box
+      >
+        <CardBody margin={"4"}>
+          <Image
+            src="https://tb-static.uber.com/prod/image-proc/processed_images/d7aa2ec6e0b783acad468958d24be077/f0d1762b91fd823a1aa9bd0dab5c648d.jpeg"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+          <Stack mt="2" spacing="3">
+            <Heading size="md">Hot Donut</Heading>
+            <Text>Eat this Eat that</Text>
+            <Text color="blue.600" fontSize="2xl">
+              $450
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="orange">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
+      <Card
+        maxW="sm"
         bg="#E6E6E6"
-        height="400px"
+        height="fit"
         borderRadius="50px 50px 50px 50px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         transition="transform 0.2s ease-out"
         _hover={{ transform: "scale(1.1)" }}
-      />
+      >
+        <CardBody margin={"4"}>
+          <Image
+            src="https://tb-static.uber.com/prod/image-proc/processed_images/ad1a828916e460172a4380afd01638a6/f0d1762b91fd823a1aa9bd0dab5c648d.jpeg"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+          <Stack mt="2" spacing="3">
+            <Heading size="md">Hot Donut</Heading>
+            <Text>Eat this Eat that</Text>
+            <Text color="blue.600" fontSize="2xl">
+              $450
+            </Text>
+          </Stack>
+        </CardBody>
+        <Divider />
+        <CardFooter>
+          <ButtonGroup spacing="2">
+            <Button variant="solid" colorScheme="orange">
+              Add to cart
+            </Button>
+          </ButtonGroup>
+        </CardFooter>
+      </Card>
     </SimpleGrid>
   );
 }
