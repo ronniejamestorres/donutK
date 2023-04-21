@@ -15,13 +15,12 @@ import {
 import { Card, CardHeader, CardBody, CardFooter, Text } from "@chakra-ui/react";
 
 function GridCards() {
-  const columns = useBreakpointValue({ base: 1, md: 4 }); // 2 columns on small screens, 3 on larger screens
+  const columns = useBreakpointValue({ base: 2, md: 4 }); // 2 columns on small screens, 3 on larger screens
   return (
-    <SimpleGrid columns={columns} spacing="10px" margin="100px">
+    <SimpleGrid columns={columns} spacing="10px" margin="50px">
       <Card
         maxW="sm"
         bg="#E6E6E6"
-        height="fit"
         borderRadius="50px 50px 50px 50px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         transition="transform 0.2s ease-out"
@@ -50,6 +49,7 @@ function GridCards() {
           </ButtonGroup>
         </CardFooter>
       </Card>
+
       <Card
         maxW="sm"
         bg="#E6E6E6"

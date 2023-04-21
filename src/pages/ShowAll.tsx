@@ -4,9 +4,9 @@ import { Box } from "@chakra-ui/react";
 import Navbar from "../component/Navbar";
 import GridCards from "../component/GridCards";
 import backgroundImage from "../images/bg-grey-01.svg";
-import DkLogo from "../images/DkLogo-01.svg";
+import SearchSection from "../component/SearchSection";
 
-function LandingPage() {
+function ShowAll() {
   const location = useLocation();
 
   useEffect(() => {
@@ -25,14 +25,15 @@ function LandingPage() {
       backgroundImage={`url(${backgroundImage})`}
       backgroundRepeat="no-repeat"
       backgroundPosition="center"
-      backgroundSize="cover"
+      backgroundSize={{ base: "cover", md: "cover" }}
       h="100vh"
       w="100vw"
     >
       <Navbar />
+      <SearchSection />
       <GridCards />
     </Box>
   );
 }
 
-export default LandingPage;
+export default ShowAll;
