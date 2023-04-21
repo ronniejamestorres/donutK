@@ -21,7 +21,7 @@ function SearchSection() {
   return (
     <SimpleGrid columns={columns} spacing="10px" margin="10px">
       <Card bg="none" boxShadow="0px 4px 4px rgba(0, 0, 0, 0)">
-        <CardBody margin={"4"}>
+        <CardBody mt={"10"}>
           <Stack mt="2" spacing="3">
             <Heading color="orange.400" fontSize="5xl" size="">
               TRY OUR BEST
