@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { Card, CardHeader, CardBody, CardFooter, Text } from "@chakra-ui/react";
 
-function GridCards() {
+function GridCards({ donutData }) {
   const columns = useBreakpointValue({ base: 2, md: 4 }); // 2 columns on small screens, 3 on larger screens
   return (
     <SimpleGrid columns={columns} spacing="10px" margin="50px">
@@ -27,18 +27,17 @@ function GridCards() {
         _hover={{ transform: "scale(1.1)" }}
       >
         <CardBody margin={"4"}>
-          <Text>Nom</Text>
           <Image
             src="https://png2.cleanpng.com/sh/c210e8eb09c2a42192152558264e145b/L0KzQYi4UcI4N2EAfZGAYUHmdIeBUcNjP5cAT5C6M0a2QYW6UcE2OWI9S6s8NkG1RISATwBvbz==/5a1cd6813b7f97.1363143115118393612437.png"
             alt="Green double couch with wooden legs"
             borderRadius="lg"
           />
           <Stack mt="2" spacing="3">
-            <Heading size="md">Hot Donut</Heading>
-            <Text>Eat this Eat that</Text>
+            <Heading size="md">{donutData[0].name}</Heading>
+            <Text>{donutData[0].ingredients}</Text>
             Image Dispo Prix Ingredients Quantité Date Thumbs up or down
             <Text color="blue.600" fontSize="2xl">
-              $450
+              {donutData[0].price}$
             </Text>
           </Stack>
         </CardBody>

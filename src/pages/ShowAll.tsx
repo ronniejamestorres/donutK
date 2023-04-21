@@ -5,9 +5,11 @@ import Navbar from "../component/Navbar";
 import GridCards from "../component/GridCards";
 import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
+import donutData from "../data/donutData.json";
 
 function ShowAll() {
   const location = useLocation();
+  console.log(donutData);
 
   useEffect(() => {
     if (location.hash) {
@@ -31,7 +33,7 @@ function ShowAll() {
     >
       <Navbar />
       <SearchSection />
-      <GridCards />
+      <GridCards donutData={donutData} />
     </Box>
   );
 }
