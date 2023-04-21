@@ -30,6 +30,7 @@ export default function WithSubnavigation() {
   return (
     <Box>
       <Flex
+        as="header"
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         borderRadius="0 0 100px 100px"
@@ -43,6 +44,8 @@ export default function WithSubnavigation() {
         align={"center"}
         pr={28}
         pl={28}
+        position="fixed"
+        w="100%"
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
