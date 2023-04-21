@@ -4,10 +4,12 @@ import { Box } from "@chakra-ui/react";
 import Navbar from "../component/Navbar";
 import GridCards from "../component/GridCards";
 import backgroundImage from "../images/bg-grey-01.svg";
-
+import SearchSection from "../component/SearchSection";
+import donutData from "../data/donutData.json";
 
 function ShowAll() {
   const location = useLocation();
+  console.log(donutData);
 
   useEffect(() => {
     if (location.hash) {
@@ -25,12 +27,13 @@ function ShowAll() {
       backgroundImage={`url(${backgroundImage})`}
       backgroundRepeat="no-repeat"
       backgroundPosition="center"
-      backgroundSize="cover"
+      backgroundSize={{ base: "cover", md: "cover" }}
       h="100vh"
       w="100vw"
     >
       <Navbar />
-      <GridCards />
+      <SearchSection />
+      <GridCards donutData={donutData} />
     </Box>
   );
 }
