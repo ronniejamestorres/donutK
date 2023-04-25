@@ -6,6 +6,7 @@ import GridCards from "../component/GridCards";
 import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
 import donutData from "../data/donutData.json";
+import Footer from "../component/Footer";
 
 function ShowAll() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function ShowAll() {
       <Navbar />
       <SearchSection />
       <GridCards donutData={donutData} />
+      <Footer />
     </Box>
   );
 }
