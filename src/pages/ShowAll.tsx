@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import Navbar from "../component/Navbar";
@@ -6,6 +6,7 @@ import GridCards from "../component/GridCards";
 import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
 import donutData from "../data/donutData.json";
+import Footer from "../component/Footer";
 
 function ShowAll() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function ShowAll() {
       <Navbar />
       <SearchSection />
       <GridCards donutData={donutData} />
+      <Footer />
     </Box>
   );
 }
