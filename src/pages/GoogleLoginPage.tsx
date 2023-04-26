@@ -7,12 +7,11 @@ export default function GoogleLoginPage() {
   const navigate = useNavigate();
   const responseGoogle = (response) => {
     console.log(response);
-    navigate("/showall");
   };
 
   return (
     <div>
-      <GoogleOAuthProvider clientId="YOUR_CLIENT_ID">
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <GoogleLogin
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
