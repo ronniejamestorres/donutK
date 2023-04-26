@@ -7,11 +7,15 @@ import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
 import donutData from "../data/donutData.json";
 import Footer from "../component/Footer";
+import { GET_ALL_DONUTS } from "../graphql/queries";
+import { useQuery } from "@apollo/client";
 
 function ShowAll() {
   const location = useLocation();
-  console.log(donutData);
 
+  const { loading, error, data } = useQuery(GET_ALL_DONUTS);
+  loading && console.log("Loading...");
+  data && console.log(data.donuts);
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);

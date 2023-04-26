@@ -14,16 +14,16 @@ function GridCards() {
   const [donutData, setDonutData] = useState(donuts);
   const [selectedDonuts, setSelectedDonuts] = useState([]);
 
-  useEffect(() => {
-    // Automatically update the donut data when the JSON file changes
-    const intervalId = setInterval(() => {
-      fetch("/donuts.json")
-        .then((response) => response.json())
-        .then((data) => setDonutData(data));
-    }, 1000);
+  // useEffect(() => {
+  //   // Automatically update the donut data when the JSON file changes
+  //   const intervalId = setInterval(() => {
+  //     fetch("/donuts.json")
+  //       .then((response) => response.json())
+  //       .then((data) => setDonutData(data));
+  //   }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const handleAddToBasket = (donut) => {
     setSelectedDonuts([...selectedDonuts, donut]);
