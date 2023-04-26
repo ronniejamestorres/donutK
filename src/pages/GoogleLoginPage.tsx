@@ -1,6 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { GoogleLogin, googleLogout } from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 
 export default function GoogleLoginPage() {
