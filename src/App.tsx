@@ -5,6 +5,7 @@ import ShowData from "./pages/ShowData";
 import ShowOne from "./pages/ShowOne";
 import LandingPage from "./pages/LandingPage";
 import GoogleLoginPage from "./pages/GoogleLoginPage";
+import { useQuery, gql } from "@apollo/client";
 
 function App() {
   return (

@@ -2,7 +2,7 @@
   {
     "_id": "1",
     "name": "Glazed Donut",
-    "img": "https://i.pinimg.com/originals/0f/5c/3f/0f5c3f331d98ffdcfd18883cfa452b8b.jpg",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429681/DonutK/pngwing.com_3_embbqi.png",
     "description": "A classic, light and fluffy donut with a sweet glaze.",
     "price": 1.25,
     "ingredients": "flour, sugar, yeast, water, salt, glaze",
@@ -14,7 +14,7 @@
   {
     "_id": "2",
     "name": "Chocolate Frosted Donut",
-    "img": "https://w7.pngwing.com/pngs/667/139/png-transparent-doughnut-cream-breakfast-bakery-dessert-donut-collection-baked-goods-food-baking-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429687/DonutK/pngwing.com_4_lrmdvd.png",
     "description": "A delicious donut topped with a rich chocolate frosting.",
     "price": 1.5,
     "ingredients": "flour, sugar, yeast, water, salt, cocoa, frosting",
@@ -26,7 +26,7 @@
   {
     "_id": "3",
     "name": "Strawberry Frosted Donut",
-    "img": "https://w7.pngwing.com/pngs/386/496/png-transparent-sprinkle-cover-doughnut-donuts-frosting-icing-stuffing-sprinkles-krispy-kreme-doughnut-food-baking-recipe-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429676/DonutK/pngwing.com_hi9stf.png",
     "description": "A fruity and delightful donut with a smooth strawberry frosting.",
     "price": 1.5,
     "ingredients": "flour, sugar, yeast, water, salt, strawberry, frosting",
@@ -38,7 +38,7 @@
   {
     "_id": "4",
     "name": "Blueberry Donut",
-    "img": "https://w7.pngwing.com/pngs/165/834/png-transparent-donuts-ferrero-rocher-krispy-kreme-nutella-stuffing-chocolate-cocoa-bean-bread-krispy-kreme-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429664/DonutK/pngwing.com_12_mwuypc.png",
     "description": "A cake-like donut infused with real blueberries.",
     "price": 1.75,
     "ingredients": "flour, sugar, blueberries, water, salt, oil",
@@ -50,7 +50,7 @@
   {
     "_id": "5",
     "name": "Boston Cream Donut",
-    "img": "https://w7.pngwing.com/pngs/745/920/png-transparent-blue-donut-illustration-doughnut-paper-green-delicious-donut-food-decorative-green-apple-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429666/DonutK/pngwing.com_11_rnpct2.png",
     "description": "A fluffy donut filled with vanilla custard and topped with chocolate glaze.",
     "price": 2.0,
     "ingredients": "flour, sugar, yeast, water, salt, custard, chocolate glaze",
@@ -62,7 +62,7 @@
   {
     "_id": "6",
     "name": "Powdered Donut",
-    "img": "https://w7.pngwing.com/pngs/624/217/png-transparent-doughnut-european-cuisine-breakfast-donut-collection-blue-food-happy-birthday-vector-images-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429669/DonutK/pngwing.com_6_pawwjj.png",
     "description": "A light and fluffy donut coated with powdered sugar.",
     "price": 1.25,
     "ingredients": "flour, sugar, yeast, water, salt, powdered sugar",
@@ -74,7 +74,7 @@
   {
     "_id": "7",
     "name": "Maple Glazed Donut",
-    "img": "https://w7.pngwing.com/pngs/900/307/png-transparent-donuts-frosting-icing-cider-doughnut-bagel-glaze-doughnut-baked-goods-food-recipe-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429683/DonutK/pngwing.com_2_bcmo3x.png",
     "description": "A delicious donut with a sweet maple glaze.",
     "price": 1.5,
     "ingredients": "flour, sugar, yeast, water, salt, maple glaze",
@@ -86,7 +86,7 @@
   {
     "_id": "8",
     "name": "Jelly-Filled Donut",
-    "img": "https://w7.pngwing.com/pngs/799/899/png-transparent-cider-doughnut-donuts-frosting-icing-bossche-bol-old-fashioned-doughnut-choco-donuts-thumbnail.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429705/DonutK/pngwing.com_8_slgrex.png",
     "description": "A scrumptious donut filled with sweet raspberry jelly.",
     "price": 1.75,
     "ingredients": "flour, sugar, yeast, water, salt, raspberry jelly",
@@ -98,7 +98,7 @@
   {
     "_id": "9",
     "name": "Cinnamon Sugar Donut",
-    "img": "https://images.rawpixel.com/image_png_1300/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvZnJlYXRfYnJlYWRfZm9vZF9jb29raW5nLTAyLWpvYjYxOV8yLWt6dzVieWY2LnBuZw.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429679/DonutK/pngwing.com_10_fq402o.png",
     "description": "A delightful donut coated with a blend of cinnamon and sugar.",
     "price": 1.25,
     "ingredients": "flour, sugar, yeast, water, salt, cinnamon, sugar",
@@ -110,7 +110,7 @@
   {
     "_id": "10",
     "name": "Apple Fritter Donut",
-    "img": "https://images.rawpixel.com/image_png_1300/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvZnJlYXRfYnJlYWRfZm9vZF9jb29raW5nLTAzLWpvYjYxOV8xLWt6dzVieWR0LnBuZw.png",
+    "img": "https://res.cloudinary.com/dinhx1a6c/image/upload/v1682429658/DonutK/pngwing.com_7_qfwad5.png",
     "description": "A deliciously crispy and sweet donut filled with cinnamon-spiced apples.",
     "price": 2.25,
     "ingredients": "flour, sugar, yeast, water, salt, apples, cinnamon",
