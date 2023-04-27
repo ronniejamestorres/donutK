@@ -16,6 +16,7 @@ function ShowAll() {
   const { loading, error, data } = useQuery(GET_ALL_DONUTS);
   loading && console.log("Loading...");
   data && console.log(data.donuts);
+  error && console.log(error);
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);
