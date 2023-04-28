@@ -33,15 +33,15 @@ function GridCards({ onAddToBasket }) {
   const [selectedDonut, setSelectedDonut] = useState(null);
   const [showBasketDonuts, setShowBasketDonuts] = useState(false); // Add this state
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetch("/donuts.json")
-        .then((response) => response.json())
-        .then((data) => setDonutData(data));
-    }, 1000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     fetch("/donuts.json")
+  //       .then((response) => response.json())
+  //       .then((data) => setDonutData(data));
+  //   }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const handleAddToBasket = (donut) => {
     setBasketDonuts([...basketDonuts, donut]);
