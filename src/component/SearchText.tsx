@@ -14,12 +14,13 @@ function SearchText() {
             fontSize={{ base: "3xl", md: "5xl" }}
             color="orange.400"
             size=""
+            fontFamily={"Gloria Hallelujah"}
           >
-            TRY THE BEST
+            Try The Best
             <Text as="span" color="pink.400" margin={"10px"}>
               DONUTS
             </Text>
-            IN TOWN
+            In Town
           </Heading>
 
           <Text color="" fontSize="xl">

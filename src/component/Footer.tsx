@@ -86,13 +86,13 @@ export default function SmallWithLogoLeft() {
         <Text color={"white"}>© DONUTS KINGDOW. All rights reserved</Text>
         <Stack direction={"row"} spacing={6}>
           <SocialButton label={"Twitter"} href={"#"}>
-            <FaTwitter />
+            <FaTwitter color="white" />
           </SocialButton>
           <SocialButton label={"YouTube"} href={"#"}>
-            <FaYoutube />
+            <FaYoutube color="white" />
           </SocialButton>
           <SocialButton label={"Instagram"} href={"#"}>
-            <FaInstagram />
+            <FaInstagram color="white" />
           </SocialButton>
         </Stack>
       </Container>
