@@ -16,7 +16,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-import donuts from "../data/donutData.json";
+
 import {
   ArrowBackIcon,
   ArrowForwardIcon,
@@ -24,25 +24,39 @@ import {
   ViewOffIcon,
 } from "@chakra-ui/icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
+import { gql, useQuery } from "@apollo/client";
 
-function GridCards({ onAddToBasket }) {
-  const [donutData, setDonutData] = useState(donuts);
-  const [displayedDonuts, setDisplayedDonuts] = useState(donuts.slice(0, 4));
+const GET_DONUTS = gql`
+  query Donuts {
+    donuts {
+      img
+      description
+      price
+      ingredients
+      qty
+      date
+      thumbsUp
+      thumbsDown
+      id
+    }
+  }
+`;
+
+function GridCards() {
+  const [donutData, setDonutData] = useState([]);
+  const [displayedDonuts, setDisplayedDonuts] = useState([]); // donuts.slice(0, 4)
   const [startIndex, setStartIndex] = useState(0);
   const [basketDonuts, setBasketDonuts] = useState([]);
   const [selectedDonut, setSelectedDonut] = useState(null);
   const [showBasketDonuts, setShowBasketDonuts] = useState(false); // Add this state
+  const { loading, error, data } = useQuery(GET_DONUTS);
 
-  // useEffect(() => {
-
-  //   const intervalId = setInterval(() => {
-  //     fetch("/donuts.json")
-  //       .then((response) => response.json())
-  //       .then((data) => setDonutData(data));
-  //   }, 1000);
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
+  useEffect(() => {
+    if (data) {
+      setDonutData(data.donuts);
+      setDisplayedDonuts(data.donuts.slice(0, 4));
+    }
+  }, [data]);
 
   const handleAddToBasket = (donut) => {
     setBasketDonuts([...basketDonuts, donut]);
@@ -120,7 +134,7 @@ function GridCards({ onAddToBasket }) {
             w={"fit-content"}
           />
           {displayedDonuts.map((donut) => (
-            <GridItem key={donut._id}>
+            <GridItem key={donut.id}>
               <Box
                 overflow="hidden"
                 borderWidth="1px"
