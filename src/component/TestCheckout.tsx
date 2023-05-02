@@ -21,7 +21,7 @@ const TestCheckout = () => {
       const line_items = pendingOrders;
 
       const response = await fetch(
-        "http://localhost:4000/create-checkout-session",
+        "https://donutk-backend-pifrn.ondigitalocean.app/create-checkout-session",
         {
           method: "POST",
           headers: {

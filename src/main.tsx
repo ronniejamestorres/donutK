@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 //"http://localhost:4000"
 //"https://donutk-backend-pifrn.ondigitalocean.app/"
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri: "https://donutk-backend-pifrn.ondigitalocean.app",
   cache: new InMemoryCache(),
 });
 
