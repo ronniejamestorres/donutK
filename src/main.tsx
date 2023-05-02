@@ -4,9 +4,10 @@ import App from "./App";
 
 import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-
+//"http://localhost:4000"
+//"https://donutk-backend-pifrn.ondigitalocean.app/"
 const client = new ApolloClient({
-  uri: "https://donutk-backend-pifrn.ondigitalocean.app/",
+  uri: "http://localhost:4000",
   cache: new InMemoryCache(),
 });
 

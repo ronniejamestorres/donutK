@@ -5,6 +5,7 @@ import ShowData from "./pages/ShowData";
 import ShowOne from "./pages/ShowOne";
 import LandingPage from "./pages/LandingPage";
 import GoogleLoginPage from "./pages/GoogleLoginPage";
+import TestCheckout from "./component/TestCheckout";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/showall" element={<ShowAll />}></Route>
           <Route path="/showone" element={<ShowOne />}></Route>
           <Route path="/showdata" element={<ShowData />}></Route>
+          <Route path="/TestCheckout" element={<TestCheckout />}></Route>
         </Routes>
       </div>
     </Router>
