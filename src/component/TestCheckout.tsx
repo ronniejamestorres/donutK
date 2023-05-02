@@ -1,7 +1,25 @@
 //TestCheckout.tsx
+
+import { useState, useEffect } from "react";
+
+type pendingOrdersType = {
+  price: string;
+  quantity: number;
+};
+
 const TestCheckout = () => {
+  const [pendingOrders, setPendingOrders] = useState<pendingOrdersType[]>([
+    {
+      price: "price_1N2xpLIundI4kMC0oOM2FbXl",
+      quantity: 2,
+    },
+  ]);
+
   const handleCheckout = async () => {
     try {
+      console.log(pendingOrders);
+      const line_items = pendingOrders;
+
       const response = await fetch(
         "http://localhost:4000/create-checkout-session",
         {
@@ -10,11 +28,12 @@ const TestCheckout = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            quantity: 1,
+            line_items,
           }),
         }
       );
       const data = await response.json();
+      console.log(data);
       window.location = data.url;
     } catch (err) {
       console.log(err);

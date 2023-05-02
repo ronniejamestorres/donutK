@@ -56,6 +56,7 @@ function GridCards() {
       setDonutData(data.donuts);
       setDisplayedDonuts(data.donuts.slice(0, 4));
     }
+    console.log(error);
   }, [data]);
 
   const handleAddToBasket = (donut) => {
