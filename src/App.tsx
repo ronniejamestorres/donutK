@@ -6,6 +6,9 @@ import ShowOne from "./pages/ShowOne";
 import LandingPage from "./pages/LandingPage";
 import GoogleLoginPage from "./pages/GoogleLoginPage";
 import TestCheckout from "./component/TestCheckout";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Address";
+import Address from "./pages/Address";
 
 function App() {
   return (
@@ -15,9 +18,12 @@ function App() {
           <Route path="/" element={<LandingPage />}></Route>
           <Route path="/googlelogin" element={<GoogleLoginPage />}></Route>
           <Route path="/showall" element={<ShowAll />}></Route>
+          <Route path="/Cart" element={<Cart />}></Route>
           <Route path="/showone" element={<ShowOne />}></Route>
           <Route path="/showdata" element={<ShowData />}></Route>
           <Route path="/TestCheckout" element={<TestCheckout />}></Route>
+          <Route path="/adress" element={<Address/>}></Route>
+          
         </Routes>
       </div>
     </Router>

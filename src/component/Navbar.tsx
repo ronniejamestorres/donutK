@@ -96,10 +96,12 @@ export default function WithSubnavigation() {
             fontSize={"sm"}
             fontWeight={400}
             variant={"link"}
-            href={"#"}
+            href={"/cart"}
+            
           >
             <Icon as={MdOutlineShoppingCart} w={8} h={8} color="orange.400" />
           </Button>
+          
           <Button
             as={"a"}
             display={{ base: "none", md: "inline-flex" }}
