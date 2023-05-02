@@ -97,10 +97,14 @@ export default function WithSubnavigation() {
                 size={'md'}
                 fontWeight={'normal'}
                 px={2}
+                bgColor={'pink.400'}
                 colorScheme={'pink'}
-                bg={'pink.400'}
-                _hover={{ bg: 'pink.300' }} >
-               
+                textColor={'white'}
+                _hover={{ bg: 'pink.200',text:'white' }}
+                variant={'link'}
+                href={'/Showall'}
+                >
+                
           
                <Text mr="2">Go shopping</Text>
                <Icon as={GiDonut} boxSize="6" />

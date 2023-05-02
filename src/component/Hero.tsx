@@ -28,7 +28,7 @@ import {
        backgroundRepeat="no-repeat"
        backgroundPosition={{ base: "center", md: "center",xl:"center" }}
        backgroundSize={{ base: "cover", md: "cover", lg:"cover",xl:"cover" }}
-       h={{ base: "90vh", md: "50vh",lg:"100vh",xl:"100vh" }}
+       h={{ base: "90vh", md: "50vh",lg:"95vh",xl:"95vh" }}
        w={{ base: "100vw", md: "100vw",lg:"100vw",xl:"100vw" }}
 
       >
@@ -75,19 +75,20 @@ import {
               direction={{ base: 'column', sm: 'row' }}>
               <Button
                 rounded={'full'}
-                size={'lg'}
+                size={'md'}
                 fontWeight={'normal'}
-                px={6}
+                px={3}
                 colorScheme={'pink'}
                 bg={'pink.400'}
+                
                 _hover={{ bg: 'pink.300' }} >
                 Show menu
               </Button>
               <Button
                 rounded={'full'}
-                size={'lg'}
+                size={'md'}
                 fontWeight={'normal'}
-                px={6}
+                px={3}
                 
                 
                 >

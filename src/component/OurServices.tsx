@@ -80,10 +80,10 @@ export default function gridListWith() {
         </Text>
       </Stack>
 
-      <Container maxW={"5xl"} mt={12}>
+      <Container maxW={"6xl"} mt={12}>
         <Flex
           flexWrap="wrap"
-          gridGap={6}
+          gridGap={8}
           justify="center"
           fontFamily={"Gloria Hallelujah"}
         >
