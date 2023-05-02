@@ -64,16 +64,6 @@ function GridCards({ onAddToBasket }) {
     console.log(error);
   }, [data]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetch("/donuts.json")
-        .then((response) => response.json())
-        .then((data) => setDonutData(data));
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
   const handleAddToBasket = (donut) => {
     setBasketDonuts([...basketDonuts, donut]);
   };
