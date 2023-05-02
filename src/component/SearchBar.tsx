@@ -47,10 +47,11 @@ const SearchBar = () => {
 
   return (
     <Box
+      display="flex"
+      alignItems="center"
       mt={"10"}
-      //border={"1px"}
-
-      height={"400px"}
+      pl={{ base: "40px", md: "100px" }}
+      pr={{ base: "40px", md: "100px" }}
       p={"10px"}
     >
       <FormControl>

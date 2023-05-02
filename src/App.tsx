@@ -7,7 +7,7 @@ import LandingPage from "./pages/LandingPage";
 import GoogleLoginPage from "./pages/GoogleLoginPage";
 import TestCheckout from "./component/TestCheckout";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/Address";
+
 import Address from "./pages/Address";
 
 function App() {
@@ -22,8 +22,7 @@ function App() {
           <Route path="/showone" element={<ShowOne />}></Route>
           <Route path="/showdata" element={<ShowData />}></Route>
           <Route path="/TestCheckout" element={<TestCheckout />}></Route>
-          <Route path="/adress" element={<Address/>}></Route>
-          
+          <Route path="/adress" element={<Address />}></Route>
         </Routes>
       </div>
     </Router>

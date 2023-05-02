@@ -15,6 +15,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  Divider,
 } from "@chakra-ui/react";
 
 import donuts from "../data/donutData.json";
@@ -134,10 +135,11 @@ function GridCards({ onAddToBasket }) {
         </Box>
       )}
 
-      <Flex flexDirection="row" justify={"space-between"}>
+      <Flex justify={"center"} gap={"4"}>
         <IconButton
           alignSelf="center"
-          bg={"white"}
+          bg={"orange.300"}
+          color={"white"}
           aria-label="Previous Donuts"
           size="lg"
           icon={<ArrowBackIcon />}
@@ -146,6 +148,22 @@ function GridCards({ onAddToBasket }) {
 
         <Grid
           templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
+          w={"fit-content"}
+        />
+        <IconButton
+          alignSelf="center"
+          bg={"orange.300"}
+          color={"white"}
+          aria-label="Next Donuts"
+          size="lg"
+          icon={<ArrowForwardIcon />}
+          onClick={handleNextDonuts}
+          w={"fit-content"}
+        />
+      </Flex>
+      <Flex flexDirection="row" justifyContent="center">
+        <Grid
+          templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
           gap={4}
           m={4}
         >
@@ -154,39 +172,52 @@ function GridCards({ onAddToBasket }) {
               <Box
                 overflow="hidden"
                 borderWidth="1px"
-                p={"20px"}
-                borderRadius="50px 50px 50px 50px"
+                p={"10px"}
+                h={{ base: "300px", md: "300px" }}
+                w={{ base: "auto", md: "300px" }}
+                borderRadius="3xl"
                 boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
-                bg="#E6E6E6"
+                bg={"white"}
                 transition="transform 0.2s ease-out"
                 _hover={{ transform: "scale(1.1)" }}
               >
-                <Flex justifyContent="center">
-                  <Image
-                    src={donut.img}
-                    alt={donut.name}
-                    height={"100px"}
-                    onClick={() => handleDonutClick(donut)}
-                    cursor="pointer"
-                  />
-                </Flex>
-                <Box p="6">
-                  <Flex alignItems="baseline">
-                    <Text
-                      fontSize="md"
-                      fontWeight="bold"
-                      color="gray.600"
-                      mr={2}
-                    >
-                      ${donut.price.toFixed(2)}
-                    </Text>
-                    <Text>{donut.qty} left</Text>
+                <Box>
+                  <Flex justifyContent="center">
+                    <Image
+                      src={donut.img}
+                      alt={donut.name}
+                      height={"100px"}
+                      onClick={() => handleDonutClick(donut)}
+                      cursor="pointer"
+                      m={"10px"}
+                    />
                   </Flex>
 
-                  <Button onClick={() => handleAddToBasket(donut)}>
+                  <Box>
+                    <Text fontWeight="bold" color="gray.600" mr={2}>
+                      <Flex justifyContent={"center"}>
+                        <Text fontSize="xl">{donut.name}</Text>
+                      </Flex>
+                      <Flex justifyContent={"center"}>
+                        <Text fontSize="xl">${donut.price.toFixed(2)}</Text>
+                      </Flex>
+                    </Text>
+                    <Flex justifyContent={"center"}>
+                      <Text>{donut.qty} left</Text>
+                    </Flex>
+                  </Box>
+                </Box>
+                <Divider />
+                <Flex justifyContent="center">
+                  <Button
+                    onClick={() => handleAddToBasket(donut)}
+                    bg={"pink.300"}
+                    color={"white"}
+                    mt={"10px"}
+                  >
                     Add to Basket
                   </Button>
-                </Box>
+                </Flex>
                 {selectedDonut === donut && (
                   <Modal
                     isOpen={selectedDonut === donut}
@@ -195,10 +226,10 @@ function GridCards({ onAddToBasket }) {
                     <ModalOverlay />
                     <ModalContent
                       overflow="hidden"
-                      borderWidth="1px"
                       borderRadius="50px 50px 50px 50px"
                       boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
                       bg={"pink.400"}
+                      w={{ base: "300px", md: "400px" }}
                     >
                       <Flex
                         justifyContent="center"
@@ -219,6 +250,7 @@ function GridCards({ onAddToBasket }) {
                       </ModalHeader>
 
                       <ModalCloseButton />
+
                       <ModalBody color={"white"}>
                         <Text>{selectedDonut.description}</Text>
                       </ModalBody>
@@ -250,6 +282,43 @@ function GridCards({ onAddToBasket }) {
           icon={<ArrowForwardIcon />}
           onClick={handleNextDonuts}
         />
+      </Flex>
+      <Flex>
+        <IconButton
+          onClick={toggleBasketDonuts}
+          color="orange.400"
+          bg={"white"}
+          icon={
+            showBasketDonuts ? (
+              <MdOutlineShoppingCart />
+            ) : (
+              <MdOutlineShoppingCart />
+            )
+          }
+          aria-label="Toggle Basket Donuts"
+        />
+
+        {showBasketDonuts && (
+          <Box
+            border={"1px"}
+            h={"300px"}
+            w={"300px"}
+            overflow={"scroll"}
+            borderRadius={"3xl"}
+          >
+            <Text fontSize="xl" fontWeight="bold"></Text>
+            <VStack spacing={2} align="stretch">
+              {basketDonuts.map((donut, index) => (
+                <Box key={index} borderRadius="lg" p={4}>
+                  <Text fontSize="md" fontWeight="bold">
+                    {donut.name}
+                  </Text>
+                  <Text fontSize="sm">Price: ${donut.price.toFixed(2)}</Text>
+                </Box>
+              ))}
+            </VStack>
+          </Box>
+        )}
       </Flex>
     </>
   );
