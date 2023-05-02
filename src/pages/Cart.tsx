@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -8,19 +8,17 @@ import {
   ListItem,
   Text,
   useToast,
- 
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
+import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillMinusCircle } from "react-icons/ai";
+import { MdDeleteOutline } from "react-icons/md";
+import "../App.css";
 
-import { AiFillPlusCircle } from 'react-icons/ai';
-import { AiFillMinusCircle } from 'react-icons/ai';
-import { MdDeleteOutline } from 'react-icons/md';
-import '../App.css' 
-
-
-
-
-
+type pendingOrdersType = {
+  price: string;
+  quantity: number;
+};
 
 type Product = {
   id: number;
@@ -33,19 +31,16 @@ function Cart() {
   const [products, setProducts] = useState<Product[]>([
     {
       id: 1,
-      name: 'Product 1',
+      name: "Product 1",
       price: 1.5,
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: "https://via.placeholder.com/150",
     },
     {
       id: 2,
-      name: 'Product 2',
+      name: "Product 2",
       price: 1.7,
-      imageUrl: 'https://via.placeholder.com/150',
+      imageUrl: "https://via.placeholder.com/150",
     },
-    
-    
-   
   ]);
   const [cart, setCart] = useState<number[]>([]);
   const toast = useToast();
@@ -53,11 +48,10 @@ function Cart() {
   const addToCart = (productId: number) => {
     setCart([...cart, productId]);
     toast({
-      title: 'Donut added to bag',
-      status: 'success',
+      title: "Donut added to bag",
+      status: "success",
       duration: 1000,
       isClosable: true,
-      
     });
   };
 
@@ -73,7 +67,7 @@ function Cart() {
   const removeProduct = (productId: number) => {
     const newCart = cart.filter((id) => id !== productId);
     setCart(newCart);
-  
+
     const newProducts = products.filter((product) => product.id !== productId);
     setProducts(newProducts);
   };
@@ -93,11 +87,50 @@ function Cart() {
     return calculateSubtotal() + calculateTax();
   };
 
+  const [pendingOrders, setPendingOrders] = useState<pendingOrdersType[]>([
+    {
+      price: "price_1N2xpLIundI4kMC0oOM2FbXl",
+      quantity: 2,
+    },
+  ]);
+
+  const handleCheckout = async () => {
+    try {
+      console.log(pendingOrders);
+      const line_items = pendingOrders;
+
+      const response = await fetch(
+        "http://localhost:4000/create-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            line_items,
+          }),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      window.location = data.url;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    
-    <Container maxW="xl" mt={{sm:5,md:8,lg:10,xl:12}} bg={'gray.100'}>
-      <Box mb={{sm:5, md:8,lg:10,xl:12}}>
-        <Text as="h1" fontSize="3xl" fontWeight="bold" mb={4} fontFamily={'Gloria Hallelujah'} bgColor={'pink.300'} rounded={'lg'}>
+    <Container maxW="xl" mt={{ sm: 5, md: 8, lg: 10, xl: 12 }} bg={"gray.100"}>
+      <Box mb={{ sm: 5, md: 8, lg: 10, xl: 12 }}>
+        <Text
+          as="h1"
+          fontSize="3xl"
+          fontWeight="bold"
+          mb={4}
+          fontFamily={"Gloria Hallelujah"}
+          bgColor={"pink.300"}
+          rounded={"lg"}
+        >
           Shopping Bag
         </Text>
       </Box>
@@ -105,9 +138,18 @@ function Cart() {
         {products.map((product) => (
           <ListItem key={product.id}>
             <Box display="flex" alignItems="center">
-              <Image src={product.imageUrl} alt={product.name} mr={2} rounded={'full'}/>
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                mr={2}
+                rounded={"full"}
+              />
               <Box flex={1}>
-                <Text fontSize="lg" fontWeight="bold" fontFamily={'Gloria Hallelujah'}>
+                <Text
+                  fontSize="lg"
+                  fontWeight="bold"
+                  fontFamily={"Gloria Hallelujah"}
+                >
                   {product.name}
                 </Text>
                 <Text>${product.price}</Text>
@@ -118,41 +160,39 @@ function Cart() {
                   size="sm"
                   mr={2}
                   onClick={() => removeProduct(product.id)}
-                  
                 >
-                  {<MdDeleteOutline/>}
+                  {<MdDeleteOutline />}
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
-                  rounded={'full'}
-                  color='orange.200'
-                  borderColor={'orange.200'}
+                  rounded={"full"}
+                  color="orange.200"
+                  borderColor={"orange.200"}
                   onClick={() => removeFromCart(product.id)}
                   mr={2}
                 >
-                  {<AiFillMinusCircle/>}
+                  {<AiFillMinusCircle />}
                 </Button>
                 <Text>{cart.filter((id) => id === product.id).length}</Text>
                 <Button
                   variant="outline"
                   size="sm"
-                  rounded={'full'}
-                  color='pink.300'
-                  borderColor={'pink.300'}
+                  rounded={"full"}
+                  color="pink.300"
+                  borderColor={"pink.300"}
                   onClick={() => addToCart(product.id)}
                   ml={2}
-                  
                 >
-                 {<AiFillPlusCircle/>}
+                  {<AiFillPlusCircle />}
                 </Button>
               </Box>
             </Box>
           </ListItem>
         ))}
       </List>
-      <Box mt={6} bg="cyan.100" p={4} borderRadius={4} rounded={'xl'}>
-        <Text fontSize="xl" mb={2} fontFamily={'Gloria Hallelujah'}>
+      <Box mt={6} bg="cyan.100" p={4} borderRadius={4} rounded={"xl"}>
+        <Text fontSize="xl" mb={2} fontFamily={"Gloria Hallelujah"}>
           Order description
         </Text>
         <Text>
@@ -164,15 +204,16 @@ function Cart() {
         <Text>
           Total: <strong>${calculateTotalPrice()}</strong>
         </Text>
-        <Button mt={4} bgColor={'pink.200'} fontFamily={'Gloria Hallelujah'}
+        <Button
+          onClick={handleCheckout}
+          mt={4}
+          bgColor={"pink.200"}
+          fontFamily={"Gloria Hallelujah"}
         >
-        
           Checkout
         </Button>
       </Box>
     </Container>
-    
-    
   );
 }
 

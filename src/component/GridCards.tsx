@@ -16,11 +16,9 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
-<<<<<<< HEAD
 
-=======
 import donuts from "../data/donutData.json";
->>>>>>> carocaro1
+
 import {
   ArrowBackIcon,
   ArrowForwardIcon,
@@ -28,7 +26,7 @@ import {
   ViewOffIcon,
 } from "@chakra-ui/icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
-<<<<<<< HEAD
+
 import { gql, useQuery } from "@apollo/client";
 
 const GET_DONUTS = gql`
@@ -47,20 +45,14 @@ const GET_DONUTS = gql`
   }
 `;
 
-function GridCards() {
-  const [donutData, setDonutData] = useState([]);
-  const [displayedDonuts, setDisplayedDonuts] = useState([]); // donuts.slice(0, 4)
-=======
-
 function GridCards({ onAddToBasket }) {
   const [donutData, setDonutData] = useState(donuts);
   const [displayedDonuts, setDisplayedDonuts] = useState(donuts.slice(0, 4));
->>>>>>> carocaro1
   const [startIndex, setStartIndex] = useState(0);
   const [basketDonuts, setBasketDonuts] = useState([]);
   const [selectedDonut, setSelectedDonut] = useState(null);
   const [showBasketDonuts, setShowBasketDonuts] = useState(false); // Add this state
-<<<<<<< HEAD
+
   const { loading, error, data } = useQuery(GET_DONUTS);
 
   useEffect(() => {
@@ -70,7 +62,6 @@ function GridCards({ onAddToBasket }) {
     }
     console.log(error);
   }, [data]);
-=======
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -81,7 +72,6 @@ function GridCards({ onAddToBasket }) {
 
     return () => clearInterval(intervalId);
   }, []);
->>>>>>> carocaro1
 
   const handleAddToBasket = (donut) => {
     setBasketDonuts([...basketDonuts, donut]);
@@ -143,30 +133,7 @@ function GridCards({ onAddToBasket }) {
           </VStack>
         </Box>
       )}
-<<<<<<< HEAD
-      <Flex flexDirection="row" justify={"center"}>
-        <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(6, 1fr)" }}
-          gap={4}
-          m={4}
-        >
-          <IconButton
-            alignSelf="center"
-            bg={"cyan.100"}
-            aria-label="Previous Donuts"
-            size="lg"
-            icon={<ArrowBackIcon />}
-            onClick={handlePreviousDonuts}
-            w={"fit-content"}
-          />
-          {displayedDonuts.map((donut) => (
-            <GridItem key={donut.id}>
-              <Box
-                overflow="hidden"
-                borderWidth="1px"
-                p={"10px"}
-                w={{ base: "150px", md: "200px" }}
-=======
+
       <Flex flexDirection="row" justify={"space-between"}>
         <IconButton
           alignSelf="center"
@@ -188,7 +155,6 @@ function GridCards({ onAddToBasket }) {
                 overflow="hidden"
                 borderWidth="1px"
                 p={"20px"}
->>>>>>> carocaro1
                 borderRadius="50px 50px 50px 50px"
                 boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
                 bg="#E6E6E6"
@@ -274,18 +240,6 @@ function GridCards({ onAddToBasket }) {
               </Box>
             </GridItem>
           ))}
-<<<<<<< HEAD
-          <IconButton
-            alignSelf="center"
-            bg={"cyan.100"}
-            aria-label="Next Donuts"
-            size="lg"
-            icon={<ArrowForwardIcon />}
-            onClick={handleNextDonuts}
-            w={"fit-content"}
-          />
-        </Grid>
-=======
         </Grid>
 
         <IconButton
@@ -296,7 +250,6 @@ function GridCards({ onAddToBasket }) {
           icon={<ArrowForwardIcon />}
           onClick={handleNextDonuts}
         />
->>>>>>> carocaro1
       </Flex>
     </>
   );
