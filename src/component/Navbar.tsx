@@ -22,7 +22,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { MdOutlineShoppingCart, MdSettings } from "react-icons/md";
+import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DkLogo-01.svg";
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
@@ -45,8 +45,8 @@ export default function WithSubnavigation() {
         position="fixed"
         w="100%"
         top={0}
-        pl={"40px"}
-        pr={"40px"}
+        pl={{ base: "40px", md: "100px" }}
+        pr={{ base: "40px", md: "100px" }}
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
@@ -78,7 +78,7 @@ export default function WithSubnavigation() {
             alt="DK Logo"
           />
 
-          <Flex display={{ base: "none", md: "flex" }} ml={80}>
+          <Flex display={{ base: "none", md: "flex" }} ml={64}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -98,22 +98,28 @@ export default function WithSubnavigation() {
             variant={"link"}
             href={"#"}
           >
-            <Icon as={MdOutlineShoppingCart} w={8} h={8} color="orange.400" />
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            href={"#"}
-            _hover={{
-              bg: "pink.300",
-            }}
-            borderRadius={"full"}
-          >
-            <Icon as={MdSettings} />
+            <Icon
+              as={MdOutlineShoppingCart}
+              w={8}
+              h={8}
+              color="orange.400"
+              position={"relative"}
+            />
+            <Box
+              bg={"red.500"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              position={"absolute"}
+              top={0}
+              right={0}
+              fontSize={"xs"}
+              fontWeight={"bold"}
+              rounded={"full"}
+              color={"white"}
+              p={"4px"}
+            >
+              3
+            </Box>
           </Button>
         </Stack>
       </Flex>

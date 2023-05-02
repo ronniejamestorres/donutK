@@ -7,6 +7,8 @@ function SearchText() {
       boxShadow="0px 4px 4px rgba(0, 0, 0, 0)"
       //border={"1px"}
       mt={"10"}
+      pl={{ base: "20px", md: "80px" }}
+      pr={{ base: "20px", md: "20px" }}
     >
       <CardBody>
         <Stack mt="2" spacing="3">
@@ -17,7 +19,7 @@ function SearchText() {
             fontFamily={"Gloria Hallelujah"}
           >
             Try The Best
-            <Text as="span" color="pink.400" margin={"10px"}>
+            <Text as="span" color="pink.400" ml={"10px"} mr={"10px"}>
               DONUTS
             </Text>
             In Town
