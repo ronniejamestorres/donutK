@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
@@ -43,4 +41,3 @@ function ShowAll() {
 }
 
 export default ShowAll;
->>>>>>> 5b3beba0c4a108e47825bf1a46d6253acc2756a3
