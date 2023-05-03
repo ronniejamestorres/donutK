@@ -1,153 +1,316 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   Box,
-  Heading,
-  SimpleGrid,
-  Stack,
-  StackDivider,
-  useBreakpointValue,
+  Flex,
+  Grid,
+  GridItem,
+  Text,
   Image,
-  Divider,
-  ButtonGroup,
   Button,
+  IconButton,
+  VStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Divider,
 } from "@chakra-ui/react";
-import { Card, CardHeader, CardBody, CardFooter, Text } from "@chakra-ui/react";
 
-function GridCards({ donutData }) {
-  const columns = useBreakpointValue({ base: 2, md: 4 }); // 2 columns on small screens, 3 on larger screens
+import donuts from "../data/donutData.json";
+
+import {
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  ViewIcon,
+  ViewOffIcon,
+} from "@chakra-ui/icons";
+import { MdOutlineShoppingCart } from "react-icons/md";
+
+import { gql, useQuery } from "@apollo/client";
+
+const GET_DONUTS = gql`
+  query Donuts {
+    donuts {
+      img
+      description
+      price
+      ingredients
+      qty
+      date
+      thumbsUp
+      thumbsDown
+      id
+    }
+  }
+`;
+
+function GridCards({ onAddToBasket }) {
+  const [donutData, setDonutData] = useState(donuts);
+  const [displayedDonuts, setDisplayedDonuts] = useState(donuts.slice(0, 4));
+  const [startIndex, setStartIndex] = useState(0);
+  const [basketDonuts, setBasketDonuts] = useState([]);
+  const [selectedDonut, setSelectedDonut] = useState(null);
+  const [showBasketDonuts, setShowBasketDonuts] = useState(false); // Add this state
+
+  const { loading, error, data } = useQuery(GET_DONUTS);
+
+  useEffect(() => {
+    if (data) {
+      setDonutData(data.donuts);
+      setDisplayedDonuts(data.donuts.slice(0, 4));
+    }
+    console.log(error);
+  }, [data]);
+
+  const handleAddToBasket = (donut) => {
+    setBasketDonuts([...basketDonuts, donut]);
+  };
+
+  const handleNextDonuts = () => {
+    const newIndex = (startIndex + 4) % donutData.length;
+    setStartIndex(newIndex);
+    setDisplayedDonuts(donutData.slice(newIndex, newIndex + 4));
+  };
+
+  const handlePreviousDonuts = () => {
+    const newIndex = (startIndex - 4 + donutData.length) % donutData.length;
+    setStartIndex(newIndex);
+    setDisplayedDonuts(donutData.slice(newIndex, newIndex + 4));
+  };
+
+  const handleDonutClick = (donut) => {
+    setSelectedDonut(donut);
+  };
+  const toggleBasketDonuts = () => {
+    setShowBasketDonuts(!showBasketDonuts);
+  };
+
   return (
-    <SimpleGrid columns={columns} spacing="10px" margin="50px">
-      <Card
-        maxW="sm"
-        bg="#E6E6E6"
-        borderRadius="50px 50px 50px 50px"
-        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        transition="transform 0.2s ease-out"
-        _hover={{ transform: "scale(1.1)" }}
-      >
-        <CardBody margin={"4"}>
-          <Image
-            src="https://png2.cleanpng.com/sh/c210e8eb09c2a42192152558264e145b/L0KzQYi4UcI4N2EAfZGAYUHmdIeBUcNjP5cAT5C6M0a2QYW6UcE2OWI9S6s8NkG1RISATwBvbz==/5a1cd6813b7f97.1363143115118393612437.png"
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-          />
-          <Stack mt="2" spacing="3">
-            <Heading size="md">{donutData[0].name}</Heading>
-            <Text>{donutData[0].ingredients}</Text>
-            Image Dispo Prix Ingredients Quantité Date Thumbs up or down
-            <Text color="blue.600" fontSize="2xl">
-              {donutData[0].price}$
-            </Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="orange">
-              Add to cart
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
+    <>
+      <IconButton
+        onClick={toggleBasketDonuts}
+        color="orange.400"
+        bg={"white"}
+        icon={
+          showBasketDonuts ? (
+            <MdOutlineShoppingCart />
+          ) : (
+            <MdOutlineShoppingCart />
+          )
+        }
+        aria-label="Toggle Basket Donuts"
+      />
 
-      <Card
-        maxW="sm"
-        bg="#E6E6E6"
-        height="fit"
-        borderRadius="50px 50px 50px 50px"
-        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        transition="transform 0.2s ease-out"
-        _hover={{ transform: "scale(1.1)" }}
-      >
-        <CardBody margin={"4"}>
-          <Image
-            src="https://d2zv6vzmaqao5e.cloudfront.net/foodticket/images/6468/_cms1667989623_cinnamon-swirl.png"
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-          />
-          <Stack mt="2" spacing="3">
-            <Heading size="md">Hot Donut</Heading>
-            <Text>Eat this Eat that</Text>
-            <Text color="blue.600" fontSize="2xl">
-              $450
-            </Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="orange">
-              Add to cart
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
-      <Card
-        maxW="sm"
-        bg="#E6E6E6"
-        height="fit"
-        borderRadius="50px 50px 50px 50px"
-        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        transition="transform 0.2s ease-out"
-        _hover={{ transform: "scale(1.1)" }}
-      >
-        <CardBody margin={"4"}>
-          <Image
-            src="https://tb-static.uber.com/prod/image-proc/processed_images/d7aa2ec6e0b783acad468958d24be077/f0d1762b91fd823a1aa9bd0dab5c648d.jpeg"
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-          />
-          <Stack mt="2" spacing="3">
-            <Heading size="md">Hot Donut</Heading>
-            <Text>Eat this Eat that</Text>
-            <Text color="blue.600" fontSize="2xl">
-              $450
-            </Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="orange">
-              Add to cart
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
-      <Card
-        maxW="sm"
-        bg="#E6E6E6"
-        height="fit"
-        borderRadius="50px 50px 50px 50px"
-        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        transition="transform 0.2s ease-out"
-        _hover={{ transform: "scale(1.1)" }}
-      >
-        <CardBody margin={"4"}>
-          <Image
-            src="https://tb-static.uber.com/prod/image-proc/processed_images/ad1a828916e460172a4380afd01638a6/f0d1762b91fd823a1aa9bd0dab5c648d.jpeg"
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-          />
-          <Stack mt="2" spacing="3">
-            <Heading size="md">Hot Donut</Heading>
-            <Text>Eat this Eat that</Text>
-            <Text color="blue.600" fontSize="2xl">
-              $450
-            </Text>
-          </Stack>
-        </CardBody>
-        <Divider />
-        <CardFooter>
-          <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="orange">
-              Add to cart
-            </Button>
-          </ButtonGroup>
-        </CardFooter>
-      </Card>
-    </SimpleGrid>
+      {showBasketDonuts && (
+        <Box
+          border={"1px"}
+          h={"300px"}
+          w={"300px"}
+          overflow={"scroll"}
+          borderRadius={"3xl"}
+        >
+          <Text fontSize="xl" fontWeight="bold"></Text>
+          <VStack spacing={2} align="stretch">
+            {basketDonuts.map((donut, index) => (
+              <Box key={index} borderRadius="lg" p={4}>
+                <Text fontSize="md" fontWeight="bold">
+                  {donut.name}
+                </Text>
+                <Text fontSize="sm">Price: ${donut.price.toFixed(2)}</Text>
+              </Box>
+            ))}
+          </VStack>
+        </Box>
+      )}
+
+      <Flex justify={"center"} gap={"4"}>
+        <IconButton
+          alignSelf="center"
+          bg={"orange.300"}
+          color={"white"}
+          aria-label="Previous Donuts"
+          size="lg"
+          icon={<ArrowBackIcon />}
+          onClick={handlePreviousDonuts}
+        />
+
+        <Grid
+          templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
+          w={"fit-content"}
+        />
+        <IconButton
+          alignSelf="center"
+          bg={"orange.300"}
+          color={"white"}
+          aria-label="Next Donuts"
+          size="lg"
+          icon={<ArrowForwardIcon />}
+          onClick={handleNextDonuts}
+          w={"fit-content"}
+        />
+      </Flex>
+      <Flex flexDirection="row" justifyContent="center">
+        <Grid
+          templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
+          gap={4}
+          m={4}
+        >
+          {displayedDonuts.map((donut) => (
+            <GridItem key={donut._id}>
+              <Box
+                overflow="hidden"
+                borderWidth="1px"
+                p={"10px"}
+                h={{ base: "300px", md: "300px" }}
+                w={{ base: "auto", md: "300px" }}
+                borderRadius="3xl"
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
+                bg={"white"}
+                transition="transform 0.2s ease-out"
+                _hover={{ transform: "scale(1.1)" }}
+              >
+                <Box>
+                  <Flex justifyContent="center">
+                    <Image
+                      src={donut.img}
+                      alt={donut.name}
+                      height={"100px"}
+                      onClick={() => handleDonutClick(donut)}
+                      cursor="pointer"
+                      m={"10px"}
+                    />
+                  </Flex>
+
+                  <Box>
+                    <Text fontWeight="bold" color="gray.600" mr={2}>
+                      <Flex justifyContent={"center"}>
+                        <Text fontSize="xl">{donut.name}</Text>
+                      </Flex>
+                      <Flex justifyContent={"center"}>
+                        <Text fontSize="xl">${donut.price.toFixed(2)}</Text>
+                      </Flex>
+                    </Text>
+                    <Flex justifyContent={"center"}>
+                      <Text>{donut.qty} left</Text>
+                    </Flex>
+                  </Box>
+                </Box>
+                <Divider />
+                <Flex justifyContent="center">
+                  <Button
+                    onClick={() => handleAddToBasket(donut)}
+                    bg={"pink.300"}
+                    color={"white"}
+                    mt={"10px"}
+                  >
+                    Add to Basket
+                  </Button>
+                </Flex>
+                {selectedDonut === donut && (
+                  <Modal
+                    isOpen={selectedDonut === donut}
+                    onClose={() => setSelectedDonut(null)}
+                  >
+                    <ModalOverlay />
+                    <ModalContent
+                      overflow="hidden"
+                      borderRadius="50px 50px 50px 50px"
+                      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
+                      bg={"pink.400"}
+                      w={{ base: "300px", md: "400px" }}
+                    >
+                      <Flex
+                        justifyContent="center"
+                        bg={"white"}
+                        p={"10px"}
+                        h={"300px"}
+                        alignItems={"center"}
+                      >
+                        <Image
+                          src={donut.img}
+                          height={"200px"}
+                          width={"200px"}
+                        />
+                      </Flex>
+
+                      <ModalHeader color={"white"} fontSize={"2xl"}>
+                        {selectedDonut.name}
+                      </ModalHeader>
+
+                      <ModalCloseButton />
+
+                      <ModalBody color={"white"}>
+                        <Text>{selectedDonut.description}</Text>
+                      </ModalBody>
+                      <Flex justifyContent={"center"}>
+                        <Button
+                          onClick={() => handleAddToBasket(donut)}
+                          bg={"white"}
+                          color={"pink.400"}
+                          borderRadius={"full"}
+                          w={"fit-content"}
+                          m={"10px"}
+                        >
+                          Add to Basket
+                        </Button>
+                      </Flex>
+                    </ModalContent>
+                  </Modal>
+                )}
+              </Box>
+            </GridItem>
+          ))}
+        </Grid>
+
+        <IconButton
+          alignSelf="center"
+          bg={"white"}
+          aria-label="Next Donuts"
+          size="lg"
+          icon={<ArrowForwardIcon />}
+          onClick={handleNextDonuts}
+        />
+      </Flex>
+      <Flex>
+        <IconButton
+          onClick={toggleBasketDonuts}
+          color="orange.400"
+          bg={"white"}
+          icon={
+            showBasketDonuts ? (
+              <MdOutlineShoppingCart />
+            ) : (
+              <MdOutlineShoppingCart />
+            )
+          }
+          aria-label="Toggle Basket Donuts"
+        />
+
+        {showBasketDonuts && (
+          <Box
+            border={"1px"}
+            h={"300px"}
+            w={"300px"}
+            overflow={"scroll"}
+            borderRadius={"3xl"}
+          >
+            <Text fontSize="xl" fontWeight="bold"></Text>
+            <VStack spacing={2} align="stretch">
+              {basketDonuts.map((donut, index) => (
+                <Box key={index} borderRadius="lg" p={4}>
+                  <Text fontSize="md" fontWeight="bold">
+                    {donut.name}
+                  </Text>
+                  <Text fontSize="sm">Price: ${donut.price.toFixed(2)}</Text>
+                </Box>
+              ))}
+            </VStack>
+          </Box>
+        )}
+      </Flex>
+    </>
   );
 }
 

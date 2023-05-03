@@ -22,15 +22,14 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DkLogo-01.svg";
-
 export default function WithSubnavigation() {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
     <Box>
       <Flex
-        as="header"
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         borderRadius="0 0 100px 100px"
@@ -42,26 +41,36 @@ export default function WithSubnavigation() {
         borderStyle={"solid"}
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
-        pr={28}
-        pl={28}
+        zIndex="100"
         position="fixed"
         w="100%"
+        top={0}
+        pl={{ base: "40px", md: "100px" }}
+        pr={{ base: "40px", md: "100px" }}
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
           display={{ base: "flex", md: "none" }}
         >
           <IconButton
             onClick={onToggle}
             icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              isOpen ? (
+                <CloseIcon w={3} h={3} />
+              ) : (
+                <HamburgerIcon w={5} h={5} color="pink.500" />
+              )
             }
             variant={"ghost"}
             aria-label={"Toggle Navigation"}
           />
         </Flex>
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          //border="1px"
+          //borderColor={"red.500"}
+        >
           <Image
             boxSize="80px"
             objectFit="contain"
@@ -69,7 +78,7 @@ export default function WithSubnavigation() {
             alt="DK Logo"
           />
 
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+          <Flex display={{ base: "none", md: "flex" }} ml={64}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -79,29 +88,38 @@ export default function WithSubnavigation() {
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
+          //border="1px"
+          //borderColor={"red.500"}
         >
           <Button
             as={"a"}
             fontSize={"sm"}
             fontWeight={400}
             variant={"link"}
-            href={"#"}
+            href={"/cart"}
           >
-            Sign In
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"orange.400"}
-            href={"#"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            Sign Up
+            <Icon
+              as={MdOutlineShoppingCart}
+              w={8}
+              h={8}
+              color="orange.400"
+              position={"relative"}
+            />
+            <Box
+              bg={"red.500"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              position={"absolute"}
+              top={0}
+              right={0}
+              fontSize={"xs"}
+              fontWeight={"bold"}
+              rounded={"full"}
+              color={"white"}
+              p={"4px"}
+            >
+              3
+            </Box>
           </Button>
         </Stack>
       </Flex>
@@ -112,14 +130,20 @@ export default function WithSubnavigation() {
     </Box>
   );
 }
-
+//navbar color
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("orange.400", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
+  const linkColor = useColorModeValue("orange.300", "gray.200");
+  const linkHoverColor = useColorModeValue("pink.400", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
   return (
-    <Stack direction={"row"} spacing={4}>
+    <Stack
+      direction={"row"}
+      spacing={10}
+      align="center"
+      //border="1px"
+      px={{ base: 40 }}
+    >
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
@@ -127,12 +151,13 @@ const DesktopNav = () => {
               <Link
                 p={2}
                 href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
+                fontSize={"lg"}
+                fontWeight={"bold"}
                 color={linkColor}
                 _hover={{
-                  textDecoration: "none",
+                  textDecoration: "underline",
                   color: linkHoverColor,
+                  as: "u",
                 }}
               >
                 {navItem.label}
@@ -227,6 +252,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
         _hover={{
           textDecoration: "none",
         }}
+        mt={20}
       >
         <Text
           fontWeight={600}
@@ -252,7 +278,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           borderLeft={1}
           borderStyle={"solid"}
           borderColor={useColorModeValue("gray.200", "gray.700")}
-          align={"start"}
+          align={"center"}
         >
           {children &&
             children.map((child) => (
@@ -290,7 +316,7 @@ const NAV_ITEMS: Array<NavItem> = [
     ],
   },
   {
-    label: "Find Work",
+    label: "GONUTS",
     children: [
       {
         label: "Job Board",
@@ -303,13 +329,5 @@ const NAV_ITEMS: Array<NavItem> = [
         href: "#",
       },
     ],
-  },
-  {
-    label: "Learn Design",
-    href: "#",
-  },
-  {
-    label: "Hire Designers",
-    href: "#",
   },
 ];
