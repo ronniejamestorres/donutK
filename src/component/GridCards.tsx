@@ -17,7 +17,7 @@ import {
   ModalOverlay,
   Divider,
 } from "@chakra-ui/react";
-
+import { useShoppingCart } from "../context/ShoppingCartContext";
 import donuts from "../data/donutData.json";
 
 import {
@@ -46,13 +46,24 @@ const GET_DONUTS = gql`
   }
 `;
 
-function GridCards({ onAddToBasket }) {
+function GridCards({ id, name, price }) {
+  const {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+  } = useShoppingCart();
+  const quantity = getItemQuantity(id);
   const [donutData, setDonutData] = useState(donuts);
   const [displayedDonuts, setDisplayedDonuts] = useState(donuts.slice(0, 4));
   const [startIndex, setStartIndex] = useState(0);
   const [basketDonuts, setBasketDonuts] = useState([]);
   const [selectedDonut, setSelectedDonut] = useState(null);
   const [showBasketDonuts, setShowBasketDonuts] = useState(false); // Add this state
+
+  const handleAddToBasket = (donut) => {
+    setBasketDonuts([...basketDonuts, donut]);
+  };
 
   const { loading, error, data } = useQuery(GET_DONUTS);
 
@@ -63,10 +74,6 @@ function GridCards({ onAddToBasket }) {
     }
     console.log(error);
   }, [data]);
-
-  const handleAddToBasket = (donut) => {
-    setBasketDonuts([...basketDonuts, donut]);
-  };
 
   const handleNextDonuts = () => {
     const newIndex = (startIndex + 4) % donutData.length;
@@ -86,45 +93,8 @@ function GridCards({ onAddToBasket }) {
   const toggleBasketDonuts = () => {
     setShowBasketDonuts(!showBasketDonuts);
   };
-
   return (
     <>
-      <IconButton
-        onClick={toggleBasketDonuts}
-        color="orange.400"
-        bg={"white"}
-        icon={
-          showBasketDonuts ? (
-            <MdOutlineShoppingCart />
-          ) : (
-            <MdOutlineShoppingCart />
-          )
-        }
-        aria-label="Toggle Basket Donuts"
-      />
-
-      {showBasketDonuts && (
-        <Box
-          border={"1px"}
-          h={"300px"}
-          w={"300px"}
-          overflow={"scroll"}
-          borderRadius={"3xl"}
-        >
-          <Text fontSize="xl" fontWeight="bold"></Text>
-          <VStack spacing={2} align="stretch">
-            {basketDonuts.map((donut, index) => (
-              <Box key={index} borderRadius="lg" p={4}>
-                <Text fontSize="md" fontWeight="bold">
-                  {donut.name}
-                </Text>
-                <Text fontSize="sm">Price: ${donut.price.toFixed(2)}</Text>
-              </Box>
-            ))}
-          </VStack>
-        </Box>
-      )}
-
       <Flex justify={"center"} gap={"4"}>
         <IconButton
           alignSelf="center"
@@ -199,14 +169,20 @@ function GridCards({ onAddToBasket }) {
                 </Box>
                 <Divider />
                 <Flex justifyContent="center">
-                  <Button
-                    onClick={() => handleAddToBasket(donut)}
-                    bg={"pink.300"}
-                    color={"white"}
-                    mt={"10px"}
-                  >
-                    Add to Basket
-                  </Button>
+                  <Box>
+                    {quantity === 0 ? (
+                      <Button
+                        onClick={() => {
+                          increaseCartQuantity(donut.id);
+                          handleAddToBasket(donut);
+                        }}
+                      >
+                        Add to cart
+                      </Button>
+                    ) : (
+                      <Flex></Flex>
+                    )}
+                  </Box>
                 </Flex>
                 {selectedDonut === donut && (
                   <Modal
@@ -246,7 +222,6 @@ function GridCards({ onAddToBasket }) {
                       </ModalBody>
                       <Flex justifyContent={"center"}>
                         <Button
-                          onClick={() => handleAddToBasket(donut)}
                           bg={"white"}
                           color={"pink.400"}
                           borderRadius={"full"}
@@ -263,15 +238,6 @@ function GridCards({ onAddToBasket }) {
             </GridItem>
           ))}
         </Grid>
-
-        <IconButton
-          alignSelf="center"
-          bg={"white"}
-          aria-label="Next Donuts"
-          size="lg"
-          icon={<ArrowForwardIcon />}
-          onClick={handleNextDonuts}
-        />
       </Flex>
       <Flex>
         <IconButton

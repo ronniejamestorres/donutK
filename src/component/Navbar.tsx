@@ -24,7 +24,9 @@ import {
 } from "@chakra-ui/icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DkLogo-01.svg";
-export default function WithSubnavigation() {
+import { useShoppingCart } from "../context/ShoppingCartContext";
+export default function Navbar() {
+  const { openCart, cartQuantity } = useShoppingCart();
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -97,6 +99,7 @@ export default function WithSubnavigation() {
             fontWeight={400}
             variant={"link"}
             href={"/cart"}
+            onClick={openCart}
           >
             <Icon
               as={MdOutlineShoppingCart}
@@ -118,7 +121,7 @@ export default function WithSubnavigation() {
               color={"white"}
               p={"4px"}
             >
-              3
+              {cartQuantity}
             </Box>
           </Button>
         </Stack>
@@ -301,7 +304,7 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "DONUTS",
+    label: "Login",
     children: [
       {
         label: "Explore Design Work",
