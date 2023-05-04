@@ -33,6 +33,7 @@ import { gql, useQuery } from "@apollo/client";
 const GET_DONUTS = gql`
   query Donuts {
     donuts {
+      name
       img
       description
       price
@@ -93,8 +94,59 @@ function GridCards({ id, name, price }) {
   const toggleBasketDonuts = () => {
     setShowBasketDonuts(!showBasketDonuts);
   };
+  const { cartQuantity } = useShoppingCart();
   return (
     <>
+      <Flex>
+        <IconButton
+          onClick={toggleBasketDonuts}
+          color="orange.400"
+          bg={"white"}
+          icon={
+            showBasketDonuts ? (
+              <MdOutlineShoppingCart />
+            ) : (
+              <MdOutlineShoppingCart />
+            )
+          }
+          aria-label="Toggle Basket Donuts"
+        />
+        <Box
+          bg={"red.500"}
+          justifyContent={"center"}
+          alignItems={"center"}
+          position={"absolute"}
+          left={6}
+          fontSize={"xs"}
+          fontWeight={"bold"}
+          rounded={"full"}
+          color={"white"}
+          p={"4px"}
+        >
+          {cartQuantity}
+        </Box>
+        {showBasketDonuts && (
+          <Box
+            border={"1px"}
+            h={"300px"}
+            w={"300px"}
+            overflow={"scroll"}
+            borderRadius={"3xl"}
+          >
+            <Text fontSize="xl" fontWeight="bold"></Text>
+            <VStack spacing={2} align="stretch">
+              {basketDonuts.map((donut, index) => (
+                <Box key={index} borderRadius="lg" p={4}>
+                  <Text fontSize="md" fontWeight="bold">
+                    {donut.name}
+                  </Text>
+                  <Text fontSize="sm">Price: ${donut.price.toFixed(2)}</Text>
+                </Box>
+              ))}
+            </VStack>
+          </Box>
+        )}
+      </Flex>
       <Flex justify={"center"} gap={"4"}>
         <IconButton
           alignSelf="center"
@@ -142,7 +194,10 @@ function GridCards({ id, name, price }) {
                 _hover={{ transform: "scale(1.1)" }}
               >
                 <Box>
-                  <Flex justifyContent="center">
+                  <Flex
+                    justifyContent="center"
+                    w={{ base: "none", sm: "300px" }}
+                  >
                     <Image
                       src={donut.img}
                       alt={donut.name}
@@ -219,6 +274,10 @@ function GridCards({ id, name, price }) {
 
                       <ModalBody color={"white"}>
                         <Text>{selectedDonut.description}</Text>
+                        <Text fontSize={"xl"} mt={"4px"} mb={"4px"}>
+                          Ingredients :{" "}
+                        </Text>
+                        <Text>{selectedDonut.ingredients}</Text>
                       </ModalBody>
                       <Flex justifyContent={"center"}>
                         <Button
@@ -238,43 +297,6 @@ function GridCards({ id, name, price }) {
             </GridItem>
           ))}
         </Grid>
-      </Flex>
-      <Flex>
-        <IconButton
-          onClick={toggleBasketDonuts}
-          color="orange.400"
-          bg={"white"}
-          icon={
-            showBasketDonuts ? (
-              <MdOutlineShoppingCart />
-            ) : (
-              <MdOutlineShoppingCart />
-            )
-          }
-          aria-label="Toggle Basket Donuts"
-        />
-
-        {showBasketDonuts && (
-          <Box
-            border={"1px"}
-            h={"300px"}
-            w={"300px"}
-            overflow={"scroll"}
-            borderRadius={"3xl"}
-          >
-            <Text fontSize="xl" fontWeight="bold"></Text>
-            <VStack spacing={2} align="stretch">
-              {basketDonuts.map((donut, index) => (
-                <Box key={index} borderRadius="lg" p={4}>
-                  <Text fontSize="md" fontWeight="bold">
-                    {donut.name}
-                  </Text>
-                  <Text fontSize="sm">Price: ${donut.price.toFixed(2)}</Text>
-                </Box>
-              ))}
-            </VStack>
-          </Box>
-        )}
       </Flex>
     </>
   );

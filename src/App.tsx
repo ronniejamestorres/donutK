@@ -18,7 +18,7 @@ function App() {
       <div>
         <Routes>
           <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/googlelogin" element={<GoogleLoginPage />}></Route>
+          <Route path="/googleloginpage" element={<GoogleLoginPage />}></Route>
           <Route path="/showall" element={<ShowAll />}></Route>
           <Route path="/store" element={<Store />}></Route>
           <Route path="/Cart" element={<Cart />}></Route>
