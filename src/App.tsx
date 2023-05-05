@@ -12,23 +12,32 @@ import Address from "./pages/Address";
 import Store from "./pages/Store";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 
+import CartPage from "./pages/CartPage";
+import { CartProvider } from "./context/CartContext";
+
 function App() {
   return (
-    <ShoppingCartProvider>
-      <div>
-        <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
-          <Route path="/googleloginpage" element={<GoogleLoginPage />}></Route>
-          <Route path="/showall" element={<ShowAll />}></Route>
-          <Route path="/store" element={<Store />}></Route>
-          <Route path="/Cart" element={<Cart />}></Route>
-          <Route path="/showone" element={<ShowOne />}></Route>
-          <Route path="/showdata" element={<ShowData />}></Route>
-          <Route path="/TestCheckout" element={<TestCheckout />}></Route>
-          <Route path="/adress" element={<Address />}></Route>
-        </Routes>
-      </div>
-    </ShoppingCartProvider>
+    <CartProvider>
+      <ShoppingCartProvider>
+        <div>
+          <Routes>
+            <Route path="/" element={<LandingPage />}></Route>
+            <Route
+              path="/googleloginpage"
+              element={<GoogleLoginPage />}
+            ></Route>
+            <Route path="/showall" element={<ShowAll />}></Route>
+            <Route path="/cartpage" element={<CartPage />}></Route>
+            <Route path="/store" element={<Store />}></Route>
+            <Route path="/Cart" element={<Cart />}></Route>
+            <Route path="/showone" element={<ShowOne />}></Route>
+            <Route path="/showdata" element={<ShowData />}></Route>
+            <Route path="/TestCheckout" element={<TestCheckout />}></Route>
+            <Route path="/adress" element={<Address />}></Route>
+          </Routes>
+        </div>
+      </ShoppingCartProvider>
+    </CartProvider>
   );
 }
 

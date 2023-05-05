@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import Navbar from "../component/Navbar";
-import GridCards from "../component/GridCards";
+import GridCards from "../component/GridCardsTest";
 import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
 //import donutData from "../data/donutData.json";

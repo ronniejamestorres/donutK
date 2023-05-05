@@ -25,8 +25,8 @@ import {
 import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DkLogo-01.svg";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import { NavLink } from "react-router-dom";
 export default function Navbar() {
-  const { openCart, cartQuantity } = useShoppingCart();
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -99,7 +99,6 @@ export default function Navbar() {
             fontWeight={400}
             variant={"link"}
             href={"/cart"}
-            onClick={openCart}
           >
             <Icon
               as={MdOutlineShoppingCart}
@@ -120,10 +119,33 @@ export default function Navbar() {
               rounded={"full"}
               color={"white"}
               p={"4px"}
-            >
-              {cartQuantity}
-            </Box>
+            ></Box>
           </Button>
+
+          <NavLink to="/cartpage">
+            <Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"}>
+              <Icon
+                as={MdOutlineShoppingCart}
+                w={8}
+                h={8}
+                color="orange.400"
+                position={"relative"}
+              />
+              <Box
+                bg={"red.500"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                position={"absolute"}
+                top={0}
+                right={0}
+                fontSize={"xs"}
+                fontWeight={"bold"}
+                rounded={"full"}
+                color={"white"}
+                p={"4px"}
+              ></Box>
+            </Button>
+          </NavLink>
         </Stack>
       </Flex>
 

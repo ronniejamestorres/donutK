@@ -4,6 +4,7 @@ import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
 
 //"http://localhost:4000"
 //"https://donutk-backend-pifrn.ondigitalocean.app/"
