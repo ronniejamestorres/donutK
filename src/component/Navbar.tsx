@@ -28,6 +28,7 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import { NavLink } from "react-router-dom";
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
+  const { openCart, cartQuantity } = useShoppingCart();
 
   return (
     <Box>
@@ -98,7 +99,7 @@ export default function Navbar() {
             fontSize={"sm"}
             fontWeight={400}
             variant={"link"}
-            href={"/cart"}
+            onClick={openCart}
           >
             <Icon
               as={MdOutlineShoppingCart}
@@ -131,6 +132,7 @@ export default function Navbar() {
                 color="orange.400"
                 position={"relative"}
               />
+
               <Box
                 bg={"red.500"}
                 justifyContent={"center"}
@@ -143,7 +145,10 @@ export default function Navbar() {
                 rounded={"full"}
                 color={"white"}
                 p={"4px"}
-              ></Box>
+              >
+                {" "}
+                {cartQuantity}
+              </Box>
             </Button>
           </NavLink>
         </Stack>
