@@ -14,6 +14,8 @@ import { ShoppingCartProvider } from "./context/ShoppingCartContext";
 
 import CartPage from "./pages/CartPage";
 import { CartProvider } from "./context/CartContext";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
             <Route path="/showone" element={<ShowOne />}></Route>
             <Route path="/TestCheckout" element={<TestCheckout />}></Route>
             <Route path="/adress" element={<Address />}></Route>
+            <Route path="/success" element={<Success />}></Route>
+            <Route path="/cancel" element={<Cancel />}></Route>
           </Routes>
         </div>
       </ShoppingCartProvider>
