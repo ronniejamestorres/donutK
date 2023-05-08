@@ -94,35 +94,6 @@ export default function Navbar() {
           //border="1px"
           //borderColor={"red.500"}
         >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            onClick={openCart}
-          >
-            <Icon
-              as={MdOutlineShoppingCart}
-              w={8}
-              h={8}
-              color="orange.400"
-              position={"relative"}
-            />
-            <Box
-              bg={"red.500"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              position={"absolute"}
-              top={0}
-              right={0}
-              fontSize={"xs"}
-              fontWeight={"bold"}
-              rounded={"full"}
-              color={"white"}
-              p={"4px"}
-            ></Box>
-          </Button>
-
           <NavLink to="/cartpage">
             <Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"}>
               <Icon

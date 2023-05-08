@@ -16,6 +16,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  keyframes,
 } from "@chakra-ui/react";
 
 import donuts from "../data/donutData.json";
@@ -23,7 +24,9 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import { gql, useQuery } from "@apollo/client";
 import { useCart } from "../context/CartContext";
 import { NavLink } from "react-router-dom";
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, ArrowForwardIcon, MinusIcon } from "@chakra-ui/icons";
+import backgroundImage from "../images/DK-card-bg-01.svg";
+import { color } from "framer-motion";
 
 const GET_DONUTS = gql`
   query Donuts {
@@ -43,7 +46,8 @@ const GET_DONUTS = gql`
 `;
 
 function GridCardsTest({ id, name, price }) {
-  const { getItemQuantity, increaseCartQuantity } = useShoppingCart();
+  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
+    useShoppingCart();
   const quantity = getItemQuantity(id);
   const [donutData, setDonutData] = useState(donuts);
   const [displayedDonuts, setDisplayedDonuts] = useState(donuts.slice(0, 4));
@@ -79,13 +83,12 @@ function GridCardsTest({ id, name, price }) {
   const handleDonutClick = (donut) => {
     setSelectedDonut(donut);
   };
+  const handleDecreaseQuantity = (donutId) => {
+    decreaseCartQuantity(donutId);
+  };
   return (
     <>
-      <Grid
-        templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
-        w={"fit-content"}
-      />
-      <Flex justify={"center"} gap={"4"}>
+      <Flex justify={"center"} gap={"4"} m={"4"}>
         <IconButton
           alignSelf="center"
           bg={"orange.300"}
@@ -107,16 +110,12 @@ function GridCardsTest({ id, name, price }) {
           w={"fit-content"}
         />
       </Flex>
-      <Grid
-        templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(4, 1fr)" }}
-        w={"fit-content"}
-      />
 
-      <Flex flexDirection="row" justifyContent="center">
+      <Flex flexDirection="row" justifyContent="center" mb={"100"}>
         <Grid
           templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
           gap={4}
-          m={4}
+          m={2}
         >
           {displayedDonuts.map((donut) => (
             <GridItem key={donut.id}>
@@ -132,49 +131,51 @@ function GridCardsTest({ id, name, price }) {
                 transition="transform 0.2s ease-out"
                 _hover={{ transform: "scale(1.1)" }}
               >
-                <Box>
-                  <Flex
-                    justifyContent="center"
-                    w={{ base: "none", sm: "300px" }}
-                  >
-                    <Image
-                      src={donut.img}
-                      alt={donut.name}
-                      height={"100px"}
-                      onClick={() => handleDonutClick(donut)}
-                      cursor="pointer"
-                      m={"10px"}
-                    />
-                  </Flex>
+                <Flex justifyContent="center" w={{ base: "none", sm: "300px" }}>
+                  <Image
+                    src={donut.img}
+                    alt={donut.name}
+                    height={"100px"}
+                    onClick={() => handleDonutClick(donut)}
+                    cursor="pointer"
+                    m={"10px"}
+                  />
+                </Flex>
 
-                  <Box>
-                    <Text fontWeight="bold" color="gray.600" mr={2}>
-                      <Flex justifyContent={"center"}>
-                        <Text fontSize="xl">{donut.name}</Text>
-                      </Flex>
-                      <Flex justifyContent={"center"}>
-                        <Text fontSize="xl">${donut.price.toFixed(2)}</Text>
-                      </Flex>
-                    </Text>
+                <Box>
+                  <Text fontWeight="bold" color="gray.600" mr={2}>
                     <Flex justifyContent={"center"}>
-                      <Text>{donut.qty} left</Text>
+                      <Text fontSize="xl">{donut.name}</Text>
                     </Flex>
-                  </Box>
+                    <Flex justifyContent={"center"}>
+                      <Text fontSize="xl">${donut.price.toFixed(2)}</Text>
+                    </Flex>
+                  </Text>
+                  <Flex justifyContent={"center"}>
+                    <Text>{donut.qty} left</Text>
+                  </Flex>
                 </Box>
+
                 <Divider />
                 <Flex justifyContent="center">
-                  <Box>
-                    <Button
-                      onClick={() => {
-                        increaseCartQuantity(donut.id);
-                        addToCart(donut);
-                      }}
-                    >
-                      Add to cart
-                    </Button>
-
-                    <Flex></Flex>
-                  </Box>
+                  <Flex justifyContent="center">
+                    <Box>
+                      <Button
+                        onClick={() => {
+                          increaseCartQuantity(donut.id);
+                          addToCart(donut);
+                        }}
+                        bg={"pink.300"}
+                        rounded={"full"}
+                        transition="transform 0.2s ease-out"
+                        _hover={{ bg: "cyan.100" }}
+                        //_focus={{ boxShadow: "outline" }}
+                        color={"white"}
+                      >
+                        Add to cart
+                      </Button>
+                    </Box>
+                  </Flex>
                 </Flex>
                 {selectedDonut === donut && (
                   <Modal
@@ -190,16 +191,22 @@ function GridCardsTest({ id, name, price }) {
                       w={{ base: "300px", md: "400px" }}
                     >
                       <Flex
-                        justifyContent="center"
                         bg={"white"}
+                        justifyContent="center"
                         p={"10px"}
                         h={"300px"}
                         alignItems={"center"}
+                        backgroundImage={`url(${backgroundImage})`}
+                        backgroundRepeat="no-repeat"
+                        backgroundPosition="center"
+                        backgroundSize={{ base: "full", md: "cover" }}
                       >
                         <Image
                           src={donut.img}
-                          height={"200px"}
-                          width={"200px"}
+                          height={"full"}
+                          width={"full"}
+                          w={{ base: "200px", md: "200px" }}
+                          h={{ base: "200px", md: "200px" }}
                         />
                       </Flex>
 
@@ -218,13 +225,19 @@ function GridCardsTest({ id, name, price }) {
                       </ModalBody>
                       <Flex justifyContent={"center"}>
                         <Button
-                          bg={"white"}
-                          color={"pink.400"}
-                          borderRadius={"full"}
-                          w={"fit-content"}
                           m={"10px"}
+                          onClick={() => {
+                            increaseCartQuantity(donut.id);
+                            addToCart(donut);
+                          }}
+                          bg={"pink.100"}
+                          rounded={"full"}
+                          transition="transform 0.2s ease-out"
+                          _hover={{ bg: "cyan.100" }}
+                          //_focus={{ boxShadow: "outline" }}
+                          color={"pink.700"}
                         >
-                          Add to Basket
+                          Add to cart
                         </Button>
                       </Flex>
                     </ModalContent>
