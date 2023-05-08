@@ -5,7 +5,7 @@ import Navbar from "../component/Navbar";
 import GridCards from "../component/GridCardsTest";
 import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
-//import donutData from "../data/donutData.json";
+
 import Footer from "../component/Footer";
 
 function ShowAll() {

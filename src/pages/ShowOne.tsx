@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Box, Grid, GridItem, Text } from "@chakra-ui/react";
-import donuts from "../data/donutData.json";
 
 function ShowOne() {
   const [donutData, setDonutData] = useState(donuts);

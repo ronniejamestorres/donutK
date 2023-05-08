@@ -42,6 +42,7 @@ const GET_DONUTS = gql`
       date
       thumbsUp
       thumbsDown
+      stripeProductId
       id
     }
   }

@@ -19,14 +19,11 @@ import {
   keyframes,
 } from "@chakra-ui/react";
 
-import donuts from "../data/donutData.json";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { gql, useQuery } from "@apollo/client";
 import { useCart } from "../context/CartContext";
-import { NavLink } from "react-router-dom";
 import { ArrowBackIcon, ArrowForwardIcon, MinusIcon } from "@chakra-ui/icons";
 import backgroundImage from "../images/DK-card-bg-01.svg";
-import { color } from "framer-motion";
 
 const GET_DONUTS = gql`
   query Donuts {
@@ -40,6 +37,7 @@ const GET_DONUTS = gql`
       date
       thumbsUp
       thumbsDown
+      stripeProductId
       id
     }
   }
@@ -49,10 +47,10 @@ function GridCardsTest({ id, name, price }) {
   const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
     useShoppingCart();
   const quantity = getItemQuantity(id);
-  const [donutData, setDonutData] = useState(donuts);
-  const [displayedDonuts, setDisplayedDonuts] = useState(donuts.slice(0, 4));
+  const [donutData, setDonutData] = useState([]);
+  const [displayedDonuts, setDisplayedDonuts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
-  const { data } = useQuery(GET_DONUTS);
+  const { loading, data, error } = useQuery(GET_DONUTS);
   const [selectedDonut, setSelectedDonut] = useState(null);
   const { addToCart } = useCart();
 
@@ -61,7 +59,6 @@ function GridCardsTest({ id, name, price }) {
       setDonutData(data.donuts);
       setDisplayedDonuts(data.donuts.slice(0, 4));
     }
-    console.log(donutData);
   }, [data]);
 
   const handleAddToCart = (donut) => {

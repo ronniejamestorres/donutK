@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -15,11 +15,30 @@ import {
   Divider,
   CloseButton,
 } from "@chakra-ui/react";
-import data from "../data/donutData.json";
+
 import { Search2Icon } from "@chakra-ui/icons";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import backgroundImage from "../images/DK-card-bg-01.svg";
 import { useCart } from "../context/CartContext";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_DONUTS = gql`
+  query Donuts {
+    donuts {
+      name
+      img
+      description
+      price
+      ingredients
+      qty
+      date
+      thumbsUp
+      thumbsDown
+      stripeProductId
+      id
+    }
+  }
+`;
 
 type Donut = {
   _id: string;
@@ -38,10 +57,21 @@ const SearchBar = () => {
   const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
     useShoppingCart();
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerms, setSearchTerms] = useState([]);
   const [searchResults, setSearchResults] = useState<Donut[]>([]);
   const [selectedDonut, setSelectedDonut] = useState(null);
+  const [donutData, setDonutData] = useState([]);
   const [showResults, setShowResults] = useState(true); // Add this state
   const { addToCart } = useCart();
+  const { data, error, loading } = useQuery(GET_DONUTS);
+
+  useEffect(() => {
+    if (data) {
+      setDonutData(data.donuts);
+      setSearchTerms(data.donuts.map((donut) => donut.name));
+    }
+  }, [data]);
+
   const handleAddToCart = (donut) => {
     addToCart(donut);
   };
@@ -52,13 +82,12 @@ const SearchBar = () => {
     setShowResults(false); // Set the state to false
   };
   const handleSearch = () => {
-    const results = data.filter((donut) =>
+    const results = donutData.filter((donut) =>
       donut.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSearchResults(results);
   };
 
-  const searchTerms = data.map((donut) => donut.name);
   const handleDonutClick = (donut) => {
     setSelectedDonut(donut);
   };
