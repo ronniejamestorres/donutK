@@ -47,7 +47,10 @@ const CartPage: React.FC = () => {
       );
       const data = await response.json();
       console.log(data);
-      window.location = data.url;
+      if (data.url) {
+        console.log("data url is ", data.url);
+        window.location = data.url;
+      }
     } catch (err) {
       console.log(err);
     }
