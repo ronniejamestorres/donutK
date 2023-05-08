@@ -24,8 +24,11 @@ import {
 } from "@chakra-ui/icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DkLogo-01.svg";
-export default function WithSubnavigation() {
+import { useShoppingCart } from "../context/ShoppingCartContext";
+import { NavLink } from "react-router-dom";
+export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
+  const { openCart, cartQuantity } = useShoppingCart();
 
   return (
     <Box>
@@ -91,36 +94,34 @@ export default function WithSubnavigation() {
           //border="1px"
           //borderColor={"red.500"}
         >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            href={"/cart"}
-          >
-            <Icon
-              as={MdOutlineShoppingCart}
-              w={8}
-              h={8}
-              color="orange.400"
-              position={"relative"}
-            />
-            <Box
-              bg={"red.500"}
-              justifyContent={"center"}
-              alignItems={"center"}
-              position={"absolute"}
-              top={0}
-              right={0}
-              fontSize={"xs"}
-              fontWeight={"bold"}
-              rounded={"full"}
-              color={"white"}
-              p={"4px"}
-            >
-              3
-            </Box>
-          </Button>
+          <NavLink to="/cartpage">
+            <Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"}>
+              <Icon
+                as={MdOutlineShoppingCart}
+                w={8}
+                h={8}
+                color="orange.400"
+                position={"relative"}
+              />
+
+              <Box
+                bg={"red.500"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                position={"absolute"}
+                top={0}
+                right={0}
+                fontSize={"xs"}
+                fontWeight={"bold"}
+                rounded={"full"}
+                color={"white"}
+                p={"4px"}
+              >
+                {" "}
+                {cartQuantity}
+              </Box>
+            </Button>
+          </NavLink>
         </Stack>
       </Flex>
 
@@ -301,33 +302,11 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "DONUTS",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
+    label: "Login",
+    href: "/GoogleLoginPage",
   },
   {
     label: "GONUTS",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
+    href: "/LandingPage",
   },
 ];

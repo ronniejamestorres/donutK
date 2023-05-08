@@ -25,7 +25,7 @@ function SearchText() {
             In Town
           </Heading>
 
-          <Text color="" fontSize="xl">
+          <Text color="" fontSize="lg">
             Who loves donuts? Or perhaps it would be easier to ask, « Who
             doesn’t love donuts? » So, what are you waiting for, order our fresh
             donuts now!

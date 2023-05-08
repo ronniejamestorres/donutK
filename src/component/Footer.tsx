@@ -70,7 +70,6 @@ export default function SmallWithLogoLeft() {
       color={useColorModeValue("gray.700", "gray.200")}
       w="100%"
       p={"2"}
-      mt={"100px"}
     >
       <Container
         as={Stack}
