@@ -7,7 +7,9 @@ import {
   Text,
   Button,
   Image,
+  Icon
 } from "@chakra-ui/react";
+import { GiDonut } from "react-icons/gi";
 
 import { motion } from "framer-motion";
 import wave from "../images/wave3.svg";
@@ -19,7 +21,7 @@ export default function hero() {
     <Box
       backgroundImage={`url(${wave})`}
       backgroundRepeat="no-repeat"
-      backgroundPosition={{ base: "center", md: "center", xl: "center" }}
+      backgroundPosition={{ base: "center", md: "center",lg:"center", xl: "center" }}
       backgroundSize={{ base: "cover", md: "cover", lg: "cover", xl: "cover" }}
       h={{ base: "90vh", md: "50vh", lg: "95vh", xl: "95vh" }}
       w={{ base: "100vw", md: "100vw", lg: "100vw", xl: "100vw" }}
@@ -28,8 +30,8 @@ export default function hero() {
         <Stack
           align={"center"}
           spacing={{ base: 2, md: 5 }}
-          py={{ base: 4, md: 2, lg: 30, xl: 30 }}
-          direction={{ base: "column", md: "row" }}
+          py={{ base: 4, md: 5, lg: 30, xl: 30 }}
+          direction={{ base: "column", md: "row", lg: "row"}}
         >
           <Stack flex={1} spacing={{ base: 5, md: 5 }}>
             <Heading
@@ -74,20 +76,26 @@ export default function hero() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              <Button
-                rounded={"full"}
-                size={"md"}
-                fontWeight={"normal"}
-                px={3}
-                colorScheme={"pink"}
-                bg={"pink.400"}
-                _hover={{ bg: "pink.300" }}
-              >
-                Show menu
-              </Button>
-              <Button rounded={"full"} size={"md"} fontWeight={"normal"} px={3}>
-                How It Works
-              </Button>
+              <Button fontFamily={'Gloria Hallelujah'}
+            as={"a"}
+            display={{ base: "inline-flex", md: "inline-flex", lg: "inline-flex" }}
+            
+                rounded={'full'}
+                size={'md'}
+                fontWeight={'normal'}
+                px={2}
+                bgColor={'pink.400'}
+                colorScheme={'pink'}
+                textColor={'white'}
+                _hover={{ bg: 'pink.200',text:'white' }}
+                variant={'link'}
+                href={'/Showall'}
+                >
+                
+          
+               <Text mr="2">Go shopping</Text>
+               <Icon as={GiDonut} boxSize="6" />
+          </Button>
             </Stack>
           </Stack>
           <Flex

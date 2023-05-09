@@ -77,7 +77,7 @@ const TestimonialAvatar = ({
     <Flex align={'center'} mt={8} direction={'column'}>
       <Avatar src={src} alt={name} mb={2} />
       <Stack spacing={-1} align={'center'}>
-        <Text fontWeight={200}>{name}</Text>
+        <Text fontWeight={100}>{name}</Text>
         <Text fontSize={'sm'} color={useColorModeValue('gray.600', 'gray.400')}>
           {title}
         </Text>
@@ -89,12 +89,12 @@ const TestimonialAvatar = ({
 export default function WithSpeechBubbles() {
   return (
     <Box bg={useColorModeValue('white', 'gray.700')}>
-  <Container maxW={'5xl'} py={16} as={Stack} spacing={24}>
+  <Container maxW={'4xl'} py={16} as={Stack} spacing={24}>
     <Stack spacing={0} align={'center'}>
     <Heading
   fontFamily={'Gloria Hallelujah'}
   lineHeight={2}
-  fontWeight={100}
+  fontWeight={80}
   >
   <Text
     as={'span'}
@@ -121,7 +121,7 @@ export default function WithSpeechBubbles() {
     </Stack>
     <Stack
       direction={{ base: 'column', md: 'row' }}
-      spacing={{ base: 10, md: 4, lg: 10 }}>
+      spacing={{ base: 10, md: 4,lg: 4,  lg: 10 }}>
           <Testimonial>
             <TestimonialContent>
               <TestimonialText>

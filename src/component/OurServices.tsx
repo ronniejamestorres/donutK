@@ -60,7 +60,7 @@ const Card = ({ heading, description, icon }: CardProps) => {
 
 export default function gridListWith() {
   return (
-    <Box p={4}>
+    <Box p={4} lineHeight={10}>
       <Stack spacing={8} as={Container} maxW={"3xl"} textAlign={"center"}>
         <Heading
           fontSize={{ base: "2xl", sm: "4xl" }}
