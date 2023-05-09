@@ -10,6 +10,7 @@ interface Donut {
   date: string;
   thumbsUp: number;
   thumbsDown: number;
+  stripeProductId: string;
   id: string;
 }
 

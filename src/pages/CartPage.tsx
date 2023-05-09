@@ -27,10 +27,10 @@ const CartPage: React.FC = () => {
 
   const taxes = subtotal * taxRate;
   const totalAmount = subtotal + taxes;
+  console.log("cart is ", cart);
 
   const handleCheckout = async () => {
     try {
-      console.log(cart);
       const line_items = cart;
 
       const response = await fetch(

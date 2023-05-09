@@ -11,7 +11,11 @@ const TestCheckout = () => {
   const [pendingOrders, setPendingOrders] = useState<pendingOrdersType[]>([
     {
       price: "price_1N2xpLIundI4kMC0oOM2FbXl",
-      quantity: 2,
+      quantity: 5,
+    },
+    {
+      price: "price_1N2xlKIundI4kMC0JvMBG8jt",
+      quantity: 18,
     },
   ]);
 
