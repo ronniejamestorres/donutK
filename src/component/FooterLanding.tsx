@@ -16,7 +16,7 @@ import {
   const Logo = (props: any) => {
     return (
       <Box
-        bgColor={"grey.200"}
+        bgColor={"white"}
         borderRadius="50px 50px 50px 50px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       >
@@ -43,7 +43,7 @@ import {
   
   return (
       <chakra.button
-        bg={useColorModeValue("orange.300", "whiteAlpha.100")}
+        bg={useColorModeValue("blackAlpha.100", "whiteAlpha.100")}
         rounded={"full"}
         w={8}
         h={8}
@@ -70,7 +70,7 @@ import {
         bg={useColorModeValue("gray.100", "gray.900")}
         color={useColorModeValue("grey.200", "gray.200")}
         w="100%"
-        mt={"100px"}
+        p={"2"}
         
       >
         <Container

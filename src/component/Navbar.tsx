@@ -37,7 +37,8 @@ export default function Navbar() {
         color={useColorModeValue("gray.600", "white")}
         borderRadius="0 0 100px 100px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        minH={"80px"}
+        minH={"40px"}
+        maxH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}

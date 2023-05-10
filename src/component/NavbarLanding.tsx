@@ -22,20 +22,23 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { GiDonut } from "react-icons/gi";
-import { MdSettings } from "react-icons/md";
+import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DkLogo-01.svg";
-export default function WithSubnavigation() {
+import { useShoppingCart } from "../context/ShoppingCartContext";
+import { NavLink } from "react-router-dom";
+export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
+  const { openCart, cartQuantity } = useShoppingCart();
 
   return (
-    <Box>
+    <Box width={"full"}>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         borderRadius="0 0 100px 100px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-        minH={"80px"}
+        minH={"40px"}
+        maxH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
@@ -46,26 +49,29 @@ export default function WithSubnavigation() {
         position="relative"
         w="100%"
         top={0}
-        pl={"40px"}
-        pr={"40px"}
+        pl={{ base: "40px", md: "100px" }}
+        pr={{ base: "40px", md: "100px" }}
       >
         <Flex
           flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
           display={{ base: "flex", md: "none" }}
         >
           <IconButton
             onClick={onToggle}
             icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
+              isOpen ? (
+                <CloseIcon w={3} h={3} />
+              ) : (
+                <HamburgerIcon w={5} h={5} color="pink.500" />
+              )
             }
             variant={"ghost"}
             aria-label={"Toggle Navigation"}
           />
         </Flex>
         <Flex
-          flex={{ base: 1 }}
-          justify={{ base: "center", md: "start" }}
+          flex={{ base: 2 }}
+          justify={{ base: "start", md: "start" }}
           //border="1px"
           //borderColor={"red.500"}
         >
@@ -76,40 +82,13 @@ export default function WithSubnavigation() {
             alt="DK Logo"
           />
 
-          <Flex display={{ base: "none", md: "flex" }} ml={30}>
+          <Flex display={{ base: "none", md: "flex", lg: "flex"}} m={"0"}>
             <DesktopNav />
           </Flex>
         </Flex>
 
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-          
-        >
         
-          <Button fontFamily={'Gloria Hallelujah'}
-            as={"a"}
-            display={{ base: "none", md: "inline-flex", lg: "inline-flex" }}
-            
-                rounded={'full'}
-                size={'md'}
-                fontWeight={'normal'}
-                px={2}
-                bgColor={'pink.400'}
-                colorScheme={'pink'}
-                textColor={'white'}
-                _hover={{ bg: 'pink.200',text:'white' }}
-                variant={'link'}
-                href={'/Showall'}
-                >
-                
           
-               <Text mr="2">Go shopping</Text>
-               <Icon as={GiDonut} boxSize="6" />
-          </Button>
-        </Stack>
       </Flex>
 
       <Collapse in={isOpen} animateOpacity>
@@ -139,7 +118,7 @@ const DesktopNav = () => {
               <Link
                 p={2}
                 href={navItem.href ?? "#"}
-                fontSize={"md"}
+                fontSize={"lg"}
                 fontWeight={"bold"}
                 color={linkColor}
                 _hover={{
@@ -267,7 +246,6 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
           borderStyle={"solid"}
           borderColor={useColorModeValue("gray.200", "gray.700")}
           align={"center"}
-          
         >
           {children &&
             children.map((child) => (
@@ -290,33 +268,8 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "DONUTS",
-    children: [
-      {
-        label: "Explore Design Work",
-        subLabel: "Trending Design to inspire you",
-        href: "#",
-      },
-      {
-        label: "New & Noteworthy",
-        subLabel: "Up-and-coming Designers",
-        href: "#",
-      },
-    ],
+    label: "Login",
+    href: "/GoogleLoginPage",
   },
-  {
-    label: "GONUTS",
-    children: [
-      {
-        label: "Job Board",
-        subLabel: "Find your dream design job",
-        href: "#",
-      },
-      {
-        label: "Freelance Projects",
-        subLabel: "An exclusive list for contract work",
-        href: "#",
-      },
-    ],
-  },
+  
 ];
