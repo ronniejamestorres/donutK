@@ -94,6 +94,9 @@ function GridCardsTest({ id, name, price }) {
           size="lg"
           icon={<ArrowBackIcon />}
           onClick={handlePreviousDonuts}
+          rounded={"full"}
+          transition="transform 0.2s ease-out"
+          _hover={{ transform: "scale(1.5)" }}
         />
 
         <IconButton
@@ -105,12 +108,15 @@ function GridCardsTest({ id, name, price }) {
           icon={<ArrowForwardIcon />}
           onClick={handleNextDonuts}
           w={"fit-content"}
+          rounded={"full"}
+          transition="transform 0.2s ease-out"
+          _hover={{ transform: "scale(1.5)" }}
         />
       </Flex>
 
       <Flex flexDirection="row" justifyContent="center" mb={"100"}>
         <Grid
-          templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
+          templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}
           gap={4}
           m={2}
         >
@@ -121,7 +127,7 @@ function GridCardsTest({ id, name, price }) {
                 borderWidth="1px"
                 p={"10px"}
                 h={{ base: "300px", md: "300px" }}
-                w={{ base: "auto", md: "300px" }}
+                w={{ base: "auto", md: "auto" }}
                 borderRadius="3xl"
                 boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
                 bg={"white"}

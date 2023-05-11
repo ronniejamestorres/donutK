@@ -82,7 +82,7 @@ export default function Navbar() {
             alt="DK Logo"
           />
 
-          <Flex display={{ base: "none", md: "flex" }} ml={64}>
+          <Flex display={{ base: "none", md: "flex" }}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -305,9 +305,5 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Login",
     href: "/GoogleLoginPage",
-  },
-  {
-    label: "GONUTS",
-    href: "/LandingPage",
   },
 ];

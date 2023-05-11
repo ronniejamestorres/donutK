@@ -6,7 +6,7 @@ import GridCards from "../component/GridCardsTest";
 import backgroundImage from "../images/bg-grey-01.svg";
 import SearchSection from "../component/SearchSection";
 
-import Footer from "../component/Footer";
+import FooterLanding from "../component/FooterLanding";
 
 function ShowAll() {
   const location = useLocation();
@@ -34,8 +34,7 @@ function ShowAll() {
       <Navbar />
       <SearchSection />
       <GridCards onAddToBasket={undefined} />
-
-      <Footer />
+      <FooterLanding />
     </Box>
   );
 }

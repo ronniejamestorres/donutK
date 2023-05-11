@@ -5,7 +5,7 @@ import SearchText from "./SearchText";
 function SearchSection() {
   const columns = useBreakpointValue({ base: 1, md: 2 });
   return (
-    <SimpleGrid columns={columns} spacing="10px" pt={"20"}>
+    <SimpleGrid columns={columns} spacing="10px" pt={"10"}>
       <SearchText />
       <SearchBar />
     </SimpleGrid>

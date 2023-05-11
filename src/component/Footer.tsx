@@ -66,6 +66,7 @@ const SocialButton = ({
 export default function SmallWithLogoLeft() {
   return (
     <Box
+      borderRadius="100px 100px 0 0"
       bg={useColorModeValue("orange.400", "gray.900")}
       color={useColorModeValue("gray.700", "gray.200")}
       w="100%"

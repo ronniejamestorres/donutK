@@ -12,7 +12,8 @@ import { Image } from "@chakra-ui/react";
 import Navbar from "../component/Navbar";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import Footer from "../component/Footer";
-import backgroundImage from "../images/DK-card-bg-01.svg";
+import FooterLanding from "../component/FooterLanding";
+import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 
 const CartPage: React.FC = () => {
   const { addToCart } = useCart();
@@ -31,7 +32,11 @@ const CartPage: React.FC = () => {
 
   const handleCheckout = async () => {
     try {
-      const line_items = cart;
+      const aggregatedCart = aggregateCartItems(cart); // get the aggregated cart items
+      const line_items = aggregatedCart.map((item) => ({
+        price: item.stripeProductId,
+        quantity: item.quantity,
+      }));
 
       const response = await fetch(
         "https://donutk-backend-pifrn.ondigitalocean.app/create-checkout-session",
@@ -46,34 +51,32 @@ const CartPage: React.FC = () => {
         }
       );
       const data = await response.json();
-      console.log(data);
       if (data.url) {
-        console.log("data url is ", data.url);
         window.location = data.url;
       }
     } catch (err) {
       console.log(err);
     }
   };
+
   const handleAddToCart = (donut) => {
     addToCart(donut);
   };
   const aggregateCartItems = (cartItems) => {
     const aggregatedItems = {};
     cartItems.forEach((item) => {
-      if (aggregatedItems[item.name]) {
-        aggregatedItems[item.name].quantity += 1;
+      const key = item.stripeProductId; // use the stripeProductId as the key
+      if (aggregatedItems[key]) {
+        aggregatedItems[key].quantity += 1; // increment the quantity if the item already exists
       } else {
-        aggregatedItems[item.name] = { ...item, quantity: 1 };
+        aggregatedItems[key] = { ...item, quantity: 1 }; // create a new item with quantity 1
       }
     });
-    return Object.values(aggregatedItems);
+    return Object.values(aggregatedItems); // convert the object to an array
   };
 
   const aggregatedCart = aggregateCartItems(cart);
-  const handleDecreaseQuantity = (donutId) => {
-    decreaseCartQuantity(donutId);
-  };
+
   return (
     <>
       <Navbar />
@@ -94,9 +97,6 @@ const CartPage: React.FC = () => {
             borderRadius={4}
             rounded={"xl"}
             overflow={"scroll"}
-            backgroundImage={`url(${backgroundImage})`}
-            backgroundPosition="screen"
-            backgroundSize={{ base: "full", md: "cover" }}
           >
             <Box maxW={{ base: "xl", md: "full" }}>
               <Text
@@ -134,25 +134,33 @@ const CartPage: React.FC = () => {
                           increaseCartQuantity(donut.id);
                           addToCart(donut);
                         }}
-                        bg={"pink.400"}
+                        borderColor={"pink.300"}
+                        rounded={"full"}
+                        variant="outline"
                         transition="transform 0.2s ease-out"
                         _hover={{ bg: "cyan.100" }}
                         //_focus={{ boxShadow: "outline" }}
                         color={"white"}
+                        bg={"pink.300"}
                       >
-                        +
+                        {<AiFillPlusCircle />}
                       </Button>
                       {/* Add the decrease button */}
                       <Button
-                        onClick={() => handleDecreaseQuantity(donut.id)}
-                        bg={"pink.200"}
+                        onClick={() => {
+                          decreaseCartQuantity(donut.id);
+                        }}
+                        variant="outline"
+                        rounded={"full"}
+                        bg="orange.200"
+                        color={"white"}
+                        borderColor={"orange.200"}
                         ml={2}
                         transition="transform 0.2s ease-out"
                         _hover={{ bg: "cyan.100" }}
                         //_focus={{ boxShadow: "outline" }}
-                        color={"white"}
                       >
-                        -
+                        {<AiFillMinusCircle />}
                       </Button>
                     </Box>
                   </Flex>
@@ -170,29 +178,28 @@ const CartPage: React.FC = () => {
             rounded={"xl"}
           >
             <Flex
-              alignItems="center" // Center items vertically
-              flexDirection="column" // Set the direction of the items to column
-              borderRadius={4}
-              rounded={"xl"}
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              h="100%"
             >
-              <Text fontSize="3xl" fontFamily={"Gloria Hallelujah"} m={"4px"}>
+              <Text fontSize="3xl" m={4} textAlign="center">
                 Order description
               </Text>
-              <Text fontWeight="bold" fontSize="xl">
-                Subtotal: ${subtotal.toFixed(2)}
-              </Text>
-              <Text fontWeight="bold" fontSize="xl">
-                Taxes: ${taxes.toFixed(2)}
-              </Text>
-              <Text fontWeight="bold" fontSize="xl">
-                Total Amount: ${totalAmount.toFixed(2)}
-              </Text>
+
+              <Box fontWeight="bold" fontSize="xl" textAlign="center">
+                <Text>Total Amount:</Text>
+                <Flex justifyContent="center" fontSize="4xl">
+                  <Box>${totalAmount.toFixed(2)}</Box>
+                </Flex>
+              </Box>
+
               <Box mt={4}>
                 <Button
                   bg="pink.300"
                   size="lg"
                   onClick={handleCheckout}
-                  fontFamily={"Gloria Hallelujah"}
+                  fontFamily="Gloria Hallelujah"
                 >
                   Checkout
                 </Button>
@@ -201,7 +208,7 @@ const CartPage: React.FC = () => {
           </GridItem>
         </Grid>
       </Container>
-      <Footer />
+      <FooterLanding />
     </>
   );
 };
