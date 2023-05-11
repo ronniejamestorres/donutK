@@ -73,13 +73,13 @@ export default function GoogleLoginPage() {
     justifyContent="center"
     minHeight="100vh"
     minWidth="100vw"
-    bg={"pink.200"}
+    bg={"pink.100"}
     bgImage={DkLogo}
     bgRepeat="no-repeat"
     bgPosition="center"
   >
     <Box
-      bg={"pink.100"}
+      bg={"gray.100"}
       h={  "300px" }
       w={ "300px" }
       display="flex"
