@@ -188,63 +188,83 @@ function GridCardsTest({ id, name, price }) {
           _hover={{ transform: "scale(1.5)" }}
         />
       </Flex>
+      <Box border="1px" overflow={"hidden"}>
+        <Slider ref={sliderRef} {...settings}>
+          {donutData.map((donut) => (
+            <Box>
+              <Box
+                key={donut.id}
+                m={4}
+                minW={{ base: "calc(50% - 16px)", md: "calc(25% - 16px)" }} // Add a minimum width
+                border={"1px"}
+              >
+                <Flex justifyContent={"center"}>
+                  <Image
+                    src={donut.img}
+                    alt={donut.name}
+                    onClick={() => handleDonutClick(donut)}
+                    cursor="pointer"
+                    h={"200px"}
+                  />
+                </Flex>
 
-      <Slider ref={sliderRef} {...settings}>
-        {donutData.map((donut) => (
-          <Box key={donut.id} m={4} width="100%" overflowX={"hidden"}>
-            <Image src={donut.img} alt={donut.name} />
+                <Text>{donut.name}</Text>
 
-            <Text>{donut.name}</Text>
+                <Text>${donut.price.toFixed(2)}</Text>
 
-            <Text>${donut.price.toFixed(2)}</Text>
+                <Text>{donut.qty} left</Text>
 
-            <Text>{donut.qty} left</Text>
+                <Divider />
 
-            <Divider />
+                <Flex justifyContent="center" flexDirection={"column"}>
+                  <Button
+                    onClick={() => {
+                      increaseCartQuantity(donut.id);
+                      addToCart(donut);
+                      showToast(donut);
+                      setAddedDonuts((prev) => new Set(prev.add(donut.id)));
+                    }}
+                  >
+                    Add to cart
+                  </Button>
 
-            <Button
-              onClick={() => {
-                increaseCartQuantity(donut.id);
-                addToCart(donut);
-                showToast(donut);
-                setAddedDonuts((prev) => new Set(prev.add(donut.id)));
-              }}
-            >
-              Add to cart
-            </Button>
+                  <Flex justifyContent="center" flexDirection={"row"}>
+                    {/* Decrease button */}
+                    <Button
+                      isDisabled={getCartItemQuantity(donut.id) === 0}
+                      onClick={() => {
+                        decreaseNumberQuantity(donut.id);
+                        decreaseCartQuantity(donut.id);
+                        showDecreasedToast(donut);
+                      }}
+                    >
+                      Decrease
+                    </Button>
 
-            {/* Decrease button */}
-            <Button
-              isDisabled={getCartItemQuantity(donut.id) === 0}
-              onClick={() => {
-                decreaseNumberQuantity(donut.id);
-                decreaseCartQuantity(donut.id);
-                showDecreasedToast(donut);
-              }}
-            >
-              Decrease
-            </Button>
+                    {/* Remove button */}
+                    <Button
+                      isDisabled={getCartItemQuantity(donut.id) === 0}
+                      onClick={() => {
+                        removeFromCart(donut.id);
+                        removeNumberCart(donut.id);
+                        showRemovedToast(donut);
 
-            {/* Remove button */}
-            <Button
-              isDisabled={getCartItemQuantity(donut.id) === 0}
-              onClick={() => {
-                removeFromCart(donut.id);
-                removeNumberCart(donut.id);
-                showRemovedToast(donut);
-
-                setAddedDonuts((prev) => {
-                  const updatedSet = new Set(prev);
-                  updatedSet.delete(donut.id);
-                  return updatedSet;
-                });
-              }}
-            >
-              Remove
-            </Button>
-          </Box>
-        ))}
-      </Slider>
+                        setAddedDonuts((prev) => {
+                          const updatedSet = new Set(prev);
+                          updatedSet.delete(donut.id);
+                          return updatedSet;
+                        });
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </Flex>
+                </Flex>
+              </Box>
+            </Box>
+          ))}
+        </Slider>
+      </Box>
     </>
   );
 }
