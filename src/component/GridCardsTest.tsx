@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext, useRef } from "react";
 import {
   Flex,
   Grid,
@@ -15,6 +15,9 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import { gql, useQuery } from "@apollo/client";
 import { useCart } from "../context/CartContext";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const GET_DONUTS = gql`
   query Donuts {
@@ -38,7 +41,7 @@ function GridCardsTest({ id, name, price }) {
   const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
     useShoppingCart();
   const [addedDonuts, setAddedDonuts] = useState(new Set());
-
+  const sliderRef = useRef(null);
   const [donutData, setDonutData] = useState([]);
   const [displayedDonuts, setDisplayedDonuts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
@@ -57,18 +60,6 @@ function GridCardsTest({ id, name, price }) {
       setDisplayedDonuts(data.donuts.slice(0, 4));
     }
   }, [data]);
-
-  const handleNextDonuts = () => {
-    const newIndex = (startIndex + 4) % donutData.length;
-    setStartIndex(newIndex);
-    setDisplayedDonuts(donutData.slice(newIndex, newIndex + 4));
-  };
-
-  const handlePreviousDonuts = () => {
-    const newIndex = (startIndex - 4 + donutData.length) % donutData.length;
-    setStartIndex(newIndex);
-    setDisplayedDonuts(donutData.slice(newIndex, newIndex + 4));
-  };
 
   const toast = useToast();
 
@@ -142,25 +133,65 @@ function GridCardsTest({ id, name, price }) {
     });
   };
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          rows: 2,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <Flex justify={"center"} gap={"4"} m={"4"}>
         <IconButton
+          alignSelf="center"
+          bg={"orange.300"}
+          color={"white"}
           aria-label="Previous Donuts"
+          size="lg"
           icon={<ArrowBackIcon />}
-          onClick={handlePreviousDonuts}
+          onClick={() => sliderRef.current.slickPrev()}
+          rounded={"full"}
+          transition="transform 0.2s ease-out"
+          _hover={{ transform: "scale(1.5)" }}
         />
 
         <IconButton
+          alignSelf="center"
+          bg={"orange.300"}
+          color={"white"}
           aria-label="Next Donuts"
+          size="lg"
           icon={<ArrowForwardIcon />}
-          onClick={handleNextDonuts}
+          onClick={() => sliderRef.current.slickNext()}
+          w={"fit-content"}
+          rounded={"full"}
+          transition="transform 0.2s ease-out"
+          _hover={{ transform: "scale(1.5)" }}
         />
       </Flex>
 
-      <Grid templateColumns={{ base: "repeat(2, 1fr)", lg: "repeat(4, 1fr)" }}>
-        {displayedDonuts.map((donut) => (
-          <GridItem key={donut.id}>
+      <Slider ref={sliderRef} {...settings}>
+        {donutData.map((donut) => (
+          <Box key={donut.id} m={4} width="100%" overflowX={"hidden"}>
             <Image src={donut.img} alt={donut.name} />
 
             <Text>{donut.name}</Text>
@@ -196,14 +227,12 @@ function GridCardsTest({ id, name, price }) {
 
             {/* Remove button */}
             <Button
-              // Disable the button if the cart is empty or the item quantity is 0
               isDisabled={getCartItemQuantity(donut.id) === 0}
               onClick={() => {
                 removeFromCart(donut.id);
                 removeNumberCart(donut.id);
                 showRemovedToast(donut);
 
-                // Remove the donut from the addedDonuts state
                 setAddedDonuts((prev) => {
                   const updatedSet = new Set(prev);
                   updatedSet.delete(donut.id);
@@ -213,9 +242,9 @@ function GridCardsTest({ id, name, price }) {
             >
               Remove
             </Button>
-          </GridItem>
+          </Box>
         ))}
-      </Grid>
+      </Slider>
     </>
   );
 }
