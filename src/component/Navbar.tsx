@@ -106,7 +106,7 @@ export default function Navbar() {
               />
 
               <Box
-                bg={"red.500"}
+                bg={"pink.300"}
                 justifyContent={"center"}
                 alignItems={"center"}
                 position={"absolute"}
