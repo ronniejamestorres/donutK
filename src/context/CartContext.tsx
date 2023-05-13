@@ -63,13 +63,25 @@ export const CartProvider: React.FC = ({ children }) => {
     }
   };
 
+  // Add this function to get the quantity of a specific item in the cart
+  const getCartItemQuantity = (itemId) => {
+    const item = cart.find((cartItem) => cartItem.id === itemId);
+    return item ? item.quantity : 0;
+  };
+
   useEffect(() => {
     console.log("Cart updated:", cart);
   }, [cart]);
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, decreaseCartQuantity }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        decreaseCartQuantity,
+        getCartItemQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>

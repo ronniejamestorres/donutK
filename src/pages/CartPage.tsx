@@ -9,18 +9,21 @@ import {
 } from "@chakra-ui/react";
 import { useCart } from "../context/CartContext";
 import { Image } from "@chakra-ui/react";
-import Navbar from "../component/Navbar";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import Footer from "../component/Footer";
-import FooterLanding from "../component/FooterLanding";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
+import Navbar from "../component/Navbar";
+import GridCardsTest from "../component/GridCardsTest";
+import FooterLanding from "../component/FooterLanding";
+import { useEffect } from "react";
 
 const CartPage: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const { addToCart } = useCart();
   const { cart } = useCart();
   const { increaseCartQuantity, decreaseCartQuantity } = useShoppingCart();
   const taxRate = 0.1; // You can adjust the tax rate accordingly
-
   const subtotal = cart.reduce(
     (accumulator, currentItem) => accumulator + currentItem.price,
     0
@@ -208,6 +211,8 @@ const CartPage: React.FC = () => {
           </GridItem>
         </Grid>
       </Container>
+
+      <GridCardsTest />
       <FooterLanding />
     </>
   );

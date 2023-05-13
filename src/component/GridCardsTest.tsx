@@ -37,13 +37,19 @@ const GET_DONUTS = gql`
 function GridCardsTest({ id, name, price }) {
   const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
     useShoppingCart();
+  const [addedDonuts, setAddedDonuts] = useState(new Set());
 
   const [donutData, setDonutData] = useState([]);
   const [displayedDonuts, setDisplayedDonuts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const { data } = useQuery(GET_DONUTS);
 
-  const { addToCart, removeFromCart, decreaseCartQuantity } = useCart();
+  const {
+    addToCart,
+    removeFromCart,
+    decreaseCartQuantity,
+    getCartItemQuantity,
+  } = useCart();
 
   useEffect(() => {
     if (data) {
@@ -78,19 +84,21 @@ function GridCardsTest({ id, name, price }) {
               borderRadius="full"
               mr={3}
             />
-            <Text>Added {donut.name} to bag</Text>
+            <Text color={"pink.700"} fontWeight={"bold"}>
+              Added {donut.name} to bag
+            </Text>
           </Flex>
         </Box>
       ),
       duration: 3000,
       isClosable: true,
-      position: "bottom-left",
+      position: "top",
     });
   };
   const showDecreasedToast = (donut) => {
     toast({
       render: () => (
-        <Box color="white" p={3} bg="pink.300" borderRadius="md">
+        <Box color="white" p={3} bg="orange.300" borderRadius="md">
           <Flex alignItems="center">
             <Image
               src={donut.img}
@@ -99,19 +107,21 @@ function GridCardsTest({ id, name, price }) {
               borderRadius="full"
               mr={3}
             />
-            <Text>Removed 1 {donut.name} from bag</Text>
+            <Text color={"orange.700"} fontWeight={"bold"}>
+              Removed 1 {donut.name} from bag
+            </Text>
           </Flex>
         </Box>
       ),
       duration: 3000,
       isClosable: true,
-      position: "bottom-left",
+      position: "top",
     });
   };
   const showRemovedToast = (donut) => {
     toast({
       render: () => (
-        <Box color="white" p={3} bg="pink.300" borderRadius="md">
+        <Box color="white" p={3} bg="cyan.300" borderRadius="md">
           <Flex alignItems="center">
             <Image
               src={donut.img}
@@ -120,13 +130,15 @@ function GridCardsTest({ id, name, price }) {
               borderRadius="full"
               mr={3}
             />
-            <Text>Removed {donut.name} from bag</Text>
+            <Text color={"cyan.700"} fontWeight={"bold"}>
+              Removed {donut.name} from bag
+            </Text>
           </Flex>
         </Box>
       ),
       duration: 3000,
       isClosable: true,
-      position: "bottom-left",
+      position: "top",
     });
   };
 
@@ -163,13 +175,16 @@ function GridCardsTest({ id, name, price }) {
               onClick={() => {
                 increaseCartQuantity(donut.id);
                 addToCart(donut);
-                showToast(donut); // Add this line
+                showToast(donut);
+                setAddedDonuts((prev) => new Set(prev.add(donut.id)));
               }}
             >
               Add to cart
             </Button>
 
+            {/* Decrease button */}
             <Button
+              isDisabled={getCartItemQuantity(donut.id) === 0}
               onClick={() => {
                 decreaseNumberQuantity(donut.id);
                 decreaseCartQuantity(donut.id);
@@ -179,11 +194,21 @@ function GridCardsTest({ id, name, price }) {
               Decrease
             </Button>
 
+            {/* Remove button */}
             <Button
+              // Disable the button if the cart is empty or the item quantity is 0
+              isDisabled={getCartItemQuantity(donut.id) === 0}
               onClick={() => {
                 removeFromCart(donut.id);
                 removeNumberCart(donut.id);
                 showRemovedToast(donut);
+
+                // Remove the donut from the addedDonuts state
+                setAddedDonuts((prev) => {
+                  const updatedSet = new Set(prev);
+                  updatedSet.delete(donut.id);
+                  return updatedSet;
+                });
               }}
             >
               Remove
