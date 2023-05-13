@@ -87,6 +87,48 @@ function GridCardsTest({ id, name, price }) {
       position: "bottom-left",
     });
   };
+  const showDecreasedToast = (donut) => {
+    toast({
+      render: () => (
+        <Box color="white" p={3} bg="pink.300" borderRadius="md">
+          <Flex alignItems="center">
+            <Image
+              src={donut.img}
+              alt={donut.name}
+              boxSize="50px"
+              borderRadius="full"
+              mr={3}
+            />
+            <Text>Removed 1 {donut.name} from bag</Text>
+          </Flex>
+        </Box>
+      ),
+      duration: 3000,
+      isClosable: true,
+      position: "bottom-left",
+    });
+  };
+  const showRemovedToast = (donut) => {
+    toast({
+      render: () => (
+        <Box color="white" p={3} bg="pink.300" borderRadius="md">
+          <Flex alignItems="center">
+            <Image
+              src={donut.img}
+              alt={donut.name}
+              boxSize="50px"
+              borderRadius="full"
+              mr={3}
+            />
+            <Text>Removed {donut.name} from bag</Text>
+          </Flex>
+        </Box>
+      ),
+      duration: 3000,
+      isClosable: true,
+      position: "bottom-left",
+    });
+  };
 
   return (
     <>
@@ -126,18 +168,22 @@ function GridCardsTest({ id, name, price }) {
             >
               Add to cart
             </Button>
+
             <Button
               onClick={() => {
                 decreaseNumberQuantity(donut.id);
                 decreaseCartQuantity(donut.id);
+                showDecreasedToast(donut);
               }}
             >
               Decrease
             </Button>
+
             <Button
               onClick={() => {
                 removeFromCart(donut.id);
                 removeNumberCart(donut.id);
+                showRemovedToast(donut);
               }}
             >
               Remove
