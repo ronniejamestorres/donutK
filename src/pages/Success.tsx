@@ -1,7 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { BsBagCheckFill } from "react-icons/bs";
-import backgroundImage from "../images/bg-grey-01.svg";
+import backgroundImage from "../images/services.png";
 
 import "../App.css";
 
@@ -19,7 +19,8 @@ function Success() {
       
       backgroundSize={{ base: "cover", md: "cover" }}
       bgRepeat="no-repeat"
-      bgPosition="center"
+      bgPosition="initial"
+      
     >
       <Box
         maxW="full"

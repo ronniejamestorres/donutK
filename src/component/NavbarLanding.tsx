@@ -23,6 +23,8 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { useState, useEffect } from "react";
+
 
 
 
@@ -39,7 +41,17 @@ import DkLogo from "../images/DkLogo-01.svg";
 
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
-  const isLoggedIn = localStorage.getItem("loginUser") !== null;
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("loginUser");
+    if (loggedInUser) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, []);
 
   
 
@@ -51,7 +63,7 @@ export default function Navbar() {
         borderRadius="0 0 100px 100px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         minH={"40px"}
-        maxH={"60px"}
+        maxH={"90px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
@@ -106,27 +118,29 @@ export default function Navbar() {
   direction={'row'}
   spacing={6}
 >
-{isLoggedIn ? <LogoutButton /> : (
-<NavLink to="/GoogleLoginPage">
-    <Button
-      variant={'link'}
-      size={'lg'}
-      className={'font-weight-400'}
-      colorScheme={'pink'}
-      color={'orange.300'}
-      fontWeight={'bold'}
-      _hover={{
-        textDecoration: 'none',
-        color: 'orange.400',
-      }}
-    >
-      Login
-      <RiLoginCircleFill className={'me-2'} color="pink"/>
-    </Button>
-  </NavLink>
-
-)}
+  {isLoggedIn ? (
+    <LogoutButton />
+  ) : (
+    <NavLink to="/GoogleLoginPage">
+      <Button
+        variant={'link'}
+        size={'lg'}
+        className={'font-weight-400'}
+        colorScheme={'pink'}
+        color={'orange.300'}
+        fontWeight={'bold'}
+        _hover={{
+          textDecoration: 'none',
+          color: 'orange.400',
+        }}
+      >
+        Login
+        <RiLoginCircleFill className={'me-2'} color="pink"/>
+      </Button>
+    </NavLink>
+  )}
 </Stack>
+
       </Flex>
       
 

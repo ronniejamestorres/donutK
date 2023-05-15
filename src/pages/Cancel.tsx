@@ -1,7 +1,7 @@
 import { Box, Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { MdCancel} from "react-icons/md";
-import backgroundImage from "../images/bg-grey-01.svg";
+import backgroundImage from "../images/services.png";
 import "../App.css";
 
 function Cancel() {
@@ -20,7 +20,8 @@ function Cancel() {
       
       backgroundSize={{ base: "cover", md: "cover" }}
       bgRepeat="no-repeat"
-      bgPosition="center"
+      bgPosition="initial"
+
     >
     <Box 
      maxW="full"

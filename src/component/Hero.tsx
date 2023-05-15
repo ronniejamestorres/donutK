@@ -12,37 +12,37 @@ import {
 import { GiDonut } from "react-icons/gi";
 
 import { motion } from "framer-motion";
-import wave from "../images/wave3.svg";
+import waves from "../images/waveshero.png";
 import donutdetour from "../images/donutdetour.svg";
 import "../App.css";
 
 export default function hero() {
   return (
     <Box
-      backgroundImage={`url(${wave})`}
+      backgroundImage={`url(${waves})`}
       backgroundRepeat="no-repeat"
       backgroundPosition={{ base: "center", md: "center",lg:"center", xl: "center" }}
       backgroundSize={{ base: "cover", md: "cover", lg: "cover", xl: "cover" }}
-      h={{ base: "80vh", md: "50vh", lg: "90vh", xl: "90vh" }}
+      h={{ base: "100vh", md: "50vh", lg: "80vh", xl: "90vh" }}
       w={{ base: "100vw", md: "100vw", lg: "100vw", xl: "100vw" }}
     >
-      <Container maxW={"6xl"}>
+      <Container maxW={"6xl"}  px={{ base: 6, md: 3 ,lg:5}} py={{base:12,md:15,lg:18}}>
         <Stack
           align={"center"}
-          spacing={{ base: 2, md: 5 }}
-          py={{ base: 4, md: 5, lg: 30, xl: 30 }}
-          direction={{ base: "column", md: "row", lg: "row"}}
+          spacing={{ base: 2, md: 5,  }}
+          py={{ base: 4, md: 0, xl: 25 }}
+          direction={{ base: "column", md: "row", lg: "row", xl:"row"}}
         >
-          <Stack flex={1} spacing={{ base: 5, md: 5 }}>
+          <Stack flex={1} spacing={{ base: 5, md: 5,lg:2 }}>
             <Heading
               fontFamily={"Gloria Hallelujah"}
-              lineHeight={1.1}
+              lineHeight={1.3}
               fontWeight={600}
               fontSize={{
                 base: "3xl",
-                sm: "4xl",
+                sm: "3xl",
                 md: "4xl",
-                lg: "6xl",
+                lg: "5xl",
                 xl: "6xl",
               }}
             >
@@ -81,8 +81,8 @@ export default function hero() {
             display={{ base: "inline-flex", md: "inline-flex", lg: "inline-flex" }}
             
                 rounded={'full'}
-                size={'md'}
-                fontWeight={'normal'}
+                size={{base:"md",md:"md",lg:"lg",xl:"lg"}}
+                fontWeight={'bold'}
                 px={2}
                 bgColor={'pink.400'}
                 colorScheme={'pink'}
@@ -107,7 +107,7 @@ export default function hero() {
           >
             <Box
               position={"relative"}
-              height={"400px"}
+              height={"600px"}
               width={"full"}
               overflow={"hidden"}
             >
@@ -121,7 +121,7 @@ export default function hero() {
                   alt={"Hero Image"}
                   align={"center"}
                   w={"100%"}
-                  h={{ base: "250px", md: "300px",lg: "350px", xl: "400px" }}
+                  h={{ base: "280px", md: "320px",lg: "350px", xl: "500px" }}
                   src={donutdetour}
                 />
               </motion.div>

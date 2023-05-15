@@ -3,9 +3,10 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, useToast } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 import { gql } from '@apollo/client';
-import DkLogo from "../images/DkLogo-01.svg";
+import DkLogo from "../images/services.png";
 
 
 export default function GoogleLoginPage() {
@@ -48,23 +49,26 @@ export default function GoogleLoginPage() {
       
       localStorage.setItem('loginUser', data.loginWithGoogle);
       toast({ // Modification ici pour utiliser la fonction toast
-        title: "Hello, " + data.loginWithGoogle.user.firstName, // Modification ici pour afficher le prénom
+        render: () => (
+        <Box color="white" p={3} bg="pink.300" borderRadius="md">
+        <Flex alignItems="center">
+        <Text color={"pink.700"} fontWeight={"bold"}>
+        {"Hello, " + data.loginWithGoogle.user.firstName}
+        </Text>
+        </Flex>
+        </Box>
+        ),
         status: "success",
         duration: 5000,
         isClosable: true,
-        colorScheme: "pink",
+        position: "top",
+        });
         
-
-        
-      });
-      
-      navigate("/showall");
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+        navigate("/showall");
+        console.log(data);
+        } catch (error) {
+        console.log(error);
+        }};
  
 
  
@@ -79,7 +83,8 @@ export default function GoogleLoginPage() {
     bg={"pink.100"}
     bgImage={DkLogo}
     bgRepeat="no-repeat"
-    bgPosition="center"
+    bgPosition="initial"
+    backgroundSize={{ base: "cover",md:"cover" }}
   >
     <Box
       bg={"gray.100"}
@@ -103,6 +108,8 @@ export default function GoogleLoginPage() {
               onClick={onClick}
               leftIcon={<FcGoogle />}
               colorScheme="red"
+              
+              
             >
               Sign in with Google 🚀{' '}
             </Button>

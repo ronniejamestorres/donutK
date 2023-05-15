@@ -15,7 +15,7 @@ import { GiDonut } from "react-icons/gi";
 
 import { FaTruck } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import backgroundImage from "../images/bg-grey-01.svg";
+import backgroundImage from "../images/services.png";
 
 
 
@@ -28,13 +28,14 @@ interface CardProps {
 const Card = ({ heading, description, icon }: CardProps) => {
   return (
     <Box
-      maxW={{ base: "full", md: "275px" }}
+      maxW={{ base: "full", md: "275px"}}
       w={"full"}
       borderWidth="1px"
-      borderLeftColor={"pink.300"}
+      
       bgColor={'pink.200'}
-      borderBottomColor={"orange.300"}
-      borderRadius="xl"
+      rounded={"xl"}
+      
+      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       overflow="hidden"
       mb={5}
       p={5}
@@ -64,11 +65,11 @@ const Card = ({ heading, description, icon }: CardProps) => {
 
 export default function gridListWith() {
   return (
-    <Box p={4} lineHeight={10} backgroundImage={`url(${backgroundImage})`} bgRepeat={'no-repeat'} bgSize={'full'}
+    <Box p={8} lineHeight={{base:"5",md:"8",lg:"8",xl:"10"}} backgroundImage={`url(${backgroundImage})`} bgRepeat={'no-repeat'} bgSize={'cover'}
     >
       <Stack spacing={8} as={Container} maxW={"3xl"} textAlign={"center"}>
         <Heading
-          fontSize={{ base: "2xl", sm: "4xl" }}
+          fontSize={{ base: "2xl", sm: "4xl",md:"4xl",lg:"5xl",xl:"5xl"}}
           fontWeight={"bold"}
           fontFamily={"Gloria Hallelujah"}
         >
@@ -88,7 +89,7 @@ export default function gridListWith() {
       <Container maxW={"6xl"} mt={12}>
         <Flex
           flexWrap="wrap"
-          gridGap={8}
+          gridGap={3}
           justify="center"
           fontFamily={"Gloria Hallelujah"}
         >

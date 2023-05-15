@@ -75,12 +75,14 @@ export default function Navbar() {
           //border="1px"
           //borderColor={"red.500"}
         >
+          <NavLink to="/">
           <Image
             boxSize="80px"
             objectFit="contain"
             src={DkLogo}
             alt="DK Logo"
           />
+          </NavLink>
 
           <Flex display={{ base: "none", md: "flex" }}>
             <DesktopNav />

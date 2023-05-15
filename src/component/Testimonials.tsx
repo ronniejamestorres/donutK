@@ -19,9 +19,11 @@ const TestimonialContent = ({ children }: { children: ReactNode }) => {
   return (
     <Stack
       bg={useColorModeValue('cyan.100', 'gray.800')}
-      boxShadow={'lg'}
+      rounded={"xl"}
+      
+      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
       p={8}
-      rounded={'xl'}
+      
       align={'center'}
       pos={'relative'}
       _after={{
@@ -94,7 +96,7 @@ export default function WithSpeechBubbles() {
     <Heading
   fontFamily={'Gloria Hallelujah'}
   lineHeight={2}
-  fontWeight={80}
+  fontSize={{ base: "2xl", sm: "4xl",md:"4xl",lg:"5xl",xl:"5xl"}}
   >
   <Text
     as={'span'}
@@ -121,7 +123,7 @@ export default function WithSpeechBubbles() {
     </Stack>
     <Stack
       direction={{ base: 'column', md: 'row' }}
-      spacing={{ base: 10, md: 4,lg: 4,  lg: 10 }}>
+      spacing={{ base: 8, md: 4,lg: 4, xl: 8 }}>
           <Testimonial>
             <TestimonialContent>
               <TestimonialText>
