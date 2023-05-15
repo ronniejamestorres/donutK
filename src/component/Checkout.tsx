@@ -1,24 +1,18 @@
 import { useState, useEffect, createContext, useContext, useRef } from "react";
 import {
+  Box,
+  Container,
   Flex,
+  Text,
+  Button,
   Grid,
   GridItem,
-  Text,
-  Image,
-  Button,
-  Divider,
-  IconButton,
-  Box,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import { useShoppingCart } from "../context/ShoppingCartContext";
 import { gql, useQuery } from "@apollo/client";
 import { useCart } from "../context/CartContext";
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { BiPlusMedical } from "react-icons/bi";
+import { Image } from "@chakra-ui/react";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 import { ImCross, ImMinus, ImPlus } from "react-icons/im";
 
 const GET_DONUTS = gql`
@@ -39,16 +33,24 @@ const GET_DONUTS = gql`
   }
 `;
 
-function GridCardsTest({ id, name, price }) {
+const Checkout: React.FC = () => {
+  const { data } = useQuery(GET_DONUTS);
   const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
     useShoppingCart();
-  const [addedDonuts, setAddedDonuts] = useState(new Set());
-  const sliderRef = useRef(null);
-  const [donutData, setDonutData] = useState([]);
   const [displayedDonuts, setDisplayedDonuts] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
-  const { data } = useQuery(GET_DONUTS);
+  const [donutData, setDonutData] = useState([]);
+  const [addedDonuts, setAddedDonuts] = useState(new Set());
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
+  const { cart } = useCart();
+
+  const taxRate = 0.1; // You can adjust the tax rate accordingly
+  const subtotal = cart.reduce(
+    (accumulator, currentItem) => accumulator + currentItem.price,
+    0
+  );
   const {
     addToCart,
     removeFromCart,
@@ -64,6 +66,52 @@ function GridCardsTest({ id, name, price }) {
   }, [data]);
 
   const toast = useToast();
+  const taxes = subtotal * taxRate;
+  const totalAmount = subtotal + taxes;
+  console.log("cart is ", cart);
+  const handleCheckout = async () => {
+    try {
+      const aggregatedCart = aggregateCartItems(cart); // get the aggregated cart items
+      const line_items = aggregatedCart.map((item) => ({
+        price: item.stripeProductId,
+        quantity: item.quantity,
+      }));
+
+      const response = await fetch(
+        "https://donutk-backend-pifrn.ondigitalocean.app/create-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            line_items,
+          }),
+        }
+      );
+      const data = await response.json();
+      if (data.url) {
+        window.location = data.url;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const aggregateCartItems = (cartItems) => {
+    const aggregatedItems = {};
+    cartItems.forEach((item) => {
+      const key = item.stripeProductId; // use the stripeProductId as the key
+      if (aggregatedItems[key]) {
+        aggregatedItems[key].quantity += 1; // increment the quantity if the item already exists
+      } else {
+        aggregatedItems[key] = { ...item, quantity: 1 }; // create a new item with quantity 1
+      }
+    });
+    return Object.values(aggregatedItems); // convert the object to an array
+  };
+
+  const aggregatedCart = aggregateCartItems(cart);
 
   const showToast = (donut) => {
     toast({
@@ -135,107 +183,58 @@ function GridCardsTest({ id, name, price }) {
     });
   };
 
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          rows: 2,
-        },
-      },
-    ],
-  };
-
   return (
     <>
-      <Flex justify={"center"} gap={"4"} m={"4"}>
-        <IconButton
-          alignSelf="center"
-          bg={"orange.200"}
-          color={"orange.700"}
-          aria-label="Previous Donuts"
-          size="lg"
-          icon={<ArrowBackIcon />}
-          onClick={() => sliderRef.current.slickPrev()}
-          rounded={"full"}
-          transition="transform 0.2s ease-out"
-          _hover={{ transform: "scale(1.5)" }}
-        />
-
-        <IconButton
-          alignSelf="center"
-          bg={"orange.200"}
-          color={"orange.700"}
-          aria-label="Next Donuts"
-          size="lg"
-          icon={<ArrowForwardIcon />}
-          onClick={() => sliderRef.current.slickNext()}
-          w={"fit-content"}
-          rounded={"full"}
-          transition="transform 0.2s ease-out"
-          _hover={{ transform: "scale(1.5)" }}
-        />
-      </Flex>
-      <Box
-        //border="1px"
-        overflow={"hidden"}
-        mb={"10"}
-      >
-        <Slider ref={sliderRef} {...settings}>
-          {donutData.map((donut) => (
-            <Box>
-              <Box
-                key={donut.id}
-                m={{ base: "auto", md: "8" }}
-                minW={{ base: "calc(50% - 16px)", md: "calc(25% - 16px)" }} // Add a minimum width
-                bg={"white"}
-                h={"460px"}
-                rounded={"3xl"}
-                transition="transform 0.2s ease-out"
-                _hover={{ transform: "scale(1.1)" }}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
-                p={4}
+      <Container maxW={"full"} mt={"100"} mb={"100"}>
+        <Grid
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            md: "repeat(4, 1fr)",
+          }}
+          gap={4}
+        >
+          <GridItem
+            colSpan={{ base: 1, md: 2 }}
+            maxW={{ base: "xl", md: "full" }}
+            bg={"gray.100"}
+            h={"xl"}
+            p={4}
+            borderRadius={4}
+            rounded={"xl"}
+            overflow={"scroll"}
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
+          >
+            <Box maxW={{ base: "xl", md: "full" }}>
+              <Text
+                as="h1"
+                fontSize="3xl"
+                fontWeight="bold"
+                mb={4}
+                fontFamily={"Gloria Hallelujah"}
+                bgColor={"pink.300"}
+                rounded={"lg"}
               >
-                <Flex justifyContent={"center"}>
-                  <Image
-                    src={donut.img}
-                    alt={donut.name}
-                    onClick={() => handleDonutClick(donut)}
-                    cursor="pointer"
-                    w={"200px"}
-                  />
-                </Flex>
-                <Text fontWeight="bold" color="gray.600" mr={2}>
-                  <Flex justifyContent={"center"}>
-                    <Text fontSize={{ base: "sm", md: "xl" }} h={"10"}>
-                      {donut.name}
-                    </Text>
+                Shopping Bag
+              </Text>
+              {aggregatedCart.map((donut) => (
+                <Box key={donut.id} mb={4}>
+                  <Flex alignItems="center">
+                    <Image
+                      src={donut.img}
+                      alt={donut.name}
+                      height={"150px"}
+                      bg={"gray.200"}
+                      mr={2}
+                      rounded={"full"}
+                    />
+                    <Box ml={4} fontFamily={"Gloria Hallelujah"}>
+                      <Text fontSize="xl">{donut.name}</Text>
+                      <Text>${donut.price.toFixed(2)}</Text>
+                      <Text>Quantity: {donut.quantity}</Text>
+                    </Box>
                   </Flex>
 
-                  <Flex justifyContent={"center"}>
-                    <Text fontSize="xl">${donut.price.toFixed(2)}</Text>
-                  </Flex>
-                </Text>
-                <Text>{donut.qty} left</Text>
-
-                <Divider />
-
-                <Flex justifyContent="center" flexDirection={"column"}>
-                  <Flex justifyContent="center" m={4}>
+                  <Flex justifyContent="center" flexDirection={"row"}>
                     <Button
                       onClick={() => {
                         increaseCartQuantity(donut.id);
@@ -248,15 +247,10 @@ function GridCardsTest({ id, name, price }) {
                       color={"white"}
                       transition="transform 0.2s ease-out"
                       _hover={{ transform: "scale(1.1)" }}
+                      m={2}
                     >
-                      Add to cart
-                      <Box ml={2}>
-                        <ImPlus />
-                      </Box>
+                      <ImPlus />
                     </Button>
-                  </Flex>
-
-                  <Flex justifyContent="center" flexDirection={"row"}>
                     {/* Decrease button */}
                     <Button
                       isDisabled={getCartItemQuantity(donut.id) === 0}
@@ -299,14 +293,53 @@ function GridCardsTest({ id, name, price }) {
                       <ImCross />
                     </Button>
                   </Flex>
+                </Box>
+              ))}
+            </Box>
+          </GridItem>
+
+          <GridItem
+            colSpan={{ base: 1, md: 2 }}
+            mt={{ base: 6, md: 0 }}
+            bg="cyan.100"
+            p={4}
+            borderRadius={4}
+            rounded={"xl"}
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
+          >
+            <Flex
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              h="100%"
+            >
+              <Text fontSize="3xl" m={4} textAlign="center">
+                Order description
+              </Text>
+
+              <Box fontWeight="bold" fontSize="xl" textAlign="center">
+                <Text>Total Amount:</Text>
+                <Flex justifyContent="center" fontSize="4xl">
+                  <Box>${totalAmount.toFixed(2)}</Box>
                 </Flex>
               </Box>
-            </Box>
-          ))}
-        </Slider>
-      </Box>
+
+              <Box mt={4}>
+                <Button
+                  bg="pink.300"
+                  size="lg"
+                  onClick={handleCheckout}
+                  fontFamily="Gloria Hallelujah"
+                >
+                  Checkout
+                </Button>
+              </Box>
+            </Flex>
+          </GridItem>
+        </Grid>
+      </Container>
     </>
   );
-}
+};
 
-export default GridCardsTest;
+export default Checkout;

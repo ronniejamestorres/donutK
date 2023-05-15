@@ -106,7 +106,7 @@ export default function Navbar() {
               />
 
               <Box
-                bg={"red.500"}
+                bg={"pink.300"}
                 justifyContent={"center"}
                 alignItems={"center"}
                 position={"absolute"}
@@ -117,6 +117,8 @@ export default function Navbar() {
                 rounded={"full"}
                 color={"white"}
                 p={"4px"}
+                transition="transform 0.2s ease-out"
+                _hover={{ transform: "scale(1.5)" }}
               >
                 {" "}
                 {cartQuantity}
