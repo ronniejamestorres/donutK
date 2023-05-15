@@ -39,7 +39,7 @@ const GET_DONUTS = gql`
   }
 `;
 
-function GridCardsTest({ id, name, price }) {
+function MiniGridCards({ id, name, price }) {
   const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
     useShoppingCart();
   const [addedDonuts, setAddedDonuts] = useState(new Set());
@@ -91,7 +91,7 @@ function GridCardsTest({ id, name, price }) {
   const showDecreasedToast = (donut) => {
     toast({
       render: () => (
-        <Box color="white" p={3} bg="orange.200" borderRadius="md">
+        <Box color="white" p={3} bg="orange.300" borderRadius="md">
           <Flex alignItems="center">
             <Image
               src={donut.img}
@@ -114,7 +114,7 @@ function GridCardsTest({ id, name, price }) {
   const showRemovedToast = (donut) => {
     toast({
       render: () => (
-        <Box color="white" p={3} bg="cyan.200" borderRadius="md">
+        <Box color="white" p={3} bg="cyan.300" borderRadius="md">
           <Flex alignItems="center">
             <Image
               src={donut.img}
@@ -139,8 +139,8 @@ function GridCardsTest({ id, name, price }) {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 8,
+    slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 1024,
@@ -162,10 +162,19 @@ function GridCardsTest({ id, name, price }) {
 
   return (
     <>
-      <Flex justify={"center"} gap={"4"} m={"4"}>
+      <Flex justifyContent={"center"}>
+        <Text
+          as="h1"
+          fontSize="3xl"
+          fontWeight="bold"
+          fontFamily={"Gloria Hallelujah"}
+        >
+          Missed a donut ?
+        </Text>
+      </Flex>
+      <Flex justify={"center"} gap={"4"} m={"10"}>
         <IconButton
           alignSelf="center"
-          bg={"orange.200"}
           color={"orange.700"}
           aria-label="Previous Donuts"
           size="lg"
@@ -174,12 +183,12 @@ function GridCardsTest({ id, name, price }) {
           rounded={"full"}
           transition="transform 0.2s ease-out"
           _hover={{ transform: "scale(1.5)" }}
+          bg={"orange.200"}
         />
 
         <IconButton
           alignSelf="center"
           bg={"orange.200"}
-          color={"orange.700"}
           aria-label="Next Donuts"
           size="lg"
           icon={<ArrowForwardIcon />}
@@ -188,117 +197,35 @@ function GridCardsTest({ id, name, price }) {
           rounded={"full"}
           transition="transform 0.2s ease-out"
           _hover={{ transform: "scale(1.5)" }}
+          color={"orange.700"}
         />
       </Flex>
       <Box
-        //border="1px"
         overflow={"hidden"}
-        mb={"10"}
+        rounded={"xl"}
+        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
+        m={10}
       >
         <Slider ref={sliderRef} {...settings}>
           {donutData.map((donut) => (
             <Box>
-              <Box
-                key={donut.id}
-                m={{ base: "auto", md: "8" }}
-                minW={{ base: "calc(50% - 16px)", md: "calc(25% - 16px)" }} // Add a minimum width
-                bg={"white"}
-                h={"460px"}
-                rounded={"3xl"}
-                transition="transform 0.2s ease-out"
-                _hover={{ transform: "scale(1.1)" }}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
-                p={4}
-              >
+              <Box key={donut.id} bg={"white"} rounded={"3xl"} p={12}>
                 <Flex justifyContent={"center"}>
                   <Image
                     src={donut.img}
                     alt={donut.name}
-                    onClick={() => handleDonutClick(donut)}
                     cursor="pointer"
-                    w={"200px"}
+                    onClick={() => {
+                      increaseCartQuantity(donut.id);
+                      addToCart(donut);
+                      showToast(donut);
+                      setAddedDonuts((prev) => new Set(prev.add(donut.id)));
+                      handleDonutClick(donut);
+                    }}
+                    h={"100px"}
+                    transition="transform 0.2s ease-out"
+                    _hover={{ transform: "scale(2)" }}
                   />
-                </Flex>
-                <Text fontWeight="bold" color="gray.600" mr={2}>
-                  <Flex justifyContent={"center"}>
-                    <Text fontSize={{ base: "sm", md: "xl" }} h={"10"}>
-                      {donut.name}
-                    </Text>
-                  </Flex>
-
-                  <Flex justifyContent={"center"}>
-                    <Text fontSize="xl">${donut.price.toFixed(2)}</Text>
-                  </Flex>
-                </Text>
-                <Text>{donut.qty} left</Text>
-
-                <Divider />
-
-                <Flex justifyContent="center" flexDirection={"column"}>
-                  <Flex justifyContent="center" m={4}>
-                    <Button
-                      onClick={() => {
-                        increaseCartQuantity(donut.id);
-                        addToCart(donut);
-                        showToast(donut);
-                        setAddedDonuts((prev) => new Set(prev.add(donut.id)));
-                      }}
-                      bg={"pink.300"}
-                      rounded={"full"}
-                      color={"white"}
-                      transition="transform 0.2s ease-out"
-                      _hover={{ transform: "scale(1.1)" }}
-                    >
-                      Add to cart
-                      <Box ml={2}>
-                        <ImPlus />
-                      </Box>
-                    </Button>
-                  </Flex>
-
-                  <Flex justifyContent="center" flexDirection={"row"}>
-                    {/* Decrease button */}
-                    <Button
-                      isDisabled={getCartItemQuantity(donut.id) === 0}
-                      onClick={() => {
-                        decreaseNumberQuantity(donut.id);
-                        decreaseCartQuantity(donut.id);
-                        showDecreasedToast(donut);
-                      }}
-                      bg={"orange.200"}
-                      rounded={"full"}
-                      color={"orange.700"}
-                      transition="transform 0.2s ease-out"
-                      _hover={{ transform: "scale(1.1)" }}
-                      m={2}
-                    >
-                      <ImMinus />
-                    </Button>
-
-                    {/* Remove button */}
-                    <Button
-                      isDisabled={getCartItemQuantity(donut.id) === 0}
-                      onClick={() => {
-                        removeFromCart(donut.id);
-                        removeNumberCart(donut.id);
-                        showRemovedToast(donut);
-
-                        setAddedDonuts((prev) => {
-                          const updatedSet = new Set(prev);
-                          updatedSet.delete(donut.id);
-                          return updatedSet;
-                        });
-                      }}
-                      bg={"cyan.200"}
-                      rounded={"full"}
-                      color={"cyan.700"}
-                      transition="transform 0.2s ease-out"
-                      _hover={{ transform: "scale(1.1)" }}
-                      m={2}
-                    >
-                      <ImCross />
-                    </Button>
-                  </Flex>
                 </Flex>
               </Box>
             </Box>
@@ -309,4 +236,4 @@ function GridCardsTest({ id, name, price }) {
   );
 }
 
-export default GridCardsTest;
+export default MiniGridCards;
