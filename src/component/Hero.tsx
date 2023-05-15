@@ -23,7 +23,7 @@ export default function hero() {
       backgroundRepeat="no-repeat"
       backgroundPosition={{ base: "center", md: "center",lg:"center", xl: "center" }}
       backgroundSize={{ base: "cover", md: "cover", lg: "cover", xl: "cover" }}
-      h={{ base: "90vh", md: "50vh", lg: "95vh", xl: "95vh" }}
+      h={{ base: "80vh", md: "50vh", lg: "90vh", xl: "90vh" }}
       w={{ base: "100vw", md: "100vw", lg: "100vw", xl: "100vw" }}
     >
       <Container maxW={"6xl"}>
@@ -121,7 +121,7 @@ export default function hero() {
                   alt={"Hero Image"}
                   align={"center"}
                   w={"100%"}
-                  h={{ base: "300px", md: "350px", xl: "400px" }}
+                  h={{ base: "250px", md: "300px",lg: "350px", xl: "400px" }}
                   src={donutdetour}
                 />
               </motion.div>

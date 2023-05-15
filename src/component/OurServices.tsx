@@ -15,6 +15,9 @@ import { GiDonut } from "react-icons/gi";
 
 import { FaTruck } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import backgroundImage from "../images/bg-grey-01.svg";
+
+
 
 interface CardProps {
   heading: string;
@@ -29,6 +32,7 @@ const Card = ({ heading, description, icon }: CardProps) => {
       w={"full"}
       borderWidth="1px"
       borderLeftColor={"pink.300"}
+      bgColor={'pink.200'}
       borderBottomColor={"orange.300"}
       borderRadius="xl"
       overflow="hidden"
@@ -60,7 +64,8 @@ const Card = ({ heading, description, icon }: CardProps) => {
 
 export default function gridListWith() {
   return (
-    <Box p={4} lineHeight={10}>
+    <Box p={4} lineHeight={10} backgroundImage={`url(${backgroundImage})`} bgRepeat={'no-repeat'} bgSize={'full'}
+    >
       <Stack spacing={8} as={Container} maxW={"3xl"} textAlign={"center"}>
         <Heading
           fontSize={{ base: "2xl", sm: "4xl" }}

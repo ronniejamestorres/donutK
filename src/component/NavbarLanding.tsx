@@ -16,19 +16,32 @@ import {
   useDisclosure,
   Image,
 } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { MdOutlineShoppingCart } from "react-icons/md";
+
+
+
+import LogoutButton from "../component/LogoutButton";
+import {RiLoginCircleFill} from "react-icons/ri";
+
 import DkLogo from "../images/DkLogo-01.svg";
-import { useShoppingCart } from "../context/ShoppingCartContext";
-import { NavLink } from "react-router-dom";
+
+
+
+
+
+
+
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
-  const { openCart, cartQuantity } = useShoppingCart();
+  const isLoggedIn = localStorage.getItem("loginUser") !== null;
+
+  
 
   return (
     <Box width={"full"}>
@@ -87,9 +100,35 @@ export default function Navbar() {
           </Flex>
         </Flex>
 
-        
-          
+        <Stack
+  flex={{ base: 1, md: 0 }}
+  justify={'flex-end'}
+  direction={'row'}
+  spacing={6}
+>
+{isLoggedIn ? <LogoutButton /> : (
+<NavLink to="/GoogleLoginPage">
+    <Button
+      variant={'link'}
+      size={'lg'}
+      className={'font-weight-400'}
+      colorScheme={'pink'}
+      color={'orange.300'}
+      fontWeight={'bold'}
+      _hover={{
+        textDecoration: 'none',
+        color: 'orange.400',
+      }}
+    >
+      Login
+      <RiLoginCircleFill className={'me-2'} color="pink"/>
+    </Button>
+  </NavLink>
+
+)}
+</Stack>
       </Flex>
+      
 
       <Collapse in={isOpen} animateOpacity>
         <MobileNav />
@@ -268,8 +307,9 @@ interface NavItem {
 
 const NAV_ITEMS: Array<NavItem> = [
   {
-    label: "Login",
+    label: "",
     href: "/GoogleLoginPage",
+    
   },
   
 ];

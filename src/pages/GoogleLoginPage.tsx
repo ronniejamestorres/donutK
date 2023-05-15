@@ -2,16 +2,16 @@ import { FcGoogle } from "react-icons/fc";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
-import { Alert, Box, Button, useToast } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-import { useQuery, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 import DkLogo from "../images/DkLogo-01.svg";
 
 
 export default function GoogleLoginPage() {
   const navigate = useNavigate();
   const toast = useToast(); // Ajout de useToast ici
-
+   
   const responseGoogleFailure = (response) => {
     console.log(response);
   };
@@ -65,6 +65,9 @@ export default function GoogleLoginPage() {
     }
   };
 
+ 
+
+ 
   return (
     <Box
     maxW="full"
@@ -101,10 +104,13 @@ export default function GoogleLoginPage() {
               leftIcon={<FcGoogle />}
               colorScheme="red"
             >
-              Sign in with Google
+              Sign in with Google 🚀{' '}
             </Button>
           )}
+          
         />
+
+        
       </GoogleOAuthProvider>
     </Box>
   </Box>
