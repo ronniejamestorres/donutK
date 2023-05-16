@@ -81,24 +81,13 @@ export default function Navbar() {
           flex={{ base: 1, md: "auto" }}
           display={{ base: "flex", md: "none" }}
         >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? (
-                <CloseIcon w={3} h={3} />
-              ) : (
-                <HamburgerIcon w={5} h={5} color="pink.500" />
-              )
-            }
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
-          />
+         
+          
         </Flex>
         <Flex
           flex={{ base: 2 }}
           justify={{ base: "start", md: "start" }}
-          //border="1px"
-          //borderColor={"red.500"}
+        
         >
           <Image
             boxSize="80px"
