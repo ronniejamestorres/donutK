@@ -7,7 +7,7 @@ import {
   Text,
   Button,
   Image,
-  Icon
+  Icon,
 } from "@chakra-ui/react";
 import { GiDonut } from "react-icons/gi";
 
@@ -21,7 +21,12 @@ export default function hero() {
     <Box
       backgroundImage={`url(${wave})`}
       backgroundRepeat="no-repeat"
-      backgroundPosition={{ base: "center", md: "center",lg:"center", xl: "center" }}
+      backgroundPosition={{
+        base: "center",
+        md: "center",
+        lg: "center",
+        xl: "center",
+      }}
       backgroundSize={{ base: "cover", md: "cover", lg: "cover", xl: "cover" }}
       h={{ base: "80vh", md: "50vh", lg: "90vh", xl: "90vh" }}
       w={{ base: "100vw", md: "100vw", lg: "100vw", xl: "100vw" }}
@@ -31,7 +36,7 @@ export default function hero() {
           align={"center"}
           spacing={{ base: 2, md: 5 }}
           py={{ base: 4, md: 5, lg: 30, xl: 30 }}
-          direction={{ base: "column", md: "row", lg: "row"}}
+          direction={{ base: "column", md: "row", lg: "row" }}
         >
           <Stack flex={1} spacing={{ base: 5, md: 5 }}>
             <Heading
@@ -76,26 +81,28 @@ export default function hero() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              <Button fontFamily={'Gloria Hallelujah'}
-            as={"a"}
-            display={{ base: "inline-flex", md: "inline-flex", lg: "inline-flex" }}
-            
-                rounded={'full'}
-                size={'md'}
-                fontWeight={'normal'}
+              <Button
+                fontFamily={"Gloria Hallelujah"}
+                as={"a"}
+                display={{
+                  base: "inline-flex",
+                  md: "inline-flex",
+                  lg: "inline-flex",
+                }}
+                rounded={"full"}
+                size={"md"}
+                fontWeight={"normal"}
                 px={2}
-                bgColor={'pink.400'}
-                colorScheme={'pink'}
-                textColor={'white'}
-                _hover={{ bg: 'pink.200',text:'white' }}
-                variant={'link'}
-                href={'/Showall'}
-                >
-                
-          
-               <Text mr="2">Go shopping</Text>
-               <Icon as={GiDonut} boxSize="6" />
-          </Button>
+                bgColor={"pink.400"}
+                colorScheme={"pink"}
+                textColor={"white"}
+                _hover={{ bg: "pink.200", text: "white" }}
+                variant={"link"}
+                href={"/Showall"}
+              >
+                <Text mr="2">Go shopping</Text>
+                <Icon as={GiDonut} boxSize="6" />
+              </Button>
             </Stack>
           </Stack>
           <Flex
@@ -121,7 +128,7 @@ export default function hero() {
                   alt={"Hero Image"}
                   align={"center"}
                   w={"100%"}
-                  h={{ base: "250px", md: "300px",lg: "350px", xl: "400px" }}
+                  h={{ base: "250px", md: "300px", lg: "350px", xl: "400px" }}
                   src={donutdetour}
                 />
               </motion.div>

@@ -20,10 +20,10 @@ type ShoppingCartContext = {
   cartItems: CartItem[];
 };
 
-const ShoppingCartContext = createContext({});
+const ShoppingCartContext = createContext<Partial<ShoppingCartContext>>({});
 
 export function useShoppingCart() {
-  return useContext(ShoppingCartContext);
+  return useContext(ShoppingCartContext) as ShoppingCartContext;
 }
 
 export function ShoppingCartProvider({ children }: ShoppCartProviderProps) {
