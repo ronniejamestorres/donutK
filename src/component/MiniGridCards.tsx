@@ -21,6 +21,21 @@ import "slick-carousel/slick/slick-theme.css";
 import { BiPlusMedical } from "react-icons/bi";
 import { ImCross, ImMinus, ImPlus } from "react-icons/im";
 
+interface Donut {
+  name: string;
+  img: string;
+  description: string;
+  price: number;
+  ingredients: string[];
+  qty: number;
+  date: string;
+  thumbsUp: number;
+  thumbsDown: number;
+  stripeProductId: string;
+  id: string;
+  cartQty?: number;
+}
+
 const GET_DONUTS = gql`
   query Donuts {
     donuts {
@@ -38,23 +53,17 @@ const GET_DONUTS = gql`
     }
   }
 `;
-
-function MiniGridCards({ id, name, price }) {
-  const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
-    useShoppingCart();
+function MiniGridCards(): JSX.Element {
+  const { increaseCartQuantity } = useShoppingCart();
   const [addedDonuts, setAddedDonuts] = useState(new Set());
-  const sliderRef = useRef(null);
+  const sliderRef = useRef<Slider | null>(null);
+
   const [donutData, setDonutData] = useState([]);
   const [displayedDonuts, setDisplayedDonuts] = useState([]);
   const [startIndex, setStartIndex] = useState(0);
   const { data } = useQuery(GET_DONUTS);
 
-  const {
-    addToCart,
-    removeFromCart,
-    decreaseCartQuantity,
-    getCartItemQuantity,
-  } = useCart();
+  const { addToCart } = useCart();
 
   useEffect(() => {
     if (data) {
@@ -65,7 +74,7 @@ function MiniGridCards({ id, name, price }) {
 
   const toast = useToast();
 
-  const showToast = (donut) => {
+  const showToast = (donut: Donut) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="pink.300" borderRadius="md">
@@ -79,52 +88,6 @@ function MiniGridCards({ id, name, price }) {
             />
             <Text color={"pink.700"} fontWeight={"bold"}>
               Added {donut.name} to bag
-            </Text>
-          </Flex>
-        </Box>
-      ),
-      duration: 3000,
-      isClosable: true,
-      position: "top",
-    });
-  };
-  const showDecreasedToast = (donut) => {
-    toast({
-      render: () => (
-        <Box color="white" p={3} bg="orange.300" borderRadius="md">
-          <Flex alignItems="center">
-            <Image
-              src={donut.img}
-              alt={donut.name}
-              boxSize="50px"
-              borderRadius="full"
-              mr={3}
-            />
-            <Text color={"orange.700"} fontWeight={"bold"}>
-              Removed 1 {donut.name} from bag
-            </Text>
-          </Flex>
-        </Box>
-      ),
-      duration: 3000,
-      isClosable: true,
-      position: "top",
-    });
-  };
-  const showRemovedToast = (donut) => {
-    toast({
-      render: () => (
-        <Box color="white" p={3} bg="cyan.300" borderRadius="md">
-          <Flex alignItems="center">
-            <Image
-              src={donut.img}
-              alt={donut.name}
-              boxSize="50px"
-              borderRadius="full"
-              mr={3}
-            />
-            <Text color={"cyan.700"} fontWeight={"bold"}>
-              Removed {donut.name} from bag
             </Text>
           </Flex>
         </Box>
@@ -179,7 +142,7 @@ function MiniGridCards({ id, name, price }) {
           aria-label="Previous Donuts"
           size="lg"
           icon={<ArrowBackIcon />}
-          onClick={() => sliderRef.current.slickPrev()}
+          onClick={() => sliderRef.current && sliderRef.current.slickPrev()}
           rounded={"full"}
           transition="transform 0.2s ease-out"
           _hover={{ transform: "scale(1.5)" }}
@@ -192,7 +155,7 @@ function MiniGridCards({ id, name, price }) {
           aria-label="Next Donuts"
           size="lg"
           icon={<ArrowForwardIcon />}
-          onClick={() => sliderRef.current.slickNext()}
+          onClick={() => sliderRef.current && sliderRef.current.slickNext()}
           w={"fit-content"}
           rounded={"full"}
           transition="transform 0.2s ease-out"
@@ -207,7 +170,7 @@ function MiniGridCards({ id, name, price }) {
         m={10}
       >
         <Slider ref={sliderRef} {...settings}>
-          {donutData.map((donut) => (
+          {donutData.map((donut: Donut) => (
             <Box>
               <Box key={donut.id} bg={"white"} rounded={"3xl"} p={12}>
                 <Flex justifyContent={"center"}>
@@ -216,13 +179,13 @@ function MiniGridCards({ id, name, price }) {
                     alt={donut.name}
                     cursor="pointer"
                     onClick={() => {
-                      increaseCartQuantity(donut.id);
+                      const donutIdAsNumber = parseInt(donut.id, 10);
+                      increaseCartQuantity(donutIdAsNumber);
                       addToCart(donut);
                       showToast(donut);
                       setAddedDonuts((prev) => new Set(prev.add(donut.id)));
-                      handleDonutClick(donut);
                     }}
-                    h={"100px"}
+                    w={{ base: "100px", md: "100px" }}
                     transition="transform 0.2s ease-out"
                     _hover={{ transform: "scale(2)" }}
                   />

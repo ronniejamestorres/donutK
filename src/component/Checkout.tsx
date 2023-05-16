@@ -1,4 +1,11 @@
-import { useState, useEffect, createContext, useContext, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+  ReactNode,
+} from "react";
 import {
   Box,
   Container,
@@ -7,6 +14,7 @@ import {
   Button,
   Grid,
   GridItem,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { gql, useQuery } from "@apollo/client";
@@ -14,6 +22,40 @@ import { useCart } from "../context/CartContext";
 import { Image } from "@chakra-ui/react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { ImCross, ImMinus, ImPlus } from "react-icons/im";
+
+interface Donut {
+  name: string;
+  img: string;
+  description: string;
+  price: number;
+  ingredients: string[];
+  qty: number;
+  date: string;
+  thumbsUp: number;
+  thumbsDown: number;
+  stripeProductId: string;
+  id: string;
+  cartQty?: number;
+}
+
+interface CartItem {
+  id: string;
+  img: string;
+  name: string;
+  price: number;
+  quantity: number;
+  stripeProductId: string;
+  description: string;
+  ingredients: string;
+  qty: number;
+  date: string;
+  thumbsUp: number;
+  thumbsDown: number;
+}
+
+type AggregatedItems = {
+  [key: string]: CartItem;
+};
 
 const GET_DONUTS = gql`
   query Donuts {
@@ -34,6 +76,12 @@ const GET_DONUTS = gql`
 `;
 
 const Checkout: React.FC = () => {
+  const size = useBreakpointValue({
+    base: "300px",
+    md: "600px",
+    lg: "1000px",
+    xl: "800px",
+  });
   const { data } = useQuery(GET_DONUTS);
   const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
     useShoppingCart();
@@ -98,8 +146,8 @@ const Checkout: React.FC = () => {
     }
   };
 
-  const aggregateCartItems = (cartItems) => {
-    const aggregatedItems = {};
+  const aggregateCartItems = (cartItems: CartItem[]): CartItem[] => {
+    const aggregatedItems: AggregatedItems = {};
     cartItems.forEach((item) => {
       const key = item.stripeProductId; // use the stripeProductId as the key
       if (aggregatedItems[key]) {
@@ -113,7 +161,7 @@ const Checkout: React.FC = () => {
 
   const aggregatedCart = aggregateCartItems(cart);
 
-  const showToast = (donut) => {
+  const showToast = (donut: CartItem) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="pink.300" borderRadius="md">
@@ -136,7 +184,7 @@ const Checkout: React.FC = () => {
       position: "top",
     });
   };
-  const showDecreasedToast = (donut) => {
+  const showDecreasedToast = (donut: CartItem) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="orange.200" borderRadius="md">
@@ -159,7 +207,7 @@ const Checkout: React.FC = () => {
       position: "top",
     });
   };
-  const showRemovedToast = (donut) => {
+  const showRemovedToast = (donut: CartItem) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="cyan.200" borderRadius="md">
@@ -195,7 +243,6 @@ const Checkout: React.FC = () => {
         >
           <GridItem
             colSpan={{ base: 1, md: 2 }}
-            maxW={{ base: "xl", md: "full" }}
             bg={"gray.100"}
             h={"xl"}
             p={4}
@@ -237,7 +284,7 @@ const Checkout: React.FC = () => {
                   <Flex justifyContent="center" flexDirection={"row"}>
                     <Button
                       onClick={() => {
-                        increaseCartQuantity(donut.id);
+                        increaseCartQuantity(Number(donut.id));
                         addToCart(donut);
                         showToast(donut);
                         setAddedDonuts((prev) => new Set(prev.add(donut.id)));
@@ -251,11 +298,12 @@ const Checkout: React.FC = () => {
                     >
                       <ImPlus />
                     </Button>
+
                     {/* Decrease button */}
                     <Button
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
-                        decreaseNumberQuantity(donut.id);
+                        decreaseNumberQuantity(Number(donut.id));
                         decreaseCartQuantity(donut.id);
                         showDecreasedToast(donut);
                       }}
@@ -274,7 +322,7 @@ const Checkout: React.FC = () => {
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
                         removeFromCart(donut.id);
-                        removeNumberCart(donut.id);
+                        removeNumberCart(Number(donut.id));
                         showRemovedToast(donut);
 
                         setAddedDonuts((prev) => {
@@ -320,7 +368,7 @@ const Checkout: React.FC = () => {
               <Box fontWeight="bold" fontSize="xl" textAlign="center">
                 <Text>Total Amount:</Text>
                 <Flex justifyContent="center" fontSize="4xl">
-                  <Box>${totalAmount.toFixed(2)}</Box>
+                  <Box>${subtotal.toFixed(2)}</Box>
                 </Flex>
               </Box>
 

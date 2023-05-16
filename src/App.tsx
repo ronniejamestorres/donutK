@@ -7,11 +7,9 @@ import LandingPage from "./pages/LandingPage";
 import GoogleLoginPage from "./pages/GoogleLoginPage";
 import TestCheckout from "./component/TestCheckout";
 import Cart from "./pages/Cart";
-
 import Address from "./pages/Address";
 import Store from "./pages/Store";
 import { ShoppingCartProvider } from "./context/ShoppingCartContext";
-
 import CartPage from "./pages/CartPage";
 import { CartProvider } from "./context/CartContext";
 import Success from "./pages/Success";

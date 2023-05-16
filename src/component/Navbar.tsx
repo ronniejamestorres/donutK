@@ -28,7 +28,7 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 import { NavLink } from "react-router-dom";
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
-  const { openCart, cartQuantity } = useShoppingCart();
+  const { cartQuantity } = useShoppingCart();
 
   return (
     <Box>
@@ -305,9 +305,4 @@ interface NavItem {
   href?: string;
 }
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Login",
-    href: "/GoogleLoginPage",
-  },
-];
+const NAV_ITEMS: Array<NavItem> = [];

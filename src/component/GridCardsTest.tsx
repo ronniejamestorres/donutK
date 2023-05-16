@@ -1,25 +1,58 @@
-import { useState, useEffect, createContext, useContext, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+  SetStateAction,
+} from "react";
 import {
   Flex,
-  Grid,
-  GridItem,
   Text,
   Image,
   Button,
   Divider,
   IconButton,
   Box,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { gql, useQuery } from "@apollo/client";
 import { useCart } from "../context/CartContext";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import Slider from "react-slick";
+import { ImCross, ImMinus, ImPlus } from "react-icons/im";
+import Slider, { Settings as SliderSettings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { BiPlusMedical } from "react-icons/bi";
-import { ImCross, ImMinus, ImPlus } from "react-icons/im";
+import backgroundImage from "../images/DK-card-bg-01.svg";
+import ShoppingCart from "./ShoppingCart";
+
+interface GridCardsTestProps {
+  increaseCartQuantity: () => void;
+  removeNumberCart: () => void;
+  decreaseNumberQuantity: () => void;
+}
+
+interface Donut {
+  name: string;
+  img: string;
+  description: string;
+  price: number;
+  ingredients: string[];
+  qty: number;
+  date: string;
+  thumbsUp: number;
+  thumbsDown: number;
+  stripeProductId: string;
+  id: string;
+  cartQty?: number;
+}
 
 const GET_DONUTS = gql`
   query Donuts {
@@ -39,16 +72,16 @@ const GET_DONUTS = gql`
   }
 `;
 
-function GridCardsTest({ id, name, price }) {
+function GridCardsTest(): JSX.Element {
   const { increaseCartQuantity, removeNumberCart, decreaseNumberQuantity } =
     useShoppingCart();
   const [addedDonuts, setAddedDonuts] = useState(new Set());
-  const sliderRef = useRef(null);
-  const [donutData, setDonutData] = useState([]);
-  const [displayedDonuts, setDisplayedDonuts] = useState([]);
+  const sliderRef = useRef<Slider>(null);
+  const [donutData, setDonutData] = useState<Donut[]>([]);
+  const [displayedDonuts, setDisplayedDonuts] = useState<Donut[]>([]);
+
   const [startIndex, setStartIndex] = useState(0);
   const { data } = useQuery(GET_DONUTS);
-
   const {
     addToCart,
     removeFromCart,
@@ -58,14 +91,13 @@ function GridCardsTest({ id, name, price }) {
 
   useEffect(() => {
     if (data) {
-      setDonutData(data.donuts);
-      setDisplayedDonuts(data.donuts.slice(0, 4));
+      setDonutData(data.donuts as Donut[]);
+      setDisplayedDonuts((data.donuts as Donut[]).slice(0, 4));
     }
   }, [data]);
-
+  const [selectedDonut, setSelectedDonut] = useState<Donut | null>(null);
   const toast = useToast();
-
-  const showToast = (donut) => {
+  const showToast = (donut: Donut) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="pink.300" borderRadius="md">
@@ -88,7 +120,7 @@ function GridCardsTest({ id, name, price }) {
       position: "top",
     });
   };
-  const showDecreasedToast = (donut) => {
+  const showDecreasedToast = (donut: Donut) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="orange.200" borderRadius="md">
@@ -111,7 +143,7 @@ function GridCardsTest({ id, name, price }) {
       position: "top",
     });
   };
-  const showRemovedToast = (donut) => {
+  const showRemovedToast = (donut: Donut) => {
     toast({
       render: () => (
         <Box color="white" p={3} bg="cyan.200" borderRadius="md">
@@ -159,6 +191,9 @@ function GridCardsTest({ id, name, price }) {
       },
     ],
   };
+  const handleDonutClick = (donut: Donut) => {
+    setSelectedDonut(donut);
+  };
 
   return (
     <>
@@ -170,7 +205,7 @@ function GridCardsTest({ id, name, price }) {
           aria-label="Previous Donuts"
           size="lg"
           icon={<ArrowBackIcon />}
-          onClick={() => sliderRef.current.slickPrev()}
+          onClick={() => sliderRef.current && sliderRef.current.slickPrev()}
           rounded={"full"}
           transition="transform 0.2s ease-out"
           _hover={{ transform: "scale(1.5)" }}
@@ -183,13 +218,14 @@ function GridCardsTest({ id, name, price }) {
           aria-label="Next Donuts"
           size="lg"
           icon={<ArrowForwardIcon />}
-          onClick={() => sliderRef.current.slickNext()}
+          onClick={() => sliderRef.current && sliderRef.current.slickNext()}
           w={"fit-content"}
           rounded={"full"}
           transition="transform 0.2s ease-out"
           _hover={{ transform: "scale(1.5)" }}
         />
       </Flex>
+
       <Box
         //border="1px"
         overflow={"hidden"}
@@ -238,7 +274,8 @@ function GridCardsTest({ id, name, price }) {
                   <Flex justifyContent="center" m={4}>
                     <Button
                       onClick={() => {
-                        increaseCartQuantity(donut.id);
+                        increaseCartQuantity(parseInt(donut.id, 10));
+
                         addToCart(donut);
                         showToast(donut);
                         setAddedDonuts((prev) => new Set(prev.add(donut.id)));
@@ -261,7 +298,8 @@ function GridCardsTest({ id, name, price }) {
                     <Button
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
-                        decreaseNumberQuantity(donut.id);
+                        decreaseNumberQuantity(parseInt(donut.id, 10));
+
                         decreaseCartQuantity(donut.id);
                         showDecreasedToast(donut);
                       }}
@@ -280,7 +318,8 @@ function GridCardsTest({ id, name, price }) {
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
                         removeFromCart(donut.id);
-                        removeNumberCart(donut.id);
+                        removeNumberCart(parseInt(donut.id, 10));
+
                         showRemovedToast(donut);
 
                         setAddedDonuts((prev) => {
@@ -299,6 +338,72 @@ function GridCardsTest({ id, name, price }) {
                       <ImCross />
                     </Button>
                   </Flex>
+                  {selectedDonut === donut && (
+                    <Modal
+                      isOpen={selectedDonut === donut}
+                      onClose={() => setSelectedDonut(null)}
+                    >
+                      <ModalOverlay />
+                      <ModalContent
+                        overflow="hidden"
+                        borderRadius="50px 50px 50px 50px"
+                        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
+                        bg={"pink.400"}
+                        w={{ base: "300px", md: "400px" }}
+                      >
+                        <Flex
+                          bg={"white"}
+                          justifyContent="center"
+                          p={"10px"}
+                          h={"300px"}
+                          alignItems={"center"}
+                          backgroundImage={`url(${backgroundImage})`}
+                          backgroundRepeat="no-repeat"
+                          backgroundPosition="center"
+                          backgroundSize={{ base: "full", md: "cover" }}
+                        >
+                          <Image
+                            src={donut.img}
+                            height={"full"}
+                            width={"full"}
+                            w={{ base: "200px", md: "200px" }}
+                            h={{ base: "200px", md: "200px" }}
+                          />
+                        </Flex>
+
+                        <ModalHeader color={"white"} fontSize={"2xl"}>
+                          {selectedDonut.name}
+                        </ModalHeader>
+
+                        <ModalCloseButton />
+
+                        <ModalBody color={"white"}>
+                          <Text>{selectedDonut.description}</Text>
+                          <Text fontSize={"xl"} mt={"4px"} mb={"4px"}>
+                            Ingredients :{" "}
+                          </Text>
+                          <Text>{selectedDonut.ingredients}</Text>
+                        </ModalBody>
+                        <Flex justifyContent={"center"}>
+                          <Button
+                            m={"10px"}
+                            onClick={() => {
+                              increaseCartQuantity(parseInt(donut.id, 10));
+                              addToCart(donut);
+                            }}
+                            bg={"pink.100"}
+                            rounded={"full"}
+                            transition="transform 0.2s ease-out"
+                            _hover={{ bg: "cyan.100" }}
+                            //_focus={{ boxShadow: "outline" }}
+                            color={"pink.700"}
+                          >
+                            Add to cart
+                          </Button>
+                        </Flex>
+                      </ModalContent>
+                    </Modal>
+                  )}
                 </Flex>
               </Box>
             </Box>

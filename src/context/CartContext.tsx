@@ -1,4 +1,10 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
 interface Donut {
   name: string;
@@ -15,23 +21,29 @@ interface Donut {
   cartQty?: number;
 }
 
+interface CartProviderProps {
+  children: ReactNode;
+}
+
 interface CartContextProps {
   cart: Donut[];
   addToCart: (donut: Donut) => void;
   removeFromCart: (donutId: string) => void;
   decreaseCartQuantity: (donutId: string) => void; // Add this line
+  getCartItemQuantity: (itemId: string) => number; // Add this line
 }
 
 const CartContext = createContext<CartContextProps>({
   cart: [],
   addToCart: () => {},
   removeFromCart: () => {},
-  decreaseCartQuantity: () => {}, // Add this line
+  decreaseCartQuantity: () => {},
+  getCartItemQuantity: () => 0, // Add this line
 });
 
 export const useCart = () => useContext(CartContext);
 
-export const CartProvider: React.FC = ({ children }) => {
+export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<Donut[]>([]);
 
   const addToCart = (donut: Donut) => {
@@ -64,9 +76,9 @@ export const CartProvider: React.FC = ({ children }) => {
   };
 
   // Add this function to get the quantity of a specific item in the cart
-  const getCartItemQuantity = (itemId) => {
+  const getCartItemQuantity = (itemId: string) => {
     const item = cart.find((cartItem) => cartItem.id === itemId);
-    return item ? item.quantity : 0;
+    return item ? item.qty : 0;
   };
 
   useEffect(() => {
