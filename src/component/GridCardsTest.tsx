@@ -31,7 +31,6 @@ import Slider, { Settings as SliderSettings } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import backgroundImage from "../images/DK-card-bg-01.svg";
-import ShoppingCart from "./ShoppingCart";
 
 interface GridCardsTestProps {
   increaseCartQuantity: () => void;
