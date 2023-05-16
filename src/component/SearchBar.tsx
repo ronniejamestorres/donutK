@@ -18,7 +18,6 @@ import {
 
 import { Search2Icon } from "@chakra-ui/icons";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import backgroundImage from "../images/DK-card-bg-01.svg";
 import { useCart } from "../context/CartContext";
 import { gql, useQuery } from "@apollo/client";
 
@@ -41,26 +40,27 @@ const GET_DONUTS = gql`
 `;
 
 type Donut = {
+  id: string;
   _id: string;
   name: string;
   img: string;
   description: string;
   price: number;
-  ingredients: string;
+  ingredients: string[]; // Change this line
   qty: number;
   date: string;
   thumbsUp: number;
   thumbsDown: number;
+  stripeProductId: string;
 };
 
 const SearchBar = () => {
-  const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity } =
-    useShoppingCart();
+  const { increaseCartQuantity } = useShoppingCart();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchTerms, setSearchTerms] = useState([]);
   const [searchResults, setSearchResults] = useState<Donut[]>([]);
-  const [selectedDonut, setSelectedDonut] = useState(null);
-  const [donutData, setDonutData] = useState([]);
+  const [selectedDonut, setSelectedDonut] = useState<Donut | null>(null);
+  const [donutData, setDonutData] = useState<Donut[]>([]);
   const [showResults, setShowResults] = useState(true); // Add this state
   const { addToCart } = useCart();
   const { data, error, loading } = useQuery(GET_DONUTS);
@@ -68,13 +68,10 @@ const SearchBar = () => {
   useEffect(() => {
     if (data) {
       setDonutData(data.donuts);
-      setSearchTerms(data.donuts.map((donut) => donut.name));
+      setSearchTerms(data.donuts.map((donut: { name: any }) => donut.name));
     }
   }, [data]);
 
-  const handleAddToCart = (donut) => {
-    addToCart(donut);
-  };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
@@ -88,7 +85,7 @@ const SearchBar = () => {
     setSearchResults(results);
   };
 
-  const handleDonutClick = (donut) => {
+  const handleDonutClick = (donut: Donut) => {
     setSelectedDonut(donut);
   };
   return (
@@ -144,7 +141,7 @@ const SearchBar = () => {
               mb={"10px"}
             >
               {searchResults.map((donut) => (
-                <GridItem key={donut._id}>
+                <GridItem key={donut.id}>
                   <Box
                     overflow="hidden"
                     borderWidth="1px"

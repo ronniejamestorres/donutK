@@ -13,7 +13,7 @@ const CartPage: React.FC = () => {
     <>
       <Navbar />
       <Checkout />
-      <MiniGridCards id={undefined} name={undefined} price={undefined} />
+      <MiniGridCards />
       <FooterLanding />
     </>
   );

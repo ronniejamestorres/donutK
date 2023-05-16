@@ -119,7 +119,8 @@ const Checkout: React.FC = () => {
   console.log("cart is ", cart);
   const handleCheckout = async () => {
     try {
-      const aggregatedCart = aggregateCartItems(cart); // get the aggregated cart items
+      const aggregatedCart = aggregateCartItems(mapDonutsToCartItems(cart)); // get the aggregated cart items
+
       const line_items = aggregatedCart.map((item) => ({
         price: item.stripeProductId,
         quantity: item.quantity,
@@ -146,6 +147,26 @@ const Checkout: React.FC = () => {
     }
   };
 
+  const mapDonutsToCartItems = (donuts: Donut[]): CartItem[] => {
+    return donuts.map((donut) => ({
+      ...donut,
+      quantity: donut.cartQty || 0,
+      ingredients: Array.isArray(donut.ingredients)
+        ? donut.ingredients.join(", ")
+        : donut.ingredients,
+    }));
+  };
+
+  const convertDonutToCartItem = (donut: Donut): CartItem => {
+    return {
+      ...donut,
+      quantity: donut.cartQty || 0,
+      ingredients: Array.isArray(donut.ingredients)
+        ? donut.ingredients.join(", ")
+        : donut.ingredients,
+    };
+  };
+
   const aggregateCartItems = (cartItems: CartItem[]): CartItem[] => {
     const aggregatedItems: AggregatedItems = {};
     cartItems.forEach((item) => {
@@ -159,7 +180,7 @@ const Checkout: React.FC = () => {
     return Object.values(aggregatedItems); // convert the object to an array
   };
 
-  const aggregatedCart = aggregateCartItems(cart);
+  const aggregatedCart = aggregateCartItems(cart.map(convertDonutToCartItem)); // get the aggregated cart items
 
   const showToast = (donut: CartItem) => {
     toast({
@@ -284,8 +305,11 @@ const Checkout: React.FC = () => {
                   <Flex justifyContent="center" flexDirection={"row"}>
                     <Button
                       onClick={() => {
-                        increaseCartQuantity(Number(donut.id));
-                        addToCart(donut);
+                        increaseCartQuantity(donut.id);
+                        addToCart({
+                          ...donut,
+                          ingredients: donut.ingredients.split(", "), // assuming ingredients are comma-separated in the 'CartItem' type
+                        });
                         showToast(donut);
                         setAddedDonuts((prev) => new Set(prev.add(donut.id)));
                       }}
@@ -303,7 +327,7 @@ const Checkout: React.FC = () => {
                     <Button
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
-                        decreaseNumberQuantity(Number(donut.id));
+                        decreaseNumberQuantity(donut.id);
                         decreaseCartQuantity(donut.id);
                         showDecreasedToast(donut);
                       }}
@@ -322,7 +346,7 @@ const Checkout: React.FC = () => {
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
                         removeFromCart(donut.id);
-                        removeNumberCart(Number(donut.id));
+                        removeNumberCart(donut.id);
                         showRemovedToast(donut);
 
                         setAddedDonuts((prev) => {

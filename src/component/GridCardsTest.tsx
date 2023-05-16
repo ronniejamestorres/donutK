@@ -1,42 +1,31 @@
-import {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  useRef,
-  SetStateAction,
-} from "react";
+import { useState, useEffect, createContext, useContext, useRef } from "react";
 import {
   Flex,
+  Grid,
+  GridItem,
   Text,
   Image,
   Button,
   Divider,
   IconButton,
   Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
   ModalHeader,
   ModalCloseButton,
   ModalBody,
+  ModalContent,
+  Modal,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { gql, useQuery } from "@apollo/client";
 import { useCart } from "../context/CartContext";
 import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { ImCross, ImMinus, ImPlus } from "react-icons/im";
-import Slider, { Settings as SliderSettings } from "react-slick";
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import backgroundImage from "../images/DK-card-bg-01.svg";
-
-interface GridCardsTestProps {
-  increaseCartQuantity: () => void;
-  removeNumberCart: () => void;
-  decreaseNumberQuantity: () => void;
-}
+import { BiPlusMedical } from "react-icons/bi";
+import { ImCross, ImMinus, ImPlus } from "react-icons/im";
 
 interface Donut {
   name: string;
@@ -81,6 +70,7 @@ function GridCardsTest(): JSX.Element {
 
   const [startIndex, setStartIndex] = useState(0);
   const { data } = useQuery(GET_DONUTS);
+
   const {
     addToCart,
     removeFromCart,
@@ -90,12 +80,15 @@ function GridCardsTest(): JSX.Element {
 
   useEffect(() => {
     if (data) {
-      setDonutData(data.donuts as Donut[]);
-      setDisplayedDonuts((data.donuts as Donut[]).slice(0, 4));
+      setDonutData(data.donuts);
+      setDisplayedDonuts(data.donuts.slice(0, 4));
     }
   }, [data]);
+
   const [selectedDonut, setSelectedDonut] = useState<Donut | null>(null);
+
   const toast = useToast();
+
   const showToast = (donut: Donut) => {
     toast({
       render: () => (
@@ -224,7 +217,6 @@ function GridCardsTest(): JSX.Element {
           _hover={{ transform: "scale(1.5)" }}
         />
       </Flex>
-
       <Box
         //border="1px"
         overflow={"hidden"}
@@ -273,8 +265,7 @@ function GridCardsTest(): JSX.Element {
                   <Flex justifyContent="center" m={4}>
                     <Button
                       onClick={() => {
-                        increaseCartQuantity(parseInt(donut.id, 10));
-
+                        increaseCartQuantity(donut.id);
                         addToCart(donut);
                         showToast(donut);
                         setAddedDonuts((prev) => new Set(prev.add(donut.id)));
@@ -297,8 +288,7 @@ function GridCardsTest(): JSX.Element {
                     <Button
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
-                        decreaseNumberQuantity(parseInt(donut.id, 10));
-
+                        decreaseNumberQuantity(donut.id);
                         decreaseCartQuantity(donut.id);
                         showDecreasedToast(donut);
                       }}
@@ -317,8 +307,7 @@ function GridCardsTest(): JSX.Element {
                       isDisabled={getCartItemQuantity(donut.id) === 0}
                       onClick={() => {
                         removeFromCart(donut.id);
-                        removeNumberCart(parseInt(donut.id, 10));
-
+                        removeNumberCart(donut.id);
                         showRemovedToast(donut);
 
                         setAddedDonuts((prev) => {
@@ -356,7 +345,6 @@ function GridCardsTest(): JSX.Element {
                           p={"10px"}
                           h={"300px"}
                           alignItems={"center"}
-                          backgroundImage={`url(${backgroundImage})`}
                           backgroundRepeat="no-repeat"
                           backgroundPosition="center"
                           backgroundSize={{ base: "full", md: "cover" }}
@@ -387,7 +375,7 @@ function GridCardsTest(): JSX.Element {
                           <Button
                             m={"10px"}
                             onClick={() => {
-                              increaseCartQuantity(parseInt(donut.id, 10));
+                              increaseCartQuantity(donut.id);
                               addToCart(donut);
                             }}
                             bg={"pink.100"}

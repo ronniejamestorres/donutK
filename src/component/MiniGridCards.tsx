@@ -180,7 +180,7 @@ function MiniGridCards(): JSX.Element {
                     cursor="pointer"
                     onClick={() => {
                       const donutIdAsNumber = parseInt(donut.id, 10);
-                      increaseCartQuantity(donutIdAsNumber);
+                      increaseCartQuantity(donut.id);
                       addToCart(donut);
                       showToast(donut);
                       setAddedDonuts((prev) => new Set(prev.add(donut.id)));

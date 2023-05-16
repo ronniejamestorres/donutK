@@ -1,7 +1,16 @@
 import React from "react";
 import { Box, Text, VStack } from "@chakra-ui/react";
 
-function Basket({ donuts }) {
+type Donut = {
+  name: string;
+  price: number;
+};
+
+type BasketProps = {
+  donuts: Donut[];
+};
+
+function Basket({ donuts }: BasketProps) {
   return (
     <Box mt={6}>
       <Text fontSize="xl" fontWeight="bold" mb={2}>

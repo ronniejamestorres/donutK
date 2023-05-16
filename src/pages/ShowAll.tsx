@@ -33,7 +33,7 @@ function ShowAll() {
     >
       <Navbar />
       <SearchSection />
-      <GridCardsTest onAddToBasket={undefined} />
+      <GridCardsTest />
       <FooterLanding />
     </Box>
   );
