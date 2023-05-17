@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import waves from "../images/waveshero.png";
 import donutdetour from "../images/donutdetour.svg";
 import "../App.css";
+import { NavLink } from "react-router-dom";
 
 export default function hero() {
   return (
@@ -86,28 +87,29 @@ export default function hero() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              <Button
-                fontFamily={"Gloria Hallelujah"}
-                as={"a"}
-                display={{
-                  base: "inline-flex",
-                  md: "inline-flex",
-                  lg: "inline-flex",
-                }}
-                rounded={"full"}
-                size={{ base: "md", md: "md", lg: "lg", xl: "lg" }}
-                fontWeight={"bold"}
-                px={2}
-                bgColor={"pink.400"}
-                colorScheme={"pink"}
-                textColor={"white"}
-                _hover={{ bg: "pink.200", text: "white" }}
-                variant={"link"}
-                href={"/Showall"}
-              >
-                <Text mr="2">Go shopping</Text>
-                <Icon as={GiDonut} boxSize="6" />
-              </Button>
+              <NavLink to="/Showall">
+                <Button
+                  fontFamily={"Gloria Hallelujah"}
+                  as={"a"}
+                  display={{
+                    base: "inline-flex",
+                    md: "inline-flex",
+                    lg: "inline-flex",
+                  }}
+                  rounded={"full"}
+                  size={{ base: "md", md: "md", lg: "lg", xl: "lg" }}
+                  fontWeight={"bold"}
+                  px={2}
+                  bgColor={"pink.400"}
+                  colorScheme={"pink"}
+                  textColor={"white"}
+                  _hover={{ bg: "pink.200", text: "white" }}
+                  variant={"link"}
+                >
+                  <Text mr="2">Go shopping</Text>
+                  <Icon as={GiDonut} boxSize="6" />
+                </Button>
+              </NavLink>
             </Stack>
           </Stack>
           <Flex
