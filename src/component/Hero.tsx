@@ -58,6 +58,7 @@ export default function hero() {
               <Text
                 as={"span"}
                 position={"relative"}
+                zIndex={1}
                 _after={{
                   content: "''",
                   width: "full",

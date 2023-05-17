@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { ReactNode } from "react";
-import DkLogo from "../images/DkLogo-01.svg";
+import DkLogo from "../images/DK-last-logo-01.svg";
 import { MdBorderClear } from "react-icons/md";
 
 const Logo = (props: any) => {

@@ -16,35 +16,22 @@ import {
   useDisclosure,
   Image,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
 import {
   HamburgerIcon,
   CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
-import { useState, useEffect } from "react";
-
-import LogoutButton from "../component/LogoutButton";
-import { RiLoginCircleFill } from "react-icons/ri";
-
+import { MdOutlineShoppingCart } from "react-icons/md";
 import DkLogo from "../images/DK-last-logo-01.svg";
-
+import { useShoppingCart } from "../context/ShoppingCartContext";
+import { NavLink } from "react-router-dom";
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("loginUser");
-    if (loggedInUser) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+  const { cartQuantity } = useShoppingCart();
 
   return (
-    <Box width={"full"}>
+    <Box>
       <Flex
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
@@ -59,7 +46,7 @@ export default function Navbar() {
         borderColor={useColorModeValue("gray.200", "gray.900")}
         align={"center"}
         zIndex="100"
-        position="relative"
+        position="fixed"
         w="100%"
         top={0}
         pl={{ base: "40px", md: "100px" }}
@@ -68,16 +55,36 @@ export default function Navbar() {
         <Flex
           flex={{ base: 1, md: "auto" }}
           display={{ base: "flex", md: "none" }}
-        ></Flex>
-        <Flex flex={{ base: 2 }} justify={{ base: "start", md: "start" }}>
-          <Image
-            boxSize="80px"
-            objectFit="contain"
-            src={DkLogo}
-            alt="DK Logo"
+        >
+          <IconButton
+            onClick={onToggle}
+            icon={
+              isOpen ? (
+                <CloseIcon w={3} h={3} />
+              ) : (
+                <HamburgerIcon w={5} h={5} color="pink.500" />
+              )
+            }
+            variant={"ghost"}
+            aria-label={"Toggle Navigation"}
           />
+        </Flex>
+        <Flex
+          flex={{ base: 1 }}
+          justify={{ base: "center", md: "start" }}
+          //border="1px"
+          //borderColor={"red.500"}
+        >
+          <NavLink to="/">
+            <Image
+              boxSize="80px"
+              objectFit="contain"
+              src={DkLogo}
+              alt="DK Logo"
+            />
+          </NavLink>
 
-          <Flex display={{ base: "none", md: "flex", lg: "flex" }} m={"0"}>
+          <Flex display={{ base: "none", md: "flex" }}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -87,28 +94,39 @@ export default function Navbar() {
           justify={"flex-end"}
           direction={"row"}
           spacing={6}
+          //border="1px"
+          //borderColor={"red.500"}
         >
-          {isLoggedIn ? (
-            <LogoutButton />
-          ) : (
-            <NavLink to="/GoogleLoginPage">
-              <Button
-                variant={"link"}
-                size={"lg"}
-                className={"font-weight-400"}
-                colorScheme={"pink"}
-                color={"orange.300"}
+          <NavLink to="/cartpage">
+            <Button as={"a"} fontSize={"sm"} fontWeight={400} variant={"link"}>
+              <Icon
+                as={MdOutlineShoppingCart}
+                w={8}
+                h={8}
+                color="orange.400"
+                position={"relative"}
+              />
+
+              <Box
+                bg={"pink.300"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                position={"absolute"}
+                top={0}
+                right={0}
+                fontSize={"xs"}
                 fontWeight={"bold"}
-                _hover={{
-                  textDecoration: "none",
-                  color: "orange.400",
-                }}
+                rounded={"full"}
+                color={"white"}
+                p={"4px"}
+                transition="transform 0.2s ease-out"
+                _hover={{ transform: "scale(1.5)" }}
               >
-                Login
-                <RiLoginCircleFill className={"me-2"} color="pink" />
-              </Button>
-            </NavLink>
-          )}
+                {" "}
+                {cartQuantity}
+              </Box>
+            </Button>
+          </NavLink>
         </Stack>
       </Flex>
 
@@ -120,7 +138,7 @@ export default function Navbar() {
 }
 //navbar color
 const DesktopNav = () => {
-  const linkColor = useColorModeValue("orange.300", "gray.200");
+  const linkColor = useColorModeValue("white", "gray.200");
   const linkHoverColor = useColorModeValue("pink.400", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
 
@@ -133,18 +151,23 @@ const DesktopNav = () => {
       px={{ base: 40 }}
     >
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
+        <Box
+          key={navItem.label}
+          transition="transform 0.2s ease-out"
+          _hover={{ transform: "scale(1.1)" }}
+        >
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
                 p={2}
                 href={navItem.href ?? "#"}
                 fontSize={"lg"}
-                fontWeight={"bold"}
                 color={linkColor}
+                bg={"orange.300"}
+                rounded={"full"}
                 _hover={{
-                  textDecoration: "underline",
-                  color: linkHoverColor,
+                  textDecoration: "none",
+
                   as: "u",
                 }}
               >
@@ -287,9 +310,4 @@ interface NavItem {
   href?: string;
 }
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "",
-    href: "/GoogleLoginPage",
-  },
-];
+const NAV_ITEMS: Array<NavItem> = [];

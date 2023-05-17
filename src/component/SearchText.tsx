@@ -13,13 +13,13 @@ function SearchText() {
       <CardBody>
         <Stack mt="2" spacing="3">
           <Heading
-            fontSize={{ base: "3xl", md: "5xl" }}
-            color="orange.400"
+            fontSize={{ base: "3xl", md: "3xl", lg: "5xl" }}
+            color="orange.300"
             size=""
             fontFamily={"Gloria Hallelujah"}
           >
             Try The Best
-            <Text as="span" color="pink.400" ml={"10px"} mr={"10px"}>
+            <Text as="span" color="pink.300" ml={"10px"} mr={"10px"}>
               DONUTS
             </Text>
             In Town

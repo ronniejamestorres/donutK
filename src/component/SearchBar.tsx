@@ -147,17 +147,14 @@ const SearchBar = () => {
                     borderWidth="1px"
                     p={"10px"}
                     h={{ base: "300px", md: "300px" }}
-                    w={{ base: "auto", md: "300px" }}
+                    w={{ base: "auto", md: "200px", lg: "300px" }}
                     borderRadius="3xl"
                     boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
                     bg={"white"}
                     transition="transform 0.2s ease-out"
                     _hover={{ transform: "scale(1.1)" }}
                   >
-                    <Flex
-                      justifyContent="center"
-                      w={{ base: "none", sm: "300px" }}
-                    >
+                    <Flex justifyContent="center">
                       <Image
                         src={donut.img}
                         alt={donut.name}
@@ -171,7 +168,12 @@ const SearchBar = () => {
                     <Box>
                       <Text fontWeight="bold" color="gray.600" mr={2}>
                         <Flex justifyContent={"center"}>
-                          <Text fontSize="xl">{donut.name}</Text>
+                          <Text
+                            fontWeight={{ base: "sm", md: "md", lg: "xl" }}
+                            fontFamily={"Gloria Hallelujah"}
+                          >
+                            {donut.name}
+                          </Text>
                         </Flex>
                         <Flex justifyContent={"center"}>
                           <Text fontSize="xl">${donut.price.toFixed(2)}</Text>

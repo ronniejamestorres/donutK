@@ -23,9 +23,10 @@ import {
   ChevronRightIcon,
 } from "@chakra-ui/icons";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import DkLogo from "../images/DkLogo-01.svg";
+import DkLogo from "../images/DK-last-logo-01.svg";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { NavLink } from "react-router-dom";
+import { GiDonut } from "react-icons/gi";
 export default function Navbar() {
   const { isOpen, onToggle } = useDisclosure();
   const { cartQuantity } = useShoppingCart();
@@ -38,7 +39,7 @@ export default function Navbar() {
         borderRadius="0 0 100px 100px"
         boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
         minH={"40px"}
-        maxH={"60px"}
+        maxH={"90px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
@@ -76,12 +77,12 @@ export default function Navbar() {
           //borderColor={"red.500"}
         >
           <NavLink to="/">
-          <Image
-            boxSize="80px"
-            objectFit="contain"
-            src={DkLogo}
-            alt="DK Logo"
-          />
+            <Image
+              boxSize="80px"
+              objectFit="contain"
+              src={DkLogo}
+              alt="DK Logo"
+            />
           </NavLink>
 
           <Flex display={{ base: "none", md: "flex" }}>
@@ -151,20 +152,24 @@ const DesktopNav = () => {
       px={{ base: 40 }}
     >
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
+        <Box
+          key={navItem.label}
+          transition="transform 0.2s ease-out"
+          _hover={{ transform: "scale(1.3)" }}
+        >
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Link
                 p={2}
                 href={navItem.href ?? "#"}
                 fontSize={"lg"}
-                fontWeight={"bold"}
                 color={linkColor}
+                rounded={"full"}
                 _hover={{
-                  textDecoration: "underline",
-                  color: linkHoverColor,
+                  textDecoration: "none",
                   as: "u",
                 }}
+                fontFamily={"Gloria Hallelujah"}
               >
                 {navItem.label}
               </Link>
@@ -305,4 +310,13 @@ interface NavItem {
   href?: string;
 }
 
-const NAV_ITEMS: Array<NavItem> = [];
+const NAV_ITEMS: Array<NavItem> = [
+  {
+    label: "Our Company",
+    href: "/OurCompany",
+  },
+  {
+    label: "Contact Us",
+    href: "/OurCompany",
+  },
+];

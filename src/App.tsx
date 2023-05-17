@@ -10,6 +10,7 @@ import CartPage from "./pages/CartPage";
 import { CartProvider } from "./context/CartContext";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import OurCompany from "./pages/OurCompany";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               element={<GoogleLoginPage />}
             ></Route>
             <Route path="/showall" element={<ShowAll />}></Route>
+            <Route path="/ourcompany" element={<OurCompany />}></Route>
             <Route path="/cartpage" element={<CartPage />}></Route>
             <Route path="/adress" element={<Address />}></Route>
             <Route path="/success" element={<Success />}></Route>

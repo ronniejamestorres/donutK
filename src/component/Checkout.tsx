@@ -15,6 +15,7 @@ import {
   Grid,
   GridItem,
   useBreakpointValue,
+  Divider,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { gql, useQuery } from "@apollo/client";
@@ -295,9 +296,17 @@ const Checkout: React.FC = () => {
                       mr={2}
                       rounded={"full"}
                     />
-                    <Box ml={4} fontFamily={"Gloria Hallelujah"}>
-                      <Text fontSize="xl">{donut.name}</Text>
-                      <Text>${donut.price.toFixed(2)}</Text>
+                    <Box ml={4}>
+                      <Text
+                        fontSize="xl"
+                        fontWeight={"bold"}
+                        fontFamily={"Gloria Hallelujah"}
+                      >
+                        {donut.name}
+                      </Text>
+                      <Text fontSize={"xl"} fontWeight={"bold"}>
+                        ${donut.price.toFixed(2)}
+                      </Text>
                       <Text>Quantity: {donut.quantity}</Text>
                     </Box>
                   </Flex>
@@ -401,7 +410,9 @@ const Checkout: React.FC = () => {
                   bg="pink.300"
                   size="lg"
                   onClick={handleCheckout}
-                  fontFamily="Gloria Hallelujah"
+                  color={"pink.700"}
+                  transition="transform 0.2s ease-out"
+                  _hover={{ transform: "scale(1.1)" }}
                 >
                   Checkout
                 </Button>

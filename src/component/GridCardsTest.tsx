@@ -26,6 +26,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BiPlusMedical } from "react-icons/bi";
 import { ImCross, ImMinus, ImPlus } from "react-icons/im";
+import backgroundImage from "../images/DK-card-bg-01.svg";
 
 interface Donut {
   name: string;
@@ -227,28 +228,36 @@ function GridCardsTest(): JSX.Element {
             <Box>
               <Box
                 key={donut.id}
-                m={{ base: "auto", md: "8" }}
+                m={{ base: "4", md: "4", lg: "8" }}
                 minW={{ base: "calc(50% - 16px)", md: "calc(25% - 16px)" }} // Add a minimum width
                 bg={"white"}
-                h={"460px"}
+                h={{ base: "400px", md: "460px", lg: "480px" }}
                 rounded={"3xl"}
                 transition="transform 0.2s ease-out"
                 _hover={{ transform: "scale(1.1)" }}
                 boxShadow="0px 4px 4px rgba(0, 0, 0, 0.35)"
                 p={4}
               >
-                <Flex justifyContent={"center"}>
+                <Flex
+                  justifyContent={"center"}
+                  h={{ base: "100px", md: "auto", lg: "200px" }}
+                >
                   <Image
                     src={donut.img}
                     alt={donut.name}
                     onClick={() => handleDonutClick(donut)}
                     cursor="pointer"
-                    w={"200px"}
+                    w={{ base: "100px", md: "200px" }}
                   />
                 </Flex>
                 <Text fontWeight="bold" color="gray.600" mr={2}>
                   <Flex justifyContent={"center"}>
-                    <Text fontSize={{ base: "sm", md: "xl" }} h={"10"}>
+                    <Text
+                      fontSize={{ base: "sm", md: "md", lg: "xl" }}
+                      m={"4"}
+                      fontFamily={"Gloria Hallelujah"}
+                      h={"60px"}
+                    >
                       {donut.name}
                     </Text>
                   </Flex>
@@ -262,7 +271,7 @@ function GridCardsTest(): JSX.Element {
                 <Divider />
 
                 <Flex justifyContent="center" flexDirection={"column"}>
-                  <Flex justifyContent="center" m={4}>
+                  <Flex justifyContent="center" m={2}>
                     <Button
                       onClick={() => {
                         increaseCartQuantity(donut.id);
@@ -272,9 +281,10 @@ function GridCardsTest(): JSX.Element {
                       }}
                       bg={"pink.300"}
                       rounded={"full"}
-                      color={"white"}
+                      color={"pink.700"}
                       transition="transform 0.2s ease-out"
                       _hover={{ transform: "scale(1.1)" }}
+                      fontSize={{ base: "sm", md: "sm", lg: "md" }}
                     >
                       Add to cart
                       <Box ml={2}>
@@ -345,6 +355,7 @@ function GridCardsTest(): JSX.Element {
                           p={"10px"}
                           h={"300px"}
                           alignItems={"center"}
+                          backgroundImage={`url(${backgroundImage})`}
                           backgroundRepeat="no-repeat"
                           backgroundPosition="center"
                           backgroundSize={{ base: "full", md: "cover" }}
@@ -358,7 +369,11 @@ function GridCardsTest(): JSX.Element {
                           />
                         </Flex>
 
-                        <ModalHeader color={"white"} fontSize={"2xl"}>
+                        <ModalHeader
+                          color={"white"}
+                          fontSize={"2xl"}
+                          fontFamily={"Gloria Hallelujah"}
+                        >
                           {selectedDonut.name}
                         </ModalHeader>
 
@@ -366,7 +381,11 @@ function GridCardsTest(): JSX.Element {
 
                         <ModalBody color={"white"}>
                           <Text>{selectedDonut.description}</Text>
-                          <Text fontSize={"xl"} mt={"4px"} mb={"4px"}>
+                          <Text
+                            fontSize={"2xl"}
+                            m={"4px"}
+                            fontFamily={"Gloria Hallelujah"}
+                          >
                             Ingredients :{" "}
                           </Text>
                           <Text>{selectedDonut.ingredients}</Text>
@@ -384,8 +403,12 @@ function GridCardsTest(): JSX.Element {
                             _hover={{ bg: "cyan.100" }}
                             //_focus={{ boxShadow: "outline" }}
                             color={"pink.700"}
+                            margin={"4"}
                           >
                             Add to cart
+                            <Box ml={2}>
+                              <ImPlus />
+                            </Box>
                           </Button>
                         </Flex>
                       </ModalContent>
