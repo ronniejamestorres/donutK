@@ -13,7 +13,7 @@ import { GiDonut } from "react-icons/gi";
 
 import { motion } from "framer-motion";
 import waves from "../images/waveshero.png";
-import donutdetour from "../images/donutdetour.svg";
+import donutdetour from "../images/donutdetour.png";
 import "../App.css";
 import { NavLink } from "react-router-dom";
 
@@ -114,30 +114,28 @@ export default function hero() {
           </Stack>
           <Flex
             flex={1}
-            justify={"center"}
+            justifyContent={"center"}
             align={"center"}
             position={"relative"}
             w={"full"}
           >
-            <Box
-              position={"relative"}
-              height={"600px"}
-              width={"full"}
-              overflow={"hidden"}
-            >
+            <Box position={"relative"} height={"600px"} width={"full"}>
               <motion.div
                 animate={{
                   rotate: 360,
                   transition: { duration: 4, loop: Infinity },
                 }}
               >
-                <Image
-                  alt={"Hero Image"}
-                  align={"center"}
-                  w={"100%"}
-                  h={{ base: "280px", md: "320px", lg: "350px", xl: "500px" }}
-                  src={donutdetour}
-                />
+                <Flex justifyContent={"center"}>
+                  <Image
+                    mt={"10"}
+                    alt={"Hero Image"}
+                    align={"center"}
+                    w={{ base: "300px", md: "320px", lg: "350px", xl: "500px" }}
+                    h={{ base: "300px", md: "320px", lg: "350px", xl: "500px" }}
+                    src={donutdetour}
+                  />
+                </Flex>
               </motion.div>
             </Box>
           </Flex>

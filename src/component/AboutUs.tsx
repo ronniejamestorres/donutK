@@ -6,7 +6,11 @@ interface DonutStoryProps {}
 
 const AboutUs: React.FC<DonutStoryProps> = () => {
   return (
-    <Box p={"100px"}>
+    <Box
+      pt={"100px"}
+      pr={{ base: "10px", md: "80px", lg: "80px" }}
+      pl={{ base: "10px", md: "80px", lg: "80px" }}
+    >
       <Flex justifyContent={"center"}>
         <Text
           fontFamily={"Gloria Hallelujah"}
@@ -23,7 +27,11 @@ const AboutUs: React.FC<DonutStoryProps> = () => {
           DONUT KINGDOM
         </Text>
       </Flex>
-      <Text fontSize="lg" lineHeight="1.7" p={"80px"}>
+      <Text
+        fontSize="lg"
+        lineHeight="1.7"
+        p={{ base: "10px", md: "80px", lg: "80px" }}
+      >
         Our delicious journey began in 2010, when our founder, Jane Doe, decided
         to pursue her passion for baking. She spent countless hours perfecting
         her donut recipes and experimenting with unique flavor combinations.
