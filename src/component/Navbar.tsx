@@ -152,47 +152,49 @@ const DesktopNav = () => {
       px={{ base: 40 }}
     >
       {NAV_ITEMS.map((navItem) => (
-        <Box
-          key={navItem.label}
-          transition="transform 0.2s ease-out"
-          _hover={{ transform: "scale(1.3)" }}
-        >
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"lg"}
-                color={linkColor}
-                rounded={"full"}
-                _hover={{
-                  textDecoration: "none",
-                  as: "u",
-                }}
-                fontFamily={"Gloria Hallelujah"}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
+        <NavLink to={navItem.href || "#"}>
+          <Box
+            key={navItem.label}
+            transition="transform 0.2s ease-out"
+            _hover={{ transform: "scale(1.3)" }}
+          >
+            <Popover trigger={"hover"} placement={"bottom-start"}>
+              <PopoverTrigger>
+                <Link
+                  p={2}
+                  href={navItem.href ?? "#"}
+                  fontSize={"lg"}
+                  color={linkColor}
+                  rounded={"full"}
+                  _hover={{
+                    textDecoration: "none",
+                    as: "u",
+                  }}
+                  fontFamily={"Gloria Hallelujah"}
+                >
+                  {navItem.label}
+                </Link>
+              </PopoverTrigger>
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={"xl"}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={"xl"}
+                  minW={"sm"}
+                >
+                  <Stack>
+                    {navItem.children.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        </NavLink>
       ))}
     </Stack>
   );
@@ -256,8 +258,8 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={Link}
-        href={href ?? "#"}
+        as={NavLink}
+        to={href ?? "#"}
         justify={"space-between"}
         align={"center"}
         _hover={{
@@ -307,7 +309,7 @@ interface NavItem {
   label: string;
   subLabel?: string;
   children?: Array<NavItem>;
-  href?: string;
+  href: string; // href is always required
 }
 
 const NAV_ITEMS: Array<NavItem> = [
@@ -317,6 +319,6 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "Contact Us",
-    href: "/OurCompany",
+    href: "/ContactUs",
   },
 ];
