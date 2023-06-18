@@ -14,6 +14,10 @@ Donuts Kingdom is a React-based e-shop application that allows users to browse a
 - Order History: View and track past orders.
 - Responsive Design: Enjoy a seamless experience on different devices and screen sizes.
 
+## Visit the website
+
+https://donut-k.vercel.app/
+
 ## Installation
 
 Clone the repository:
