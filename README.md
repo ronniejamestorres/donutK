@@ -17,7 +17,7 @@ Donuts Kingdom is a React-based e-shop application that allows users to browse a
 ## Installation
 
 Clone the repository:
-git clone https://github.com/your-username/donuts-kingdom.git
+git clone git@github.com:ronniejamestorres/donutK.git
 
 Follow these steps to run this project in your local environment:
 
