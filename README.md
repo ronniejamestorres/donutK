@@ -3,7 +3,7 @@
 Donuts Kingdom is a React-based e-shop application that allows users to browse and purchase a variety of donuts with different types and flavors. Users can create an account, select their desired donuts, and make payments securely.
 
 ![Screenshot of the app](./src/images/screenshot/Screenshot.jpg)
-![Screenshot of the app](./src/images/screenshot/Screenshot1.jpg)
+![Screenshot of the app](./src/images/screenshot/Screenshot2.jpg)
 
 ## Features
 
