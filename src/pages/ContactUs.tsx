@@ -4,9 +4,9 @@ import { Box } from "@chakra-ui/react";
 import Navbar from "../component/Navbar";
 import backgroundImage from "../images/bg-grey-01.svg";
 import FooterLanding from "../component/FooterLanding";
-import AboutUs from "../component/AboutUs";
+import Contact from "../component/Contact";
 
-function OurCompany() {
+function ContactUs() {
   return (
     <Box
       backgroundImage={`url(${backgroundImage})`}
@@ -17,11 +17,10 @@ function OurCompany() {
       w="100vw"
     >
       <Navbar />
-      <AboutUs />
-
+      <Contact />
       <FooterLanding />
     </Box>
   );
 }
 
-export default OurCompany;
+export default ContactUs;

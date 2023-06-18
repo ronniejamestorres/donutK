@@ -11,6 +11,7 @@ import { CartProvider } from "./context/CartContext";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import OurCompany from "./pages/OurCompany";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             ></Route>
             <Route path="/showall" element={<ShowAll />}></Route>
             <Route path="/ourcompany" element={<OurCompany />}></Route>
+            <Route path="/contactus" element={<ContactUs />}></Route>
             <Route path="/cartpage" element={<CartPage />}></Route>
             <Route path="/adress" element={<Address />}></Route>
             <Route path="/success" element={<Success />}></Route>

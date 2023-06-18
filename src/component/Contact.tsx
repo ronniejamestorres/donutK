@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, Heading, Text, Center } from "@chakra-ui/react";
 
-interface ContactUsProps {}
+interface ContactProps {}
 
-const ContactUs: React.FC<ContactUsProps> = () => {
+const Contact: React.FC<ContactProps> = () => {
   return (
     <Center>
       <Box textAlign="center" maxWidth="600px" py="4" m={"40"}>
@@ -20,4 +20,4 @@ const ContactUs: React.FC<ContactUsProps> = () => {
   );
 };
 
-export default ContactUs;
+export default Contact;
